@@ -55,11 +55,6 @@ defaults:
     values:
       menu: true
       order: 3
-  - scope:
-      path: about.md
-    values:
-      menu: true
-      order: 4
 ```
 
 ### Adding a link to an external page to the sidebar
@@ -232,11 +227,7 @@ However, the welcome layout supports selecting specific projects and posts, by a
 layout:            welcome
 title:             Welcome
 selected_projects:
-  - _projects/hydejack-v6.md
-  - _projects/hyde-v2.md
 selected_posts:
-  - _posts/2017-05-03-javascripten.md
-  - _posts/2012-02-07-example-content.md
 more_projects:     projects.md
 more_posts:        posts.md
 big_project:       false
