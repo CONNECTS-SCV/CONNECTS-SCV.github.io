@@ -4,9 +4,10 @@ title: "Protein"
 permalink: /analysis/protein/
 ---
 
-{% assign posts = site.posts | where_exp: "post", "post.categories contains 'analysis' and post.categories contains 'protein'" %}
 <ul>
-  {% for post in posts %}
-    <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+  {% for post in site.posts %}
+    {% if post.categories contains 'analysis' and post.categories contains 'protein' %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+    {% endif %}
   {% endfor %}
 </ul>
