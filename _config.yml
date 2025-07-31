@@ -26,21 +26,19 @@ title:                 CONNECTS
 
 # A short description (~150 chars) of the page used for the meta description tag.
 # Can use markdown, but no more than one paragraph (enforced by `>`)
-description:           >
-  A Jekyll theme with JavaScript powers. "Best Theme by a Mile".
-  Combines the best of static sites and modern web apps.
-  Open `_config.yml` to edit this text.
+description: >
+  구조 생물학과 분자 설계를 위한 AI 기반 분석 플랫폼.
+  단백질-리간드 예측, 시뮬레이션, 도킹, 디자인, 독성 평가를 웹에서 손쉽게 수행하세요.
 
 # A shorter description for the sidebar.
-tagline:               >
-  A Jekyll theme with JavaScript powers.
-  Open `_config.yml` to edit this text.
+tagline: >
+  AI 기반 구조 생물학 분석 플랫폼
 
 # A list of keywords for your blog
 keywords:              []
 
 # Used by jekyll-seo-tag...
-logo:                  /assets/icons/icon.png
+logo:                  /assets/img/favicon.ico
 
 # This should be the same author as first entry in `_data/authors.yml`.
 # Duplication is necessary due to the `jekyll-feed`, `jekyll-seo-tag` plugin.
@@ -106,10 +104,10 @@ font_heading:          Roboto Slab, Helvetica, Arial, sans-serif
 
 hydejack:
   # Configure the order of complementary content on blog posts
-  post_addons:         [about, newsletter, related]
+#  post_addons:         [about, newsletter, related]
 
   # Configure the order of complementary content on project pages
-  project_addons:      [about, newsletter, other]
+#  project_addons:      [about, newsletter, other]
 
   # If you do not use Google Fonts, set to `true`.
   no_google_fonts:     false
@@ -182,7 +180,7 @@ include:
 # ========================================================================================
 
 plugins:
-  # - jekyll-avatar
+  - jekyll-avatar
   # - jekyll-default-layout
   - jekyll-feed
   # - jekyll-gist
@@ -225,11 +223,10 @@ plugins:
 #   admins:              <id>
 
 # Used on index and about sites
-# social:
-#   name:                <firstname> <lastname>
-#   links:
-#     - https://twitter.com/<username>
-#     - https://github.com/<username>
+social:
+   name:                CONNECTS
+   links:
+     - https://github.com/CONNECTS-SCV
 
 
 # Other Plugins
@@ -272,10 +269,14 @@ sass:
 
 # Add links to the sidebar.
 menu:
-  - title:             ABOUT
-    url:               /about/
-  - title:             RELEASE
-    url:               /release/
+  - title: Home
+    url: /
+  - title: Analysis
+    url: /analysis/
     submenu:
-      - title:         UPDATE LOG
-        url:           /update_log/
+      - title: Protein
+        url: /analysis/protein/
+      - title: Ligand
+        url: /analysis/ligand/
+  - title: Release
+    url: /release

@@ -1,24 +1,43 @@
-<span class="sr-only">{{ site.data.strings.navigation | default:"Navigation" }}{{ site.data.strings.colon | default:":" }}</span>
-<ul>
-  {% assign pages = site.pages | where: "menu", true %}
-  {% assign documents = site.documents | where: "menu", true %}
-  {% assign nodes = pages | concat: documents | sort: "order" %}
-  {% for node in nodes %}
-    {% unless node.redirect_to %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="/assets/js/sidebar-folder.js"></script>
+
+<span class="sr-only">
+  {{ site.data.strings.navigation | default:"Navigation" }}
+  {{ site.data.strings.colon | default:":" }}
+</span>
+
+<ul class="sidebar-nav">
+  {% assign count = 0 %}
+  {% for item in site.menu %}
+  {% assign count = count | plus: 1 %}
+  <li>
+    {% if item.submenu %}
+    <input type="checkbox" id="folder-checkbox-{{ count }}" />
+    {% endif %}
+
+    <div class="list-wrapper">
+      <a class="sidebar-nav-item" href="{{ item.url | relative_url }}">
+        {{ item.title }}
+      </a>
+
+      {% if item.submenu %}
+      <button class="spread-btn" onclick="javascript:spread({{ count }})">
+        <label id="spread-icon-{{ count }}" class="material-icons">arrow_right</label>
+      </button>
+      {% endif %}
+    </div>
+
+    {% if item.submenu %}
+    <ul class="list-body">
+      {% for subitem in item.submenu %}
       <li>
-        <a
-          {% if forloop.first %}id="_navigation"{% endif %}
-          href="{{ node.url | relative_url }}"
-          class="sidebar-nav-item{% if page.url contains node.url %} active{% endif %}"
-          {% if path.rel %}rel="{{ node.rel }}"{% endif %}
-          >
-          {{ node.title }}
+        <a class="sidebar-nav-subitem" href="{{ subitem.url | relative_url }}">
+          {{ subitem.title }}
         </a>
       </li>
-    {% else %}
-      <li>
-        <a href="{{ node.redirect_to }}" class="sidebar-nav-item external" >{{ node.title }}</a>
-      </li>
-    {% endunless %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </li>
   {% endfor %}
 </ul>

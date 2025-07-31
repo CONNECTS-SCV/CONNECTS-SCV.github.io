@@ -1,16 +1,80 @@
-// Uncomment below to remove border radius on projects and pagination items (pre v6.5)
-/*
-.card, .pagination-item {
-  border-radius: 0!important;
+// 메뉴 레이아웃 기본
+.sidebar {
+  text-align: left;
+  padding: 1rem;
 }
-*/
 
-// Uncomment below to restore the old (pre v6.5) sidebar
-/*
-@media screen {
-  .sidebar-sticky {
-    left: 2rem;
-    max-width: none;
-  }
+.sidebar-sticky {
+  height: 100%;
+  padding-top: 1rem;
+  position: absolute;
 }
-*/
+
+.sidebar-nav-item {
+  display: inline-block;
+  padding: 0.5rem 0;
+  width: 100%;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+  transition: color 0.2s;
+}
+
+.sidebar-nav-item:hover {
+  color: #4FB1BA;
+}
+
+.sidebar-nav-subitem {
+  display: inline-block;
+  padding: 0.25rem 1rem; // 들여쓰기 추가
+  font-size: 0.95rem;
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.sidebar-nav-subitem:hover {
+  color: #4FB1BA;
+}
+
+.list-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.list-body {
+  margin-bottom: 0;
+}
+
+.spread-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.5rem;
+}
+
+.spread-btn:hover {
+  color: #4FB1BA;
+}
+
+// 토글 애니메이션
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] ~ ul {
+  height: 0;
+  overflow: hidden;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s ease-out, height 0.2s ease-out;
+}
+
+input[type="checkbox"]:checked ~ ul {
+  height: auto;
+  transform: scaleY(1);
+}
