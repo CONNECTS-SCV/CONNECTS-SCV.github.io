@@ -269,3 +269,13 @@ sass:
 # so that the location of the feed XML stays the same.
 # feed:
 #   path:                atom.xml
+
+# Add links to the sidebar.
+menu:
+  - title:             ABOUT
+    url:               /about/
+  - title:             RELEASE
+    url:               /release/
+    submenu:
+      - title:         UPDATE LOG
+        url:           /update_log/
