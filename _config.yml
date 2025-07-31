@@ -180,7 +180,7 @@ include:
 # ========================================================================================
 
 plugins:
-  - jekyll-avatar
+#  - jekyll-avatar
   # - jekyll-default-layout
   - jekyll-feed
   # - jekyll-gist
