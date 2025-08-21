@@ -243,42 +243,91 @@ main > .content {
   }
 }
 
-// 코드 블록 디자인 개선
-pre {
-  max-width: 100%;
-  overflow-x: auto;
-  background: #f6f8fa;
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  padding: 16px;
-  margin: 1em 0;
-  font-size: 0.9em;
-  line-height: 1.45;
-}
-
-code {
-  background: #f3f4f6;
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-  font-size: 0.85em;
-  color: #0969da;
-}
-
-pre code {
-  background: none;
-  padding: 0;
-  color: inherit;
-  font-size: inherit;
-}
-
+// 코드 블록 디자인 개선 - 깔끔한 스타일
 .highlighter-rouge {
-  max-width: 100%;
-  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e1e4e8;
+  
+  .highlight {
+    margin: 0;
+    background: #f8f9fa;
+    
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: #24292f;
+      overflow-x: auto;
+      white-space: pre;
+      
+      code {
+        background: transparent;
+        padding: 0;
+        font-size: inherit;
+        color: inherit;
+        border-radius: 0;
+      }
+    }
+  }
 }
 
-.highlight {
-  background: #f6f8fa;
-  border-radius: 6px;
+// 인라인 코드
+code {
+  background: linear-gradient(135deg, #f1f3f4 0%, #e8eaed 100%);
+  color: #d63384;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+}
+
+// 코드 블록 내부 코드는 인라인 스타일 제거
+pre code {
+  background: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-weight: normal !important;
+}
+
+// 특별한 코드 블록 스타일 (더 구별되는 색상)
+.language-plaintext .highlight {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  
+  pre {
+    color: #495057;
+  }
+}
+
+.language-bash .highlight,
+.language-shell .highlight {
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+  
+  pre {
+    color: #e2e8f0;
+  }
+  
+  code {
+    color: #e2e8f0;
+  }
+}
+
+// 모바일 반응형
+@media (max-width: 768px) {
+  .highlighter-rouge .highlight pre {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
 }
 
 // 테이블 디자인 개선
