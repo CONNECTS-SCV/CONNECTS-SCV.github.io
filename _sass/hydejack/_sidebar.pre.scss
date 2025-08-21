@@ -40,13 +40,13 @@ hy-drawer {
 
     // <<< link
     > .hy-drawer-content.hy-drawer-left {
-      width: calc(18rem + 1px);
-      left: -17.5rem;
+      width: calc(15rem + 1px);
+      left: -14.5rem;
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
     }
 
-    --hy-drawer-width: calc(18rem + 1px);
-    --hy-drawer-slide-width: 17.5rem;
+    --hy-drawer-width: calc(15rem + 1px);
+    --hy-drawer-slide-width: 14.5rem;
     --hy-drawer-box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
 
     &.loaded {
@@ -62,7 +62,7 @@ hy-drawer {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 18rem;
+    width: 15rem;
     margin-left: 0;
     // >>>
 
@@ -122,7 +122,7 @@ hy-drawer {
 
   @media screen and (min-width: $break-point-dynamic) {
     left: auto;
-    width: 15rem;
+    width: 18rem;
   }
   // >>>>>
 }

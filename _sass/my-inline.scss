@@ -1,93 +1,195 @@
-// 메뉴 레이아웃 기본
-.sidebar {
-  text-align: left;
-  padding: 1rem;
+// 메인 콘텐츠 영역 스타일
+.content {
+  max-width: 65rem; // 기본값보다 넓게 (38rem -> 65rem)
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 3rem;
 }
 
-// 사이드바 상단 섹션 중앙 정렬
-.sidebar-about {
-  text-align: center;
-  margin-bottom: 1.5rem;
+// 사이드바가 있는 경우 콘텐츠 위치 조정
+@media (min-width: 64em) {
+  .sidebar {
+    width: 18rem; // 사이드바 너비
+  }
+  
+  hy-push-state, main {
+    margin-left: 18rem; // 사이드바 너비만큼 여백
+  }
+  
+  .content {
+    max-width: 55rem; // 데스크톱에서 콘텐츠 최대 너비
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
-.sidebar-box {
-  text-align: center;
-  margin: 1rem 0;
-}
-
-.sidebar-sticky {
-  height: 100%;
-  padding-top: 1rem;
-  position: absolute;
-}
-
-.sidebar-nav-item {
-  display: inline-block;
-  padding: 0.5rem 0;
-  width: 100%;
-  font-weight: 600;
-  text-decoration: none;
-  color: white;
-  transition: color 0.2s;
-}
-
-.sidebar-nav-item:hover {
-  color: #4FB1BA;
-}
-
-.sidebar-nav-subitem {
-  display: inline-block;
-  padding: 0.25rem 1rem; // 들여쓰기 추가
-  font-size: 0.95rem;
-  color: #ccc;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.sidebar-nav-subitem:hover {
-  color: #4FB1BA;
-}
-
-.list-wrapper {
+// 화면 중앙 정렬
+main {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+main > .content {
   width: 100%;
 }
 
-.list-body {
-  margin-bottom: 0;
-}
-
-.spread-btn {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  padding: 0;
-  margin-left: 0.5rem;
-}
-
-.spread-btn:hover {
-  color: #4FB1BA;
-}
-
-// 토글 애니메이션
-input[type="checkbox"] {
-  display: none;
-}
-
-input[type="checkbox"] ~ ul {
-  height: 0;
+// 사이드바 배경 역동적 디자인
+.sidebar-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  opacity: 0.9;
   overflow: hidden;
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.2s ease-out, height 0.2s ease-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background: radial-gradient(circle, rgba(79, 177, 186, 0.3) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.03) 10px,
+        rgba(255, 255, 255, 0.03) 20px
+      );
+  }
 }
 
-input[type="checkbox"]:checked ~ ul {
-  height: auto;
-  transform: scaleY(1);
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// 드롭다운 메뉴 스타일
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  // 메인 리스트 아이템 간격 통일
+  > li {
+    margin: 0.25rem 0;
+  }
+  
+  // 리스트 래퍼 스타일
+  .list-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    .sidebar-nav-item {
+      flex: 1;
+      display: block;
+      padding: 0.5rem 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+      }
+    }
+  }
+  
+  // 드롭다운 버튼 스타일
+  .spread-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    padding: 0.25rem;
+    margin-right: 0.5rem;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+    
+    label {
+      cursor: pointer;
+      display: block;
+      line-height: 1;
+      pointer-events: none;
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+  }
+  
+  // 체크박스 숨기기 및 토글 로직
+  li > input[type="checkbox"][id^="folder-checkbox-"] {
+    display: none;
+    
+    // 기본적으로 서브메뉴 숨기기
+    ~ .list-body {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.3s ease-out, opacity 0.2s ease;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    
+    // 체크박스 체크시 서브메뉴 표시
+    &:checked ~ .list-body {
+      max-height: 500px;
+      opacity: 1;
+      transition: max-height 0.3s ease-in, opacity 0.2s ease 0.1s;
+      padding-left: 1.5rem;
+      margin-top: 0.25rem;
+    }
+    
+    // 체크박스 체크시 아이콘 회전
+    &:checked ~ .list-wrapper .spread-btn label {
+      transform: rotate(90deg);
+    }
+  }
+  
+  // 서브메뉴 아이템 스타일
+  .list-body li {
+    margin: 0.2rem 0;
+  }
+  
+  .sidebar-nav-subitem {
+    display: block;
+    padding: 0.4rem 0.8rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+  }
 }
 
 // 카테고리 페이지 스타일
@@ -96,39 +198,39 @@ input[type="checkbox"]:checked ~ ul {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
-  
+
   .category-card {
     padding: 1.5rem;
     background: #f8f9fa;
     border-radius: 8px;
     border: 1px solid #e1e4e8;
     transition: all 0.3s ease;
-    
+
     &:hover {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transform: translateY(-2px);
     }
-    
+
     h3 {
       margin-top: 0;
       margin-bottom: 0.5rem;
-      
+
       a {
         color: #0a0e27;
         text-decoration: none;
-        
+
         &:hover {
           color: #4FB1BA;
         }
       }
     }
-    
+
     p {
       color: #586069;
       font-size: 0.95rem;
       margin-bottom: 0.5rem;
     }
-    
+
     .count {
       display: inline-block;
       padding: 0.25rem 0.5rem;
@@ -141,49 +243,356 @@ input[type="checkbox"]:checked ~ ul {
   }
 }
 
-// 포스트 카드 스타일
+// 코드 블록 디자인 개선
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  background: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 1em 0;
+  font-size: 0.9em;
+  line-height: 1.45;
+}
+
+code {
+  background: #f3f4f6;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+  color: #0969da;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.highlighter-rouge {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.highlight {
+  background: #f6f8fa;
+  border-radius: 6px;
+}
+
+// 테이블 디자인 개선
+.content table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5em 0;
+  font-size: 0.95em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  display: table;
+}
+
+// 테이블 컨테이너 overflow 처리
+.table-wrapper,
+.highlighter-rouge:has(table) {
+  overflow-x: auto;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+table {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+tbody tr {
+  background: white;
+  transition: background 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+tbody tr:hover {
+  background: #e8f4f8;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+// 첫 번째 열 강조 (옵션)
+td:first-child,
+th:first-child {
+  font-weight: 500;
+}
+
+// 모바일 반응형
+@media (max-width: 768px) {
+  table {
+    font-size: 0.85em;
+  }
+
+  th, td {
+    padding: 8px 12px;
+  }
+}
+
+// 포스트 카드 스타일 (외부 미리보기)
 .post-card {
   margin: 1.5rem 0;
-  
+  padding: 1.25rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #e1e4e8;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+  }
+
   h3 {
+    margin-top: 0;
     margin-bottom: 0.5rem;
-    
+    font-size: 1.3rem;
+
     a {
-      color: #0a0e27;
+      color: #1a1f35;
       text-decoration: none;
       transition: color 0.2s ease;
-      
+      font-weight: 700;
+
       &:hover {
         color: #4FB1BA;
       }
     }
   }
-  
+
   time {
-    display: inline-block;
-    color: #586069;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  p {
-    color: #444;
-    line-height: 1.6;
-    margin: 0.5rem 0;
-  }
-  
-  .tags {
-    margin-top: 0.75rem;
-    
-    .tag {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    color: #8b92a8;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+
+    &::before {
+      content: "📅";
       margin-right: 0.5rem;
-      background: #f1f8ff;
-      color: #0366d6;
-      border-radius: 3px;
-      font-size: 0.85rem;
-      border: 1px solid #c8e1ff;
+    }
+  }
+
+  p {
+    color: #5a6169;
+    line-height: 1.7;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+
+  .tags {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem 0.8rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      }
+    }
+  }
+}
+
+// 포스트 페이지 메타 정보
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 10px;
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #5a6169;
+    font-size: 0.9rem;
+
+    .icon {
+      color: #4FB1BA;
+    }
+  }
+}
+
+// 포스트 및 페이지 description (message box) 스타일
+.post header .message,
+.page header .message {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #1a1f35;
+  margin: 2rem 0;
+  padding: 1.5rem 2rem;
+  background: white;
+  border: 2px solid #e8f4f8;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, #4FB1BA 0%, #667eea 100%);
+  }
+
+  &::after {
+    content: "💡";
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    opacity: 0.5;
+  }
+}
+
+// 일반 페이지의 message (Analysis 페이지 등)
+.page:not(.post) .message {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #2d3561;
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.75rem;
+  background: linear-gradient(135deg, #f8fafb 0%, #e8f4f8 100%);
+  border-left: 4px solid #4FB1BA;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+// About 섹션을 포스트 아래로 이동
+.layout-post {
+  // 포스트 페이지에서는 flex를 해제하고 블록 레이아웃 사용
+  flex-direction: column;
+  
+  // About 섹션이 포스트 콘텐츠 아래에 위치하도록
+  article.post {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  
+  // About 섹션 스타일
+  aside.about {
+    clear: both;
+    width: 100%;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e1e4e8;
+  }
+}
+
+// 포스트 페이지 내부 메타 정보 (날짜와 태그만)
+.post-date.heading {
+  margin: 1.5rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e8e8e8;
+  font-size: 0; // "in"과 "on" 텍스트 숨기기
+
+  // 날짜 스타일
+  time {
+    display: block;
+    font-weight: 600;
+    color: #8b92a8;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+
+    &::before {
+      content: "📅 ";
+      margin-right: 0.4rem;
+    }
+  }
+
+  // 모든 span 기본 숨기기
+  span {
+    display: none;
+    font-size: initial;
+  }
+
+  // 태그 span들만 표시 (마지막 8개)
+  span:nth-last-child(-n+8) {
+    display: inline-block !important;
+    background: #f0f1f3;
+    color: #2d3561;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #e1e4e8;
+    margin: 0.2rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, #4FB1BA 0%, #3d9ca4 100%);
+      color: white;
+      border-color: transparent;
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 3px 10px rgba(79, 177, 186, 0.25);
+    }
+
+    // 첫 번째 실제 태그에 아이콘 추가 (ToxinPred3.0)
+    &:nth-last-child(8) {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      font-weight: 600;
+
+      &::before {
+        content: "🏷️ ";
+        margin-right: 0.3rem;
+      }
+
+      &:hover {
+        transform: translateY(-2px) scale(1.08);
+        box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+      }
     }
   }
 }

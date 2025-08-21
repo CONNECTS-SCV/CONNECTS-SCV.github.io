@@ -3,12 +3,15 @@
 <div class="author mt4">
   {% assign author = include.author %}
 
+  {% comment %}
+  Avatar image removed from post footer
   {% if author.picture %}
     {% include srcset-img.html class="avatar" img=author.picture alt=author.name %}
   {% elsif plugins contains 'jekyll-avatar' %}
     {% assign avatar = author.social.github | default:author.github.username | default:author.github  %}
     {% include avatar-tag.html user=avatar %}
   {% endif %}
+  {% endcomment %}
 
   {% assign heading_tag = include.heading_tag | default:'h2' %}
   {% assign heading_id = include.heading_id %}
