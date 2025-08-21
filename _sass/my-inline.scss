@@ -523,29 +523,20 @@ th:first-child {
   line-height: 1.8;
   color: #1a1f35;
   margin: 2rem 0;
-  padding: 1.5rem 2rem 1.5rem 4rem; // 왼쪽 패딩을 더 늘려서 색상 테두리와 아이콘 공간 확보
+  padding: 1.5rem 2rem 1.5rem 3.5rem; // 왼쪽 패딩 조정
   background: white;
   border: 2px solid #e8f4f8;
+  border-left: 5px solid #4FB1BA; // 왼쪽 테두리로 색상 표시
   border-radius: 12px;
   position: relative;
   overflow: hidden;
 
   &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5px;
-    height: 100%;
-    background: linear-gradient(180deg, #4FB1BA 0%, #667eea 100%);
-  }
-
-  &::after {
     content: "💡";
     position: absolute;
     top: 1.5rem;
-    left: 1.5rem;
-    font-size: 1.5rem;
+    left: 1.25rem;
+    font-size: 1.4rem;
     opacity: 0.6;
     pointer-events: none;
     z-index: 1;
@@ -558,11 +549,23 @@ th:first-child {
   line-height: 1.7;
   color: #2d3561;
   margin: 1.5rem 0;
-  padding: 1.25rem 1.75rem;
+  padding: 1.25rem 1.75rem 1.25rem 3rem; // 왼쪽 패딩 조정
   background: linear-gradient(135deg, #f8fafb 0%, #e8f4f8 100%);
   border-left: 4px solid #4FB1BA;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  
+  &::before {
+    content: "ℹ️";
+    position: absolute;
+    top: 1.25rem;
+    left: 1rem;
+    font-size: 1.1rem;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 1;
+  }
 }
 
 // About 섹션을 포스트 아래로 이동
