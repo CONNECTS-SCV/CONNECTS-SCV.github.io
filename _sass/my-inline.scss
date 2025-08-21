@@ -330,31 +330,37 @@ pre code {
   }
 }
 
-// 테이블 디자인 개선
-.content table {
-  width: 100%;
-  max-width: 100%;
+// 테이블 디자인 개선 - 완전히 전체 너비 사용
+table {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 100% !important;
   border-collapse: separate;
   border-spacing: 0;
-  margin: 1.5em 0;
+  margin: 1.5em 0 !important;
   font-size: 0.95em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   overflow: hidden;
-  display: table;
+  display: table !important;
+  table-layout: fixed !important; // 고정 레이아웃으로 변경
 }
 
-// 테이블 컨테이너 overflow 처리
-.table-wrapper,
-.highlighter-rouge:has(table) {
-  overflow-x: auto;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-table {
+// 테이블 컨테이너 - 완전한 너비 강제
+.content table,
+.page table,
+.post table {
+  width: 100% !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
+}
+
+// 테이블을 감싸는 모든 컨테이너도 전체 너비
+p:has(table),
+div:has(table) {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 thead {
@@ -517,7 +523,7 @@ th:first-child {
   line-height: 1.8;
   color: #1a1f35;
   margin: 2rem 0;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 2rem 1.5rem 4rem; // 왼쪽 패딩을 더 늘려서 색상 테두리와 아이콘 공간 확보
   background: white;
   border: 2px solid #e8f4f8;
   border-radius: 12px;
@@ -538,9 +544,11 @@ th:first-child {
     content: "💡";
     position: absolute;
     top: 1.5rem;
-    right: 1.5rem;
+    left: 1.5rem;
     font-size: 1.5rem;
-    opacity: 0.5;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 1;
   }
 }
 
