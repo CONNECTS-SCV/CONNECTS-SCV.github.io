@@ -40,13 +40,13 @@ hy-drawer {
 
     // <<< link
     > .hy-drawer-content.hy-drawer-left {
-      width: calc(15rem + 1px);
-      left: -14.5rem;
+      width: calc(18rem + 1px);
+      left: -17.5rem;
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
     }
 
-    --hy-drawer-width: calc(15rem + 1px);
-    --hy-drawer-slide-width: 14.5rem;
+    --hy-drawer-width: calc(18rem + 1px);
+    --hy-drawer-slide-width: 17.5rem;
     --hy-drawer-box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
 
     &.loaded {
@@ -62,7 +62,7 @@ hy-drawer {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 15rem;
+    width: 18rem;
     margin-left: 0;
     // >>>
 
@@ -115,14 +115,19 @@ hy-drawer {
 
   @media screen {
     position: absolute;
-    right: 1.5rem;
-    left: 1.5rem;
-    bottom: 1rem;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   @media screen and (min-width: $break-point-dynamic) {
-    left: auto;
-    width: 18rem;
+    left: 0;
+    right: 0;
+    width: 100%;
   }
   // >>>>>
 }

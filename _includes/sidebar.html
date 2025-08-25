@@ -7,7 +7,27 @@
       {% capture bg_style %}background-color:{{ color }};{% if image != 'none' %}background-image:url({% include smart-url url=image %}){% endif %}{% endcapture %}
       {% capture bg_class %}sidebar-bg {% if image != 'none' %}sidebar-overlay{% endif %}{% endcapture %}
     {% endif %}
-    <div class="{{ bg_class }}" style="{{ bg_style }}"></div>
+    <div class="{{ bg_class }}" style="{{ bg_style }}">
+      <div class="dna-container">
+        <!-- DNA Strand 1 -->
+        <div class="dna-strand">
+          {% for i in (1..30) %}
+          <div class="base-pair">
+            <span></span>
+          </div>
+          {% endfor %}
+        </div>
+        
+        <!-- DNA Strand 2 -->
+        <div class="dna-strand-2">
+          {% for i in (1..25) %}
+          <div class="base-pair">
+            <span></span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
 
     <div class="sidebar-sticky">
       <div class="sidebar-about-container">
@@ -16,7 +36,8 @@
         {% assign text = site.tagline | default:site.description %}
         {% if text %}
           <p class="{% if text.size > 100 %}fine{% endif %}">
-            {{ text | markdownify | replace:'<p>','' | replace:'</p>','' }}
+            AI 기반 구조 생물학<br>
+            분석 플랫폼
           </p>
         {% endif %}
       </div>

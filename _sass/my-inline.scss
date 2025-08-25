@@ -1,6 +1,6 @@
 // 메인 콘텐츠 영역 스타일
 .content {
-  max-width: 65rem; // 기본값보다 넓게 (38rem -> 65rem)
+  max-width: 65rem;
   margin-left: auto;
   margin-right: auto;
   padding: 2rem 3rem;
@@ -9,15 +9,15 @@
 // 사이드바가 있는 경우 콘텐츠 위치 조정
 @media (min-width: 64em) {
   .sidebar {
-    width: 18rem; // 사이드바 너비
+    width: 18rem;
   }
   
   hy-push-state, main {
-    margin-left: 18rem; // 사이드바 너비만큼 여백
+    margin-left: 18rem;
   }
   
   .content {
-    max-width: 55rem; // 데스크톱에서 콘텐츠 최대 너비
+    max-width: 55rem;
     margin-left: auto;
     margin-right: auto;
   }
@@ -34,311 +34,734 @@ main > .content {
   width: 100%;
 }
 
-// 사이드바 Liquid Glass 배경 디자인
+// 사이드바 배경 - 깨끗한 바이오 테마
 .sidebar-bg {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(ellipse 200% 120% at 30% 40%, rgba(103, 126, 234, 0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 150% 100% at 70% 80%, rgba(118, 75, 162, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 180% 140% at 20% 20%, rgba(79, 177, 186, 0.18) 0%, transparent 65%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(79, 177, 186, 0.06) 50%, rgba(103, 126, 234, 0.08) 100%);
-  backdrop-filter: blur(20px) contrast(1.25) brightness(1.15) saturate(1.4) hue-rotate(5deg);
-  -webkit-backdrop-filter: blur(20px) contrast(1.25) brightness(1.15) saturate(1.4) hue-rotate(5deg);
-  border-right: 1px solid rgba(255, 255, 255, 0.35);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 0 40px rgba(79, 177, 186, 0.15),
-    0 8px 32px rgba(103, 126, 234, 0.08);
+  background: linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #2c3e50 100%);
   overflow: hidden;
-
-  &::before {
-    content: "";
+  
+  // DNA 헬릭스 컨테이너
+  .dna-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle 120px at 25% 30%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 30%, transparent 60%),
-      radial-gradient(circle 150px at 75% 70%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 70%),
-      radial-gradient(circle 100px at 40% 80%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.18) 40%, transparent 65%);
-    animation: liquidDistortion 20s ease-in-out infinite;
-    transform-origin: center center;
-    mix-blend-mode: overlay;
-    filter: blur(0.5px);
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    animation: float 20s ease-in-out infinite;
+    
+    &:hover {
+      opacity: 0.7;
+      
+      .dna-strand .base-pair {
+        animation-duration: 2s;
+      }
+      
+      .dna-strand-2 .base-pair {
+        animation-duration: 3s;
+      }
+      
+      .dna-strand-3 .base-pair {
+        animation-duration: 2.5s;
+      }
+    }
   }
-
-  &::after {
-    content: "";
+  
+  // DNA 스트랜드 1 - 실제 DNA 이중 나선 구조
+  .dna-strand {
     position: absolute;
+    left: 10%;
     top: -10%;
-    left: -10%;
-    right: -10%;
-    bottom: -10%;
-    background: 
-      conic-gradient(from 0deg at 30% 40%, 
-        rgba(255, 255, 255, 0.25) 0%, 
-        transparent 25%, 
-        rgba(255, 255, 255, 0.15) 50%, 
-        transparent 75%, 
-        rgba(255, 255, 255, 0.2) 100%),
-      radial-gradient(ellipse 400px 250px at 60% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-      radial-gradient(ellipse 300px 400px at 20% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 55%);
-    animation: liquidFlow 25s ease-in-out infinite, liquidShimmer 15s ease-in-out infinite;
-    mix-blend-mode: soft-light;
-    filter: blur(1px);
+    width: 80px;
+    height: 120%;
+    transform: rotateY(0deg) rotateZ(15deg);
+    animation: dnaRotate 20s linear infinite;
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    
+    .base-pair {
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      transform-style: preserve-3d;
+      
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        top: -2.5px;
+        transition: all 0.3s ease;
+      }
+      
+      &::before {
+        left: 0;
+        background: radial-gradient(circle at 30% 30%, #ff6b6b, #c44569);
+        box-shadow: 0 0 10px rgba(255, 107, 107, 0.6),
+                    inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+      }
+      
+      &::after {
+        right: 0;
+        background: radial-gradient(circle at 30% 30%, #4ecdc4, #44a3a0);
+        box-shadow: 0 0 10px rgba(78, 205, 196, 0.6),
+                    inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+      }
+      
+      span {
+        position: absolute;
+        top: 1px;
+        left: 8px;
+        right: 8px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+          rgba(255, 107, 107, 0.8) 0%, 
+          rgba(255,255,255,0.3) 20%,
+          rgba(255,255,255,0.3) 80%, 
+          rgba(78, 205, 196, 0.8) 100%);
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+      }
+      
+      &:hover {
+        &::before {
+          transform: scale(1.3);
+          box-shadow: 0 0 30px rgba(79, 177, 186, 1);
+        }
+        &::after {
+          transform: scale(1.3);
+          box-shadow: 0 0 30px rgba(102, 126, 234, 1);
+        }
+      }
+    }
+    
+    @for $i from 1 through 30 {
+      .base-pair:nth-child(#{$i}) {
+        top: #{$i * 3.3%};
+        transform: rotateY(#{$i * 36}deg) translateZ(35px);
+        
+        @if $i % 4 == 1 {
+          &::before { 
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #c44569);
+            animation: basePulse 2s ease-in-out #{$i * 0.1}s infinite;
+          }
+          &::after { 
+            background: radial-gradient(circle at 30% 30%, #4ecdc4, #44a3a0);
+            animation: basePulse 2s ease-in-out #{$i * 0.1 + 0.5}s infinite;
+          }
+        } @else if $i % 4 == 2 {
+          &::before { 
+            background: radial-gradient(circle at 30% 30%, #667eea, #764ba2);
+            animation: basePulse 2s ease-in-out #{$i * 0.1}s infinite;
+          }
+          &::after { 
+            background: radial-gradient(circle at 30% 30%, #f093fb, #f5576c);
+            animation: basePulse 2s ease-in-out #{$i * 0.1 + 0.5}s infinite;
+          }
+        } @else if $i % 4 == 3 {
+          &::before { 
+            background: radial-gradient(circle at 30% 30%, #fa709a, #fee140);
+            animation: basePulse 2s ease-in-out #{$i * 0.1}s infinite;
+          }
+          &::after { 
+            background: radial-gradient(circle at 30% 30%, #30cfd0, #330867);
+            animation: basePulse 2s ease-in-out #{$i * 0.1 + 0.5}s infinite;
+          }
+        } @else {
+          &::before { 
+            background: radial-gradient(circle at 30% 30%, #a8edea, #fed6e3);
+            animation: basePulse 2s ease-in-out #{$i * 0.1}s infinite;
+          }
+          &::after { 
+            background: radial-gradient(circle at 30% 30%, #ffecd2, #fcb69f);
+            animation: basePulse 2s ease-in-out #{$i * 0.1 + 0.5}s infinite;
+          }
+        }
+      }
+    }
   }
-}
-
-// Advanced Liquid Glass 애니메이션들
-@keyframes liquidDistortion {
-  0%, 100% {
-    transform: scale(1) rotate(0deg) skewX(0deg);
-    filter: blur(0px) hue-rotate(0deg);
-  }
-  25% {
-    transform: scale(1.05) rotate(3deg) skewX(1deg);
-    filter: blur(0.5px) hue-rotate(5deg);
-  }
-  50% {
-    transform: scale(0.98) rotate(-2deg) skewX(-0.5deg);
-    filter: blur(0.3px) hue-rotate(-3deg);
-  }
-  75% {
-    transform: scale(1.02) rotate(1deg) skewX(0.8deg);
-    filter: blur(0.4px) hue-rotate(2deg);
-  }
-}
-
-@keyframes liquidFlow {
-  0%, 100% {
-    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+  
+  // DNA 스트랜드 2 - 실제 DNA 이중 나선 구조
+  .dna-strand-2 {
+    position: absolute;
+    right: 10%;
+    top: -5%;
+    width: 70px;
+    height: 115%;
     opacity: 0.8;
+    transform: rotateY(180deg) rotateZ(-20deg);
+    animation: dnaRotate 25s linear infinite reverse;
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    
+    .base-pair {
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      transform-style: preserve-3d;
+      
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        top: -2px;
+        transition: all 0.3s ease;
+      }
+      
+      &::before {
+        left: 0;
+        background: radial-gradient(circle at 30% 30%, #667eea, #764ba2);
+        box-shadow: 0 0 8px rgba(102, 126, 234, 0.5),
+                    inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+      }
+      
+      &::after {
+        right: 0;
+        background: radial-gradient(circle at 30% 30%, #f093fb, #f5576c);
+        box-shadow: 0 0 8px rgba(240, 147, 251, 0.5),
+                    inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+      }
+      
+      span {
+        position: absolute;
+        top: 1px;
+        left: 7px;
+        right: 7px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+          rgba(102, 126, 234, 0.8) 0%, 
+          rgba(255,255,255,0.2) 20%,
+          rgba(255,255,255,0.2) 80%, 
+          rgba(240, 147, 251, 0.8) 100%);
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+      }
+      
+      &:hover {
+        &::before {
+          transform: scale(1.2);
+          box-shadow: 0 0 25px rgba(255, 107, 107, 1);
+        }
+        &::after {
+          transform: scale(1.2);
+          box-shadow: 0 0 25px rgba(78, 205, 196, 1);
+        }
+      }
+    }
+    
+    @for $i from 1 through 25 {
+      .base-pair:nth-child(#{$i}) {
+        top: #{$i * 4%};
+        transform: rotateY(#{$i * 36 + 180}deg) translateZ(30px);
+        
+        @if $i % 4 == 1 {
+          &::before { 
+            background: radial-gradient(circle at 30% 30%, #667eea, #764ba2);
+            animation: basePulse 2.5s ease-in-out #{$i * -0.12}s infinite;
+          }
+          &::after { 
+            background: radial-gradient(circle at 30% 30%, #f093fb, #f5576c);
+            animation: basePulse 2.5s ease-in-out #{$i * -0.12 + 0.6}s infinite;
+          }
+        } @else if $i % 4 == 2 {
+          &::before { 
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #c44569);
+            animation: basePulse 2.5s ease-in-out #{$i * -0.12}s infinite;
+          }
+          &::after { 
+            background: radial-gradient(circle at 30% 30%, #4ecdc4, #44a3a0);
+            animation: basePulse 2.5s ease-in-out #{$i * -0.12 + 0.6}s infinite;
+          }
+        } @else if $i % 4 == 3 {
+          &::before { 
+            background: radial-gradient(circle at 30% 30%, #30cfd0, #330867);
+            animation: basePulse 2.5s ease-in-out #{$i * -0.12}s infinite;
+          }
+          &::after { 
+            background: radial-gradient(circle at 30% 30%, #fa709a, #fee140);
+            animation: basePulse 2.5s ease-in-out #{$i * -0.12 + 0.6}s infinite;
+          }
+        } @else {
+          &::before { 
+            background: radial-gradient(circle at 30% 30%, #ffecd2, #fcb69f);
+            animation: basePulse 2.5s ease-in-out #{$i * -0.12}s infinite;
+          }
+          &::after { 
+            background: radial-gradient(circle at 30% 30%, #a8edea, #fed6e3);
+            animation: basePulse 2.5s ease-in-out #{$i * -0.12 + 0.6}s infinite;
+          }
+        }
+      }
+    }
+  }
+}
+
+// DNA 실제 회전 애니메이션 - 이중 나선
+@keyframes dnaRotate {
+  0% {
+    transform: rotateY(0deg) rotateZ(15deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateZ(15deg);
+  }
+}
+
+// 염기 펄스 애니메이션
+@keyframes basePulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.2);
+    filter: brightness(1.3);
+  }
+}
+
+
+// 펄스 애니메이션
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+// 플로팅 애니메이션
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg);
   }
   25% {
-    transform: translateX(10px) translateY(-15px) scale(1.05) rotate(2deg);
-    opacity: 0.9;
+    transform: translateY(-5px) rotateX(2deg);
   }
   50% {
-    transform: translateX(-8px) translateY(10px) scale(0.95) rotate(-1deg);
-    opacity: 1;
+    transform: translateY(0) rotateX(-2deg);
   }
   75% {
-    transform: translateX(15px) translateY(-5px) scale(1.02) rotate(1.5deg);
-    opacity: 0.85;
+    transform: translateY(5px) rotateX(1deg);
   }
 }
 
-@keyframes liquidShimmer {
-  0%, 100% {
-    opacity: 0.4;
-    transform: translateX(-20px) translateY(-10px) rotate(0deg);
-  }
-  50% {
-    opacity: 0.7;
-    transform: translateX(20px) translateY(10px) rotate(1deg);
-  }
+// 사이드바 스티키 컨텐츠 - 넓어진 중앙 정렬
+.sidebar-sticky {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  padding: 2rem 0.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  text-align: center;
+  margin: 0 auto;
 }
 
-// 마우스 호버시 더 강한 효과
-.sidebar:hover .sidebar-bg {
-  backdrop-filter: blur(25px) contrast(1.3) brightness(1.2) saturate(1.5) hue-rotate(8deg);
-  -webkit-backdrop-filter: blur(25px) contrast(1.3) brightness(1.2) saturate(1.5) hue-rotate(8deg);
-  border-right-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    0 0 60px rgba(79, 177, 186, 0.25),
-    0 12px 40px rgba(103, 126, 234, 0.15);
+// 타이틀과 설명 - 강화된 중앙 정렬
+.sidebar-about-container {
+  margin-bottom: 2.5rem;
+  text-align: center;
+  animation: fadeInUp 1s ease;
   
-  &::before {
-    animation-duration: 12s;
-    filter: blur(0.8px);
-    mix-blend-mode: screen;
-  }
-  
-  &::after {
-    animation-duration: 15s, 8s;
-    opacity: 1.5;
-    filter: blur(0.5px);
+  .sidebar-about {
+    h2.h1 {
+      margin: 0 0 0.75rem 0;
+      
+      a {
+        color: white;
+        text-decoration: none;
+        font-size: 2.2rem;
+        font-weight: 800;
+        text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5),
+                     0 0 30px rgba(79, 177, 186, 0.3);
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+        display: inline-block;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -5px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #4fb1ba, #667eea);
+          transition: width 0.3s ease;
+        }
+        
+        &:hover {
+          color: #4fb1ba;
+          text-shadow: 0 0 30px rgba(79, 177, 186, 0.8),
+                       0 0 60px rgba(79, 177, 186, 0.4);
+          transform: scale(1.05);
+          
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+    
+    p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.95rem;
+      margin: 0 auto;
+      max-width: 200px;
+      line-height: 1.6;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      
+      br {
+        content: '';
+        display: block;
+        margin-top: 0.2rem;
+      }
+    }
   }
 }
 
-
-@keyframes rotate {
+@keyframes fadeInUp {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(20px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-// 드롭다운 메뉴 스타일
+// 네비게이션 - 넓어진 중앙 정렬
+.sidebar-nav-container {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  nav {
+    height: auto;
+    width: 100%;
+  }
+}
+
+// 네비게이션 스타일 - 개선된 중앙 정렬
 .sidebar-nav {
   list-style: none;
   padding: 0;
   margin: 0;
   
-  // 메인 리스트 아이템 간격 통일
   > li {
-    margin: 0.25rem 0;
+    margin: 0.5rem 0;
+    animation: fadeInLeft 0.4s ease;
+    animation-fill-mode: both;
+    
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.05}s;
+      }
+    }
   }
   
-  // 리스트 래퍼 스타일
   .list-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.1) 20%, 
+        rgba(255, 255, 255, 0.1) 80%, 
+        transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    &:hover::after {
+      opacity: 1;
+    }
     
     .sidebar-nav-item {
       flex: 1;
       display: block;
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1rem;
       color: rgba(255, 255, 255, 0.9);
       text-decoration: none;
-      border-radius: 4px;
-      transition: all 0.2s ease;
+      border-radius: 10px;
+      background: transparent;
+      border: none;
+      transition: all 0.25s ease;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      position: relative;
+      text-align: left;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 0;
+        background: linear-gradient(to bottom, #4fb1ba, #667eea);
+        border-radius: 3px;
+        transition: height 0.3s ease;
+      }
       
       &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+        padding-left: 1.5rem;
+        
+        &::before {
+          height: 70%;
+        }
+      }
+      
+      &.active {
         background: rgba(255, 255, 255, 0.1);
-        color: #ffffff;
+        color: #4fb1ba;
+        padding-left: 1.5rem;
+        
+        &::before {
+          height: 100%;
+          width: 4px;
+        }
       }
     }
   }
   
-  // 드롭다운 버튼 스타일
+  // 드롭다운 버튼 - 모던 미니멀 디자인
   .spread-btn {
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    padding: 0.25rem;
-    margin-right: 0.5rem;
-    transition: all 0.2s ease;
+    padding: 0;
+    margin-left: 0.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(79, 177, 186, 0);
+      z-index: -1;
+      transition: all 0.3s ease;
+    }
     
     &:hover {
-      color: #ffffff;
-      transform: scale(1.1);
+      color: #4fb1ba;
+      
+      &::after {
+        background: rgba(79, 177, 186, 0.15);
+      }
+      
+      label {
+        transform: scale(1.2);
+      }
     }
     
     label {
       cursor: pointer;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       line-height: 1;
       pointer-events: none;
       font-size: 20px;
-      transition: transform 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
   
-  // 체크박스 숨기기 및 토글 로직
+  // 체크박스 로직
   li > input[type="checkbox"][id^="folder-checkbox-"] {
     display: none;
     
-    // 기본적으로 서브메뉴 숨기기
     ~ .list-body {
       max-height: 0;
       overflow: hidden;
       opacity: 0;
-      transition: max-height 0.3s ease-out, opacity 0.2s ease;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       padding: 0;
       margin: 0;
       list-style: none;
+      transform: translateY(-10px) scale(0.95);
     }
     
-    // 체크박스 체크시 서브메뉴 표시
     &:checked ~ .list-body {
       max-height: 500px;
       opacity: 1;
-      transition: max-height 0.3s ease-in, opacity 0.2s ease 0.1s;
-      padding-left: 1.5rem;
-      margin-top: 0.25rem;
+      margin-top: 0.5rem;
+      transform: translateY(0) scale(1);
+      padding: 0;
     }
     
-    // 체크박스 체크시 아이콘 회전
-    &:checked ~ .list-wrapper .spread-btn label {
-      transform: rotate(90deg);
+    &:checked ~ .list-wrapper .spread-btn {
+      color: #4fb1ba;
+      
+      &::after {
+        background: rgba(79, 177, 186, 0.1);
+      }
+      
+      label {
+        transform: rotate(180deg);
+      }
     }
   }
   
-  // 서브메뉴 아이템 스타일
-  .list-body li {
-    margin: 0.2rem 0;
-  }
-  
-  .sidebar-nav-subitem {
-    display: block;
-    padding: 0.4rem 0.8rem;
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+  // 서브메뉴
+  .list-body {
+    li {
+      margin: 0.3rem 0;
+    }
     
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-    }
-  }
-}
-
-// 카테고리 페이지 스타일
-.category-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
-
-  .category-card {
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e1e4e8;
-    transition: all 0.3s ease;
-
-    &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transform: translateY(-2px);
-    }
-
-    h3 {
-      margin-top: 0;
-      margin-bottom: 0.5rem;
-
-      a {
-        color: #0a0e27;
-        text-decoration: none;
-
-        &:hover {
-          color: #4FB1BA;
+    .sidebar-nav-subitem {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem 0.5rem 2rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      position: relative;
+      margin: 0.2rem 0;
+      font-weight: 400;
+      text-align: left;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: 1rem;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transition: all 0.25s ease;
+      }
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.95);
+        padding-left: 2.5rem;
+        
+        &::before {
+          background: #4fb1ba;
+          box-shadow: 0 0 10px rgba(79, 177, 186, 0.5);
+          transform: scale(1.2);
+        }
+      }
+      
+      &.active {
+        color: #4fb1ba;
+        background: rgba(79, 177, 186, 0.1);
+        
+        &::before {
+          background: #4fb1ba;
+          width: 8px;
+          height: 8px;
         }
       }
     }
+  }
+}
 
-    p {
-      color: #586069;
-      font-size: 0.95rem;
-      margin-bottom: 0.5rem;
-    }
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
-    .count {
+// 소셜 링크 - 중앙 정렬 강화
+.sidebar-social {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  width: 100%;
+  animation: fadeInUp 1s ease 0.5s;
+  animation-fill-mode: both;
+  
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    
+    li {
       display: inline-block;
-      padding: 0.25rem 0.5rem;
-      background: #4FB1BA;
-      color: white;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      font-weight: 600;
+      
+      a {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: white;
+          background: rgba(79, 177, 186, 0.2);
+          border-color: #4fb1ba;
+          transform: scale(1.1) rotate(360deg);
+        }
+      }
     }
   }
 }
 
-// 코드 블록 디자인 개선 - 깔끔한 스타일
+// 코드 블록 스타일
 .highlighter-rouge {
   margin: 1.5rem 0;
   border-radius: 8px;
@@ -355,19 +778,16 @@ main > .content {
       padding: 1.25rem 1.5rem;
       background: transparent;
       border: none;
-      border-radius: 0;
       font-size: 0.875rem;
       line-height: 1.6;
       color: #24292f;
       overflow-x: auto;
-      white-space: pre;
       
       code {
         background: transparent;
         padding: 0;
         font-size: inherit;
         color: inherit;
-        border-radius: 0;
       }
     }
   }
@@ -381,55 +801,36 @@ code {
   border-radius: 4px;
   font-size: 0.875rem;
   font-weight: 500;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
 }
 
-// 코드 블록 내부 코드는 인라인 스타일 제거
+// 페이지 최소 높이 설정 (analysis 페이지와 동일한 너비 유지)
+.content.layout-page {
+  min-height: 600px;
+  
+  article.page {
+    min-height: 500px;
+    
+    // 충분한 텍스트 내용이 없을 때 공백 추가
+    &:after {
+      content: "";
+      display: block;
+      height: 300px;
+      width: 100%;
+    }
+  }
+}
+
 pre code {
   background: transparent !important;
   color: inherit !important;
   padding: 0 !important;
   border: none !important;
-  border-radius: 0 !important;
   font-weight: normal !important;
 }
 
-// 특별한 코드 블록 스타일 (더 구별되는 색상)
-.language-plaintext .highlight {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  
-  pre {
-    color: #495057;
-  }
-}
-
-.language-bash .highlight,
-.language-shell .highlight {
-  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
-  
-  pre {
-    color: #e2e8f0;
-  }
-  
-  code {
-    color: #e2e8f0;
-  }
-}
-
-// 모바일 반응형
-@media (max-width: 768px) {
-  .highlighter-rouge .highlight pre {
-    padding: 1rem;
-    font-size: 0.8rem;
-  }
-}
-
-// 테이블 디자인 개선 - 완전히 전체 너비 사용
+// 테이블 스타일
 table {
   width: 100% !important;
-  max-width: none !important;
-  min-width: 100% !important;
   border-collapse: separate;
   border-spacing: 0;
   margin: 1.5em 0 !important;
@@ -437,25 +838,6 @@ table {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   overflow: hidden;
-  display: table !important;
-  table-layout: fixed !important; // 고정 레이아웃으로 변경
-}
-
-// 테이블 컨테이너 - 완전한 너비 강제
-.content table,
-.page table,
-.post table {
-  width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-// 테이블을 감싸는 모든 컨테이너도 전체 너비
-p:has(table),
-div:has(table) {
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
 }
 
 thead {
@@ -468,20 +850,19 @@ th {
   text-align: left;
   font-weight: 600;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 tbody tr {
   background: white;
   transition: background 0.2s ease;
-}
-
-tbody tr:nth-child(even) {
-  background: #f8f9fa;
-}
-
-tbody tr:hover {
-  background: #e8f4f8;
+  
+  &:nth-child(even) {
+    background: #f8f9fa;
+  }
+  
+  &:hover {
+    background: #e8f4f8;
+  }
 }
 
 td {
@@ -493,24 +874,7 @@ tbody tr:last-child td {
   border-bottom: none;
 }
 
-// 첫 번째 열 강조 (옵션)
-td:first-child,
-th:first-child {
-  font-weight: 500;
-}
-
-// 모바일 반응형
-@media (max-width: 768px) {
-  table {
-    font-size: 0.85em;
-  }
-
-  th, td {
-    padding: 8px 12px;
-  }
-}
-
-// 포스트 카드 스타일 (외부 미리보기)
+// 포스트 카드
 .post-card {
   margin: 1.5rem 0;
   padding: 1.25rem;
@@ -533,7 +897,6 @@ th:first-child {
     a {
       color: #1a1f35;
       text-decoration: none;
-      transition: color 0.2s ease;
       font-weight: 700;
 
       &:hover {
@@ -588,166 +951,15 @@ th:first-child {
   }
 }
 
-// 포스트 페이지 메타 정보
-.post-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 1.5rem 0;
-  padding: 1rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  border-radius: 10px;
-
-  .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #5a6169;
-    font-size: 0.9rem;
-
-    .icon {
-      color: #4FB1BA;
-    }
-  }
-}
-
-// 포스트 및 페이지 description (message box) 스타일
-.post header .message,
-.page header .message {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #1a1f35;
-  margin: 2rem 0;
-  padding: 1.5rem 2rem 1.5rem 3.5rem; // 왼쪽 패딩 조정
-  background: white;
-  border: 2px solid #e8f4f8;
-  border-left: 5px solid #4FB1BA; // 왼쪽 테두리로 색상 표시
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: "💡";
-    position: absolute;
-    top: 1.5rem;
-    left: 1.25rem;
-    font-size: 1.4rem;
-    opacity: 0.6;
-    pointer-events: none;
-    z-index: 1;
-  }
-}
-
-// 일반 페이지의 message (Analysis 페이지 등)
-.page:not(.post) .message {
+// 메시지 박스
+.message {
   font-size: 1.05rem;
   line-height: 1.7;
   color: #2d3561;
   margin: 1.5rem 0;
-  padding: 1.25rem 1.75rem 1.25rem 3rem; // 왼쪽 패딩 조정
+  padding: 1.25rem 1.75rem;
   background: linear-gradient(135deg, #f8fafb 0%, #e8f4f8 100%);
   border-left: 4px solid #4FB1BA;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  position: relative;
-  
-  &::before {
-    content: "ℹ️";
-    position: absolute;
-    top: 1.25rem;
-    left: 1rem;
-    font-size: 1.1rem;
-    opacity: 0.7;
-    pointer-events: none;
-    z-index: 1;
-  }
-}
-
-// About 섹션을 포스트 아래로 이동
-.layout-post {
-  // 포스트 페이지에서는 flex를 해제하고 블록 레이아웃 사용
-  flex-direction: column;
-  
-  // About 섹션이 포스트 콘텐츠 아래에 위치하도록
-  article.post {
-    width: 100%;
-    margin-bottom: 2rem;
-  }
-  
-  // About 섹션 스타일
-  aside.about {
-    clear: both;
-    width: 100%;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 2px solid #e1e4e8;
-  }
-}
-
-// 포스트 페이지 내부 메타 정보 (날짜와 태그만)
-.post-date.heading {
-  margin: 1.5rem 0;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e8e8e8;
-  font-size: 0; // "in"과 "on" 텍스트 숨기기
-
-  // 날짜 스타일
-  time {
-    display: block;
-    font-weight: 600;
-    color: #8b92a8;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-
-    &::before {
-      content: "📅 ";
-      margin-right: 0.4rem;
-    }
-  }
-
-  // 모든 span 기본 숨기기
-  span {
-    display: none;
-    font-size: initial;
-  }
-
-  // 태그 span들만 표시 (마지막 8개)
-  span:nth-last-child(-n+8) {
-    display: inline-block !important;
-    background: #f0f1f3;
-    color: #2d3561;
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    border: 1px solid #e1e4e8;
-    margin: 0.2rem;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: linear-gradient(135deg, #4FB1BA 0%, #3d9ca4 100%);
-      color: white;
-      border-color: transparent;
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 3px 10px rgba(79, 177, 186, 0.25);
-    }
-
-    // 첫 번째 실제 태그에 아이콘 추가 (ToxinPred3.0)
-    &:nth-last-child(8) {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      font-weight: 600;
-
-      &::before {
-        content: "🏷️ ";
-        margin-right: 0.3rem;
-      }
-
-      &:hover {
-        transform: translateY(-2px) scale(1.08);
-        box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
-      }
-    }
-  }
 }

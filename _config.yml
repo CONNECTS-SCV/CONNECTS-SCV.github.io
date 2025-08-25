@@ -32,7 +32,7 @@ description: >
 
 # A shorter description for the sidebar.
 tagline: >
-  AI 기반 구조 생물학 분석 플랫폼
+  AI 기반 구조 생물학<br>분석 플랫폼
 
 # A list of keywords for your blog
 keywords:              []
@@ -271,6 +271,8 @@ sass:
 menu:
   - title: Home
     url: /
+  - title: About
+    url: /about/
   - title: Analysis
     url: /analysis/
     submenu:
@@ -279,4 +281,4 @@ menu:
       - title: Ligand
         url: /analysis/ligand/
   - title: Release
-    url: /release
+    url: /release/
