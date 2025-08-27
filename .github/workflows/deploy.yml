@@ -48,24 +48,12 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.1'
-        bundler-cache: false  # Disable automatic cache to force fresh install
-        
-    - name: Clear Bundle Cache
-      run: |
-        bundle clean --force
-        rm -rf vendor/bundle
-        rm -rf .bundle
-        echo "Bundle cache cleared"
-        
-    - name: Install dependencies
-      run: |
-        bundle config --local deployment false
-        bundle config --local path vendor/bundle
-        bundle install --jobs 4 --retry 3
+        bundler-cache: true
+        cache-version: ${{ github.run_number }}  # Force cache invalidation on each run
         
     - name: Clear Jekyll Cache
       run: |
-        bundle exec jekyll clean
+        bundle exec jekyll clean || true
         rm -rf _site
         rm -rf .jekyll-cache
         rm -rf .sass-cache
@@ -78,8 +66,9 @@ jobs:
     - name: Build with Jekyll
       run: |
         # Add timestamp to force cache invalidation
-        echo "Build started at: $(date)" >> _data/build_info.yml
-        echo "commit_sha: ${{ github.sha }}" >> _data/build_info.yml
+        echo "build_time: \"$(date -Iseconds)\"" > _data/build_info.yml
+        echo "commit_sha: \"${{ github.sha }}\"" >> _data/build_info.yml
+        echo "cache_cleared: false" >> _data/build_info.yml
         bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
       env:
         JEKYLL_ENV: production
