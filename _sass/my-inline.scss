@@ -1816,8 +1816,8 @@ td:last-child {
   justify-content: center;
 
   &:hover {
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 30px rgba(102, 126, 234, 0.2);
+    transform: translateY(-50%) scale(1.02);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
   }
 
   .progress-ring {

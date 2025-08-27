@@ -147,40 +147,67 @@
   }
   
   function setupTOCToggle() {
-    // Desktop TOC toggle
     const progressRingContainer = document.querySelector('.progress-ring-container');
     const floatingToc = document.getElementById('floating-toc');
-    const tocCloseBtn = document.querySelector('.toc-close');
+    const tocToggle = document.getElementById('toc-toggle');
     
+    // 화면 크기에 따른 TOC 동작 설정
+    function checkScreenSize() {
+      const screenWidth = window.innerWidth;
+      
+      if (screenWidth >= 1700) {
+        // 대형 화면: 기본 표시, 퍼센티지로 토글
+        if (floatingToc) {
+          floatingToc.classList.remove('hide');
+        }
+      } else {
+        // 중소형 화면: 기본 숨김, 버튼으로 토글
+        if (floatingToc) {
+          floatingToc.classList.remove('show');
+        }
+      }
+    }
+    
+    // 초기 화면 크기 창이
+    checkScreenSize();
+    
+    // 화면 크기 변경 시 재찼상이
+    window.addEventListener('resize', checkScreenSize);
+    
+    // 대형 화면용 퍼센티지 토글
     if (progressRingContainer && floatingToc) {
       progressRingContainer.addEventListener('click', function() {
-        floatingToc.classList.toggle('show');
+        if (window.innerWidth >= 1700) {
+          floatingToc.classList.toggle('hide');
+        }
       });
     }
     
-    if (tocCloseBtn && floatingToc) {
-      tocCloseBtn.addEventListener('click', function() {
-        floatingToc.classList.remove('show');
+    // 중소형 화면용 플로팅 버튼 토글
+    if (tocToggle && floatingToc) {
+      tocToggle.addEventListener('click', function() {
+        if (window.innerWidth < 1700 && window.innerWidth >= 768) {
+          floatingToc.classList.toggle('show');
+        } else if (window.innerWidth < 768) {
+          // 모바일에서는 모바일 TOC 열기
+          const mobileToc = document.getElementById('mobile-toc');
+          if (mobileToc) {
+            mobileToc.classList.add('active');
+          }
+        }
       });
     }
     
-    // Mobile TOC toggle
-    const tocToggle = document.getElementById('toc-toggle');
+    // 모바일 TOC 설정
     const mobileToc = document.getElementById('mobile-toc');
     const tocClose = document.getElementById('toc-close');
-    
-    if (tocToggle && mobileToc) {
-      tocToggle.addEventListener('click', function() {
-        mobileToc.classList.add('active');
-      });
-    }
     
     if (tocClose && mobileToc) {
       tocClose.addEventListener('click', function() {
         mobileToc.classList.remove('active');
       });
       
-      // Close when clicking outside
+      // 바깥쪽 클릭으로 닫기
       mobileToc.addEventListener('click', function(e) {
         if (e.target === mobileToc) {
           mobileToc.classList.remove('active');
@@ -192,6 +219,7 @@
   function setupSmoothScroll() {
     const tocLinks = document.querySelectorAll('.floating-toc a, .mobile-toc a');
     const mobileToc = document.getElementById('mobile-toc');
+    const floatingToc = document.getElementById('floating-toc');
     
     tocLinks.forEach(function(link) {
       link.addEventListener('click', function(e) {
@@ -212,9 +240,14 @@
             history.pushState(null, null, '#' + targetId);
           }
           
-          // Close mobile TOC if open
+          // 모바일 TOC 닫기
           if (mobileToc && mobileToc.classList.contains('active')) {
             mobileToc.classList.remove('active');
+          }
+          
+          // 중소형 화면에서 플로팅 TOC 닫기
+          if (floatingToc && window.innerWidth < 1700 && window.innerWidth >= 768) {
+            floatingToc.classList.remove('show');
           }
         }
       });
