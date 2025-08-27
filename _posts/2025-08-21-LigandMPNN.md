@@ -1,17 +1,14 @@
 ---
-
 layout: post
 title: "LigandMPNN 단백질-리간드 결합 최적화 도구"
 description: >
-LigandMPNN은 단백질이 특정 리간드에 더 잘 결합할 수 있도록 결합 부위의 서열을 최적화하는 MPNN 기반 모델입니다. 단백질과 리간드를 그래프로 변환하여 상호작용을 고려한 서열 설계를 수행합니다.
+    LigandMPNN은 단백질이 특정 리간드에 더 잘 결합할 수 있도록 결합 부위의 서열을 최적화하는 MPNN 기반 모델입니다. 단백질과 리간드를 그래프로 변환하여 상호작용을 고려한 서열 설계를 수행합니다.
 categories:
-
-* analysis
-* structure
-* prediction
-  tags: \[LigandMPNN, 단백질 설계, 리간드 최적화, 단백질-리간드, MPNN, 단백질 구조 예측, 단백질 공학, 약물 디자인]
-  author: author
-
+    - analysis
+    - structure
+    - prediction
+tags: [LigandMPNN, 단백질 설계, 리간드 최적화, 단백질-리간드, MPNN, 단백질 구조 예측, 단백질 공학, 약물 디자인]
+author: author
 ---
 
 ## 🔬 LigandMPNN이란?
