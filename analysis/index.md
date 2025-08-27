@@ -10,14 +10,34 @@ permalink: /analysis/
 
 CONNECTS 플랫폼에서 제공하는 다양한 구조 생물학 및 분자 설계 분석 도구들을 소개합니다.
 
-### 🏷️ 카테고리
+### 📊 주요 카테고리
 
-<div class="category-tags">
-  <a href="{{ '/analysis/protein/' | relative_url }}" class="category-tag">🧬 단백질 구조</a>
-  <a href="{{ '/analysis/ligand/' | relative_url }}" class="category-tag">💊 리간드</a>
-  <a href="{{ '/analysis/interaction/' | relative_url }}" class="category-tag">🤝 상호작용</a>
-  <a href="{{ '/analysis/docking/' | relative_url }}" class="category-tag">🎯 도킹</a>
-  <a href="{{ '/analysis/prediction/' | relative_url }}" class="category-tag">🔮 예측</a>
+<div class="category-grid">
+  <div class="category-section">
+    <h4>🧬 분자 구조</h4>
+    <div class="category-links">
+      <a href="{{ '/analysis/protein/' | relative_url }}">단백질</a>
+      <a href="{{ '/analysis/structure/' | relative_url }}">구조 분석</a>
+      <!-- <a href="{{ '/analysis/ligand/' | relative_url }}">리간드</a> -->
+    </div>
+  </div>
+  
+  <div class="category-section">
+    <h4>🔮 예측 & AI</h4>
+    <div class="category-links">
+      <a href="{{ '/analysis/prediction/' | relative_url }}">예측</a>
+      <a href="{{ '/analysis/ml/' | relative_url }}">머신러닝</a>
+      <!-- <a href="{{ '/analysis/design/' | relative_url }}">설계</a> -->
+    </div>
+  </div>
+  
+  <div class="category-section">
+    <h4>🤝 상호작용</h4>
+    <div class="category-links">
+      <a href="{{ '/analysis/docking/' | relative_url }}">도킹</a>
+      <!-- <a href="{{ '/analysis/interaction/' | relative_url }}">상호작용</a> -->
+    </div>
+  </div>
 </div>
 
 ---

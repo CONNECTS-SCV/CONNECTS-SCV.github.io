@@ -994,42 +994,118 @@ td:last-child {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-// 카테고리 태그 컨테이너
-.category-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+// 카테고리 그리드 레이아웃
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
   margin: 2rem 0;
-  padding: 1.5rem;
-  background: #f8f9fa;
-  border-radius: 12px;
-  border: 1px solid #e1e4e8;
 }
 
-// 카테고리 태그 스타일
+// 카테고리 섹션
+.category-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e1e4e8;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: #1a1f35;
+    font-weight: 700;
+    border-bottom: 2px solid #e1e4e8;
+    padding-bottom: 0.5rem;
+  }
+
+  .category-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    a {
+      padding: 0.4rem 0.8rem;
+      background: #f8f9fa;
+      color: #495057;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+
+      &:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+// 더 많은 카테고리 - 접기/펼치기
+.more-categories {
+  margin: 2rem 0;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #e1e4e8;
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+    list-style: none;
+
+    &:hover {
+      color: #667eea;
+    }
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  .category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+}
+
+// 카테고리 태그 스타일 (더 많은 카테고리용)
 .category-tag {
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.9rem;
   background: white;
   color: #495057;
-  border-radius: 25px;
-  font-size: 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
   font-weight: 500;
   text-decoration: none;
-  border: 2px solid #e1e4e8;
-  transition: all 0.3s ease;
+  border: 1px solid #e1e4e8;
+  transition: all 0.2s ease;
 
   &:hover {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border-color: transparent;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
   }
 }
 
