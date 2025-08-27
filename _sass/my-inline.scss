@@ -3,17 +3,30 @@
   max-width: 65rem;
   margin-left: auto;
   margin-right: auto;
-  padding: 2rem 3rem;
+  padding: 2rem 5rem 2rem 3rem;
 }
 
 // 사이드바가 있는 경우 콘텐츠 위치 조정
 @media (min-width: 64em) {
+  // 사이드바 너비를 약간 줄임 (18rem -> 16.5rem)
   .sidebar {
-    width: 18rem;
+    width: 16.5rem;
+  }
+
+  hy-drawer {
+    width: 16.5rem !important;
+
+    > .hy-drawer-content.hy-drawer-left {
+      width: calc(16.5rem + 1px) !important;
+      left: -16rem !important;
+    }
+
+    --hy-drawer-width: calc(16.5rem + 1px) !important;
+    --hy-drawer-slide-width: 16rem !important;
   }
 
   hy-push-state, main {
-    margin-left: 18rem;
+    margin-left: 16.5rem;
   }
 
   .content {
@@ -1109,6 +1122,748 @@ td:last-child {
   }
 }
 
+// 플로팅 목차 (TOC) 스타일
+.floating-toc {
+  position: fixed;
+  right: 2rem;
+  // 상단에서 약간 떨어진 위치에서 시작
+  top: 5rem;
+  width: 260px; // 약간 넓힘 (240px -> 260px)
+  // 화면 높이의 85%까지 사용 가능 (하단 여백 5rem 포함)
+  max-height: calc(100vh - 10rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(79, 177, 186, 0.15);
+  padding: 1.75rem;
+  z-index: 100;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    transform: translateX(-2px);
+  }
+
+  // 스크롤바 스타일링 - 더 세련되고 미니멀하게
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.4);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.7);
+    }
+  }
+
+  // hover하지 않을 때는 스크롤바를 거의 안보이게
+  &:not(:hover)::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.2);
+  }
+
+  .toc-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1.25rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(102, 126, 234, 0.15);
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: '📚';
+      margin-right: 0.5rem;
+      -webkit-text-fill-color: initial;
+      font-size: 1.1rem;
+    }
+  }
+
+  nav {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin: 0.15rem 0;
+
+        a {
+          display: block;
+          padding: 0.5rem 0.75rem;
+          color: #4a5568;
+          text-decoration: none;
+          font-size: 0.875rem;
+          border-radius: 8px;
+          position: relative;
+          transition: all 0.25s ease;
+          line-height: 1.5;
+          overflow: hidden;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            transition: height 0.3s ease;
+          }
+
+          &:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.08);
+            padding-left: 1rem;
+
+            &::before {
+              height: 60%;
+            }
+          }
+
+          &.active {
+            color: #667eea;
+            font-weight: 600;
+            background: rgba(102, 126, 234, 0.12);
+            padding-left: 1rem;
+
+            &::before {
+              height: 80%;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
+              pointer-events: none;
+            }
+          }
+        }
+
+        // 중첩된 목차 (h3, h4 등)
+        ul {
+          margin-top: 0.25rem;
+          padding-left: 0.5rem;
+          border-left: 1px solid rgba(102, 126, 234, 0.1);
+          margin-left: 0.75rem;
+
+          li {
+            margin: 0.1rem 0;
+
+            a {
+              font-size: 0.82rem;
+              padding: 0.35rem 0.6rem;
+              color: #718096;
+
+              &:hover {
+                color: #764ba2;
+                background: rgba(118, 75, 162, 0.06);
+              }
+
+              &.active {
+                color: #764ba2;
+                background: rgba(118, 75, 162, 0.1);
+                font-weight: 500;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 목차 반응형 디자인
+  // 대형 화면 (1600px+) - 목차 표시
+  @media (min-width: 1600px) {
+    display: block;
+  }
+
+  // 중형 화면 (1400px-1599px) - 목차 숨김 (공간 부족)
+  @media (min-width: 1400px) and (max-width: 1599px) {
+    display: none;
+  }
+
+  // 소형 화면 (1400px 미만) - 목차 숨김 (모바일 목차 사용)
+  @media (max-width: 1399px) {
+    display: none;
+  }
+
+  // 모던 스타일 변형
+  &.modern {
+    right: -340px; // 기본적으로 화면 밖에 위치
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    max-height: 70vh;
+    padding: 0;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.show {
+      right: 2rem;
+    }
+
+    .toc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #f0f0f0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px 20px 0 0;
+
+      .toc-title {
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        margin: 0;
+        border: none;
+        padding: 0;
+      }
+
+      .toc-close {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.2rem;
+        line-height: 1;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    nav {
+      padding: 1rem 0;
+      max-height: calc(70vh - 70px);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+}
+
+// 포스트 내용 레이아웃 - 화면 크기별 조정
+// 대형 화면 (1600px+)
+@media (min-width: 1600px) {
+  .layout-post .content {
+    max-width: 45rem;
+    margin-left: 2rem;
+    margin-right: calc(240px + 4rem); // 목차 너비 + 여백
+  }
+}
+
+// 중대형 화면 (1400px-1599px) - 목차 없이 전체 너비 사용
+@media (min-width: 1400px) and (max-width: 1599px) {
+  .layout-post .content {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// 중형 화면 (1200px-1399px)
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .layout-post .content {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 3rem;
+  }
+}
+
+// 소형 화면 (1200px 미만)
+@media (max-width: 1199px) {
+  .layout-post .content {
+    max-width: 100%;
+    padding: 1.5rem 2rem;
+  }
+}
+
+// 목차 버튼 (모바일/태블릿용)
+.toc-toggle {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  cursor: pointer;
+  z-index: 101;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  // 1600px 미만에서 목차 버튼 표시
+  @media (max-width: 1599px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// 모바일 목차 (오버레이)
+.mobile-toc {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+
+  &.active {
+    display: block;
+  }
+
+  .toc-content {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 320px;
+    max-width: 85vw;
+    background: linear-gradient(145deg, #ffffff 0%, #f5f7fa 100%);
+    padding: 0;
+    overflow: hidden;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+
+    .close-btn {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #667eea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background: #667eea;
+        color: white;
+        transform: rotate(90deg);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+    }
+
+    .toc-title {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 1.5rem 1.5rem 1.2rem;
+      margin: 0;
+      letter-spacing: 0.5px;
+      position: relative;
+
+      &::before {
+        content: '📚';
+        margin-right: 0.5rem;
+        font-size: 1.3rem;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      }
+    }
+
+    nav {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 1.5rem;
+
+      // 스크롤바 스타일
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(102, 126, 234, 0.3);
+        border-radius: 2px;
+
+        &:hover {
+          background: rgba(102, 126, 234, 0.5);
+        }
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-bottom: 0.3rem;
+
+          a {
+            display: block;
+            padding: 0.7rem 1rem;
+            color: #374151;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.25s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+
+            &::before {
+              content: '';
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 3px;
+              height: 0;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              border-radius: 3px;
+              transition: height 0.3s ease;
+            }
+
+            &:hover {
+              background: rgba(102, 126, 234, 0.08);
+              color: #667eea;
+              padding-left: 1.5rem;
+
+              &::before {
+                height: 70%;
+              }
+            }
+
+            &.active {
+              background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+              color: #667eea;
+              font-weight: 600;
+              padding-left: 1.5rem;
+
+              &::before {
+                height: 100%;
+                width: 4px;
+              }
+            }
+          }
+
+          ul {
+            margin-top: 0.3rem;
+            margin-left: 1.2rem;
+            padding-left: 0.8rem;
+            border-left: 2px solid rgba(102, 126, 234, 0.1);
+
+            li a {
+              font-size: 0.85rem;
+              padding: 0.5rem 0.8rem;
+              color: #6b7280;
+              font-weight: 400;
+
+              &:hover {
+                color: #764ba2;
+                background: rgba(118, 75, 162, 0.06);
+              }
+
+              &.active {
+                color: #764ba2;
+                background: rgba(118, 75, 162, 0.1);
+                font-weight: 500;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+// 모던 플로팅 TOC 스타일
+.floating-toc.modern {
+  position: fixed;
+  right: -320px; // 기본적으로 숨김
+  top: 50%;
+  transform: translateY(-50%);
+  width: 280px; // 너비 축소 (320px -> 280px)
+  max-height: 70vh;
+  background: linear-gradient(145deg, #ffffff 0%, #f5f7fa 100%);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 102;
+  overflow: hidden;
+
+  &.show {
+    right: 2rem;
+  }
+
+  .toc-header {
+    background: #f8f9fa; // 밝은 회색 배경으로 변경
+    border-bottom: 2px solid transparent;
+    padding: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .toc-title {
+      color: #374151; // 진한 회색 텍스트로 변경
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .toc-close {
+      background: rgba(102, 126, 234, 0.1);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      color: #667eea;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  nav {
+    padding: 1.5rem;
+    max-height: calc(70vh - 60px);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 0.5rem;
+
+        a {
+          display: block;
+          padding: 0.6rem 0.8rem;
+          color: #374151; // 더 진한 글씨색
+          text-decoration: none;
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          font-size: 0.875rem;
+          font-weight: 500; // 더 굵은 글씨
+          background: transparent;
+
+          &:hover {
+            background: rgba(102, 126, 234, 0.08);
+            color: #667eea;
+            padding-left: 1.2rem;
+          }
+
+          &.active {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            color: #667eea;
+            font-weight: 600;
+            border-left: 3px solid #667eea;
+          }
+        }
+
+        ul {
+          margin-top: 0.3rem;
+          margin-left: 1rem;
+
+          li a {
+            font-size: 0.825rem;
+            padding: 0.4rem 0.6rem;
+            color: #6b7280; // 서브항목은 약간 연한 색
+
+            &:hover {
+              color: #764ba2;
+            }
+
+            &.active {
+              color: #764ba2;
+              background: rgba(118, 75, 162, 0.08);
+            }
+          }
+        }
+      }
+    }
+
+    // 스크롤바 스타일
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(102, 126, 234, 0.3);
+      border-radius: 2px;
+
+      &:hover {
+        background: rgba(102, 126, 234, 0.5);
+      }
+    }
+  }
+}
+
+// 진행률 링 스타일 수정
+.progress-ring-container {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 101;
+  transition: all 0.3s ease;
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 30px rgba(102, 126, 234, 0.2);
+  }
+
+  .progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+  }
+
+  .progress-ring__circle,
+  .progress-ring__progress {
+    stroke-dasharray: 169.646;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    transition: stroke-dashoffset 0.3s ease;
+  }
+
+  .progress-ring__progress {
+    stroke-dashoffset: 169.646;
+  }
+
+  .progress-percentage {
+    position: absolute;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #667eea;
+    pointer-events: none; // 클릭 이벤트가 컨테이너로 전달되도록
+  }
+}
+
+// 진행률 링 표시 조건
+@media (min-width: 1600px) {
+  .progress-ring-container {
+    display: flex;
+  }
+}
+
+// 포스트 콘텐츠 레이아웃 수정
+@media (min-width: 1600px) {
+  .layout-post .content {
+    max-width: 42rem; // 너비 축소 (45rem -> 42rem)
+    margin-left: 3rem; // 왼쪽 여백 증가
+    margin-right: calc(280px + 5rem); // 목차 너비(280px) + 여백 증가
+  }
+}
+
 // 포스트 페이지 메타데이터 스타일 - 포스트 카드와 동일한 스타일
 .post .post-date {
   display: inline-flex;
@@ -1148,3 +1903,4 @@ td:last-child {
     }
   }
 }
+
