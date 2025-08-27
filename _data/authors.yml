@@ -8,7 +8,7 @@ author:
   # Used at the bottom of each page and at the top of the `about` layout
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |
-    AI 기반 구조 생물학 분석 플랫폼 **SCV.BIO**는
+    AI 기반 구조 생물학 분석 플랫폼 **CURIE**는
     단백질-리간드 예측, 시뮬레이션, 도킹, 분자 디자인, 독성 평가 등의 분석을
     웹 기반 환경에서 누구나 손쉽게 수행할 수 있도록 지원합니다.
 
