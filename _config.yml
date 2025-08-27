@@ -280,5 +280,11 @@ menu:
         url: /analysis/protein/
       - title: Ligand
         url: /analysis/ligand/
+      - title: Interaction
+        url: /analysis/interaction/
+      - title: Docking
+        url: /analysis/docking/
+      - title: Prediction
+        url: /analysis/prediction/
   - title: Release
     url: /release/

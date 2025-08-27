@@ -98,4 +98,4 @@ LigandMPNN은 다음과 같은 다양한 생명과학 및 약물개발 분야에
 LigandMPNN은 단백질–리간드 상호작용을 최적화하는 강력한 도구입니다.
 단백질 공학, 약물 개발, 기능성 단백질 설계 등 다양한 분야에 활용 가능합니다.
 
-> 지금 바로 <a href="#" onclick="window.open('https://scv.bio/Analysis/LigandMPNN', '_blank'); return false;" rel="noopener noreferrer">LigandMPNN 분석 페이지</a>에서 직접 사용해보세요!
+> 지금 바로 <a href="#" onclick="window.open('https://curie.kr/Analysis/LigandMPNN', '_blank'); return false;" rel="noopener noreferrer">LigandMPNN 분석 페이지</a>에서 직접 사용해보세요!

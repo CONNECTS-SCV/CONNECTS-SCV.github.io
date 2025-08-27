@@ -994,78 +994,42 @@ td:last-child {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-// 카테고리 카드 컨테이너
-.category-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+// 카테고리 태그 컨테이너
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e1e4e8;
 }
 
-// 카테고리 카드
-.category-card {
+// 카테고리 태그 스타일
+.category-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
   background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e1e4e8;
+  color: #495057;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 2px solid #e1e4e8;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-
-    h3 a {
-      color: #4FB1BA;
-    }
-  }
-
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-
-    a {
-      color: #1a1f35;
-      text-decoration: none;
-      font-weight: 700;
-      transition: color 0.3s ease;
-    }
-  }
-
-  p {
-    color: #5a6169;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-  }
-
-  .count {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.4rem 0.8rem;
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
 
-    &::before {
-      content: "🔧";
-      margin-right: 0.4rem;
-    }
+  &:active {
+    transform: translateY(0);
   }
 }
 
