@@ -10,7 +10,7 @@
     </h1>
 
     <p class="post-date">{{ post.date | date: "%Y년 %m월 %d일" }}</p>
-    
+
     {% if post.tags and post.tags.size > 0 %}
     <div class="tags">
       {% for tag in post.tags %}
@@ -23,6 +23,211 @@
   </header>
 
   {% unless include.excerpt %}
+    <!-- 플로팅 목차 - 진행률 표시 스타일 -->
+    {% if post.toc != false %}
+    <!-- 진행률 링 -->
+    <div class="progress-ring-container" id="progress-ring-container">
+      <svg class="progress-ring" width="60" height="60">
+        <circle class="progress-ring__circle" stroke="#e6e6e6" stroke-width="3" fill="transparent" r="27" cx="30" cy="30"/>
+        <circle class="progress-ring__progress" stroke="url(#gradient)" stroke-width="3" fill="transparent" r="27" cx="30" cy="30"/>
+        <defs>
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="progress-percentage">0%</div>
+    </div>
+
+    <!-- 확장형 TOC -->
+    <div class="floating-toc modern" id="floating-toc">
+      <div class="toc-header">
+        <div class="toc-title">목차</div>
+        <button class="toc-close" aria-label="목차 닫기">×</button>
+      </div>
+      <nav id="toc-nav">
+        <!-- 목차는 JavaScript로 생성됩니다 -->
+      </nav>
+    </div>
+
+    <!-- 모바일용 목차 토글 버튼 -->
+    <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">
+      📑
+    </button>
+
+    <!-- 모바일 목차 오버레이 -->
+    <div class="mobile-toc" id="mobile-toc">
+      <div class="toc-content">
+        <button class="close-btn" id="toc-close" aria-label="목차 닫기">✕</button>
+        <div class="toc-title">목차</div>
+        <nav id="mobile-toc-nav">
+          <!-- 목차는 JavaScript로 생성됩니다 -->
+        </nav>
+      </div>
+    </div>
+
+    <script>
+      // 목차 생성 및 스크롤 하이라이트
+      document.addEventListener('DOMContentLoaded', function() {
+        const headings = document.querySelectorAll('h2[id], h3[id], h4[id]');
+        const tocNav = document.getElementById('toc-nav');
+        const mobileTocNav = document.getElementById('mobile-toc-nav');
+
+        // 목차 생성
+        if (headings.length > 0 && tocNav) {
+          const tocList = document.createElement('ul');
+          let currentH2List = null;
+          let currentH3List = null;
+
+          headings.forEach(heading => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#' + heading.id;
+            a.textContent = heading.textContent;
+            li.appendChild(a);
+
+            if (heading.tagName === 'H2') {
+              tocList.appendChild(li);
+              currentH2List = document.createElement('ul');
+              li.appendChild(currentH2List);
+              currentH3List = null;
+            } else if (heading.tagName === 'H3') {
+              if (currentH2List) {
+                currentH2List.appendChild(li);
+                currentH3List = document.createElement('ul');
+                li.appendChild(currentH3List);
+              } else {
+                tocList.appendChild(li);
+              }
+            } else if (heading.tagName === 'H4') {
+              if (currentH3List) {
+                currentH3List.appendChild(li);
+              } else if (currentH2List) {
+                currentH2List.appendChild(li);
+              } else {
+                tocList.appendChild(li);
+              }
+            }
+          });
+
+          tocNav.appendChild(tocList);
+          if (mobileTocNav) {
+            mobileTocNav.appendChild(tocList.cloneNode(true));
+          }
+        }
+
+        const tocLinks = document.querySelectorAll('.floating-toc a, .mobile-toc a');
+
+        function highlightToc() {
+          let current = '';
+          headings.forEach(heading => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top <= 100) {
+              current = heading.id;
+            }
+          });
+
+          tocLinks.forEach(link => {
+            if (link.getAttribute('href') === '#' + current) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+
+        // 스크롤 이벤트 및 진행률 업데이트
+        function updateProgress() {
+          const progressRing = document.querySelector('.progress-ring__progress');
+          const progressText = document.querySelector('.progress-percentage');
+
+          if (progressRing && progressText) {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = Math.round((scrollTop / scrollHeight) * 100);
+
+            const circumference = 2 * Math.PI * 27; // r=27
+            const offset = circumference - (scrollPercentage / 100) * circumference;
+
+            progressRing.style.strokeDashoffset = offset;
+            progressText.textContent = scrollPercentage + '%';
+          }
+        }
+
+        window.addEventListener('scroll', () => {
+          highlightToc();
+          updateProgress();
+        });
+        highlightToc();
+        updateProgress();
+
+        // 진행률 링 클릭 시 TOC 표시/숨기기 토글
+        const progressRingContainer = document.querySelector('.progress-ring-container');
+        const floatingToc = document.getElementById('floating-toc');
+        const tocCloseBtn = document.querySelector('.toc-close');
+
+        if (progressRingContainer && floatingToc) {
+          progressRingContainer.addEventListener('click', function() {
+            // 토글 기능: 이미 표시되어 있으면 숨기고, 숨겨져 있으면 표시
+            if (floatingToc.classList.contains('show')) {
+              floatingToc.classList.remove('show');
+            } else {
+              floatingToc.classList.add('show');
+            }
+          });
+        }
+
+        if (tocCloseBtn && floatingToc) {
+          tocCloseBtn.addEventListener('click', function() {
+            floatingToc.classList.remove('show');
+          });
+        }
+
+        // 모바일 목차 토글
+        const tocToggle = document.getElementById('toc-toggle');
+        const mobileToc = document.getElementById('mobile-toc');
+        const tocClose = document.getElementById('toc-close');
+
+        if (tocToggle && mobileToc && tocClose) {
+          tocToggle.addEventListener('click', function() {
+            mobileToc.classList.add('active');
+          });
+
+          tocClose.addEventListener('click', function() {
+            mobileToc.classList.remove('active');
+          });
+
+          mobileToc.addEventListener('click', function(e) {
+            if (e.target === mobileToc) {
+              mobileToc.classList.remove('active');
+            }
+          });
+        }
+
+        // 부드러운 스크롤
+        tocLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+              targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+
+              // 모바일 목차 닫기
+              if (mobileToc && mobileToc.classList.contains('active')) {
+                mobileToc.classList.remove('active');
+              }
+            }
+          });
+        });
+      });
+    </script>
+    {% endif %}
+
     {{ post.content }}
   {% else %}
     {{ post.excerpt }}
