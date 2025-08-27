@@ -9,16 +9,15 @@
       {% if link_title %}</a>{% endif %}
     </h1>
 
-    <p class="post-date heading">
-      {% assign post_format = site.data.strings.date_formats.post | default:"%d %b %Y" %}
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date:post_format }}</time>
-      {% assign category_start     = site.data.strings.category_start     | default:"in " %}
-      {% assign tag_start          = site.data.strings.tag_start          | default:"on " %}
-      {% assign category_separator = site.data.strings.category_separator | default:" / " %}
-      {% assign tag_separator      = site.data.strings.tag_separator      | default:", "  %}
-      {% include tag-list.html tags=post.categories meta=site.featured_categories start_with=category_start separator=category_separator %}
-      {% include tag-list.html tags=post.tags meta=site.featured_tags start_with=tag_start separator=tag_separator %}
-    </p>
+    <p class="post-date">{{ post.date | date: "%Y년 %m월 %d일" }}</p>
+    
+    {% if post.tags and post.tags.size > 0 %}
+    <div class="tags">
+      {% for tag in post.tags %}
+        <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
 
     {% include message.html text=post.description hide=page.hide_description %}
   </header>

@@ -18,13 +18,15 @@ permalink: /analysis/ligand/
   {% for post in ligand_posts %}
 <article class="post-card">
   <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-  <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %m월 %d일" }}</time>
+  <p class="post-date">{{ post.date | date: "%Y년 %m월 %d일" }}</p>
   <p>{{ post.description | default: post.excerpt | strip_html | truncate: 160 }}</p>
+  {% if post.tags %}
   <div class="tags">
-    {% for tag in post.tags limit:3 %}
+    {% for tag in post.tags %}
       <span class="tag">{{ tag }}</span>
     {% endfor %}
   </div>
+  {% endif %}
 </article>
 <hr/>
   {% endfor %}
