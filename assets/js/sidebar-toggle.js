@@ -198,13 +198,15 @@ window.addEventListener('load', function() {
     document.body.appendChild(toggleButton);
     console.log('[DNA Toggle] Enhanced button added to page');
     
-    // Restore saved state and set initial button position
+    // Restore saved state and set initial button position with z-index
     const savedState = localStorage.getItem('sidebarHidden') === 'true';
     if (savedState) {
         document.body.classList.add('sidebar-hidden');
         toggleButton.style.left = '20px'; // Button on left when sidebar is hidden
+        toggleButton.style.zIndex = '99999'; // High z-index when sidebar is hidden
     } else {
-        toggleButton.style.left = '280px'; // Button after sidebar when visible
+        toggleButton.style.left = '220px'; // Button position when sidebar is visible
+        toggleButton.style.zIndex = '999'; // Low z-index to stay behind sidebar
     }
     
     // Handle toggle with smooth animation
