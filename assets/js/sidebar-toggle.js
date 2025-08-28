@@ -43,7 +43,7 @@ window.addEventListener('load', function() {
         justify-content: center !important;
         box-shadow: 0 8px 32px rgba(102, 126, 234, 0.35),
                     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         overflow: visible !important;
     `;
     
@@ -198,10 +198,13 @@ window.addEventListener('load', function() {
     document.body.appendChild(toggleButton);
     console.log('[DNA Toggle] Enhanced button added to page');
     
-    // Restore saved state
+    // Restore saved state and set initial button position
     const savedState = localStorage.getItem('sidebarHidden') === 'true';
     if (savedState) {
         document.body.classList.add('sidebar-hidden');
+        toggleButton.style.left = '20px'; // Button on left when sidebar is hidden
+    } else {
+        toggleButton.style.left = '280px'; // Button after sidebar when visible
     }
     
     // Handle toggle with smooth animation
@@ -231,6 +234,10 @@ window.addEventListener('load', function() {
             // Hide sidebar with smooth animation
             document.body.classList.add('sidebar-hidden');
             
+            // Move button to left edge when sidebar is hidden and restore z-index
+            this.style.left = '20px';
+            this.style.zIndex = '99999'; // High z-index when sidebar is hidden
+            
             // Animate drawer
             if (drawer) {
                 drawer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
@@ -251,6 +258,10 @@ window.addEventListener('load', function() {
         } else {
             // Show sidebar with smooth animation
             document.body.classList.remove('sidebar-hidden');
+            
+            // Move button behind sidebar and lower z-index to avoid dropdown conflict
+            this.style.left = '220px'; // Position under sidebar
+            this.style.zIndex = '999'; // Lower than sidebar (drawer usually has z-index 1000+)
             
             // Animate drawer
             if (drawer) {
