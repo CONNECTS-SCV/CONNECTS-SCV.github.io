@@ -418,3 +418,60 @@
 .navbar {
   z-index: 1001;
 }
+
+/* Hide permalink text in TOC */
+.floating-toc a .permalink-symbol,
+.floating-toc a .sr-only,
+.mobile-toc a .permalink-symbol,
+.mobile-toc a .sr-only {
+  display: none !important;
+}
+
+/* Hide any text that says "Permalink" */
+.floating-toc a:contains("Permalink"),
+.mobile-toc a:contains("Permalink") {
+  font-size: 0;
+}
+
+.floating-toc a:contains("Permalink")::before,
+.mobile-toc a:contains("Permalink")::before {
+  content: attr(data-heading-text);
+  font-size: 14px;
+}
+
+/* More specific permalink hiding */
+.floating-toc .permalink,
+.mobile-toc .permalink,
+.floating-toc [aria-label*="permalink"],
+.mobile-toc [aria-label*="permalink"],
+.floating-toc [title*="permalink"], 
+.mobile-toc [title*="permalink"],
+.floating-toc [title*="Permalink"],
+.mobile-toc [title*="Permalink"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Force hide any element containing "Permalink" text */
+.floating-toc a *:contains("Permalink"),
+.mobile-toc a *:contains("Permalink"),
+.floating-toc a span:contains("Permalink"),
+.mobile-toc a span:contains("Permalink") {
+  display: none !important;
+}
+
+/* Generic permalink text hiding */
+.floating-toc a::after,
+.mobile-toc a::after {
+  content: none !important;
+}
+
+/* Hide permalink symbols */
+.floating-toc .anchor,
+.mobile-toc .anchor,
+.floating-toc .permalink-anchor,
+.mobile-toc .permalink-anchor,
+.floating-toc .header-link,
+.mobile-toc .header-link {
+  display: none !important;
+}

@@ -39,7 +39,15 @@
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.href = '#' + heading.id;
-      a.textContent = heading.textContent;
+      
+      // Clean text content - remove permalink text
+      let cleanText = heading.textContent;
+      cleanText = cleanText.replace(/Permalink$/i, '').trim();
+      cleanText = cleanText.replace(/¶$/i, '').trim();
+      cleanText = cleanText.replace(/#$/i, '').trim();
+      
+      a.textContent = cleanText;
+      a.setAttribute('data-heading-text', cleanText);
       li.appendChild(a);
       
       if (heading.tagName === 'H2') {
@@ -72,6 +80,18 @@
     if (mobileTocNav) {
       mobileTocNav.appendChild(tocList.cloneNode(true));
     }
+    
+    // Additional cleanup for any remaining permalink text
+    setTimeout(function() {
+      const allTocLinks = document.querySelectorAll('.floating-toc a, .mobile-toc a');
+      allTocLinks.forEach(function(link) {
+        let text = link.textContent;
+        if (text.toLowerCase().includes('permalink')) {
+          text = text.replace(/Permalink/gi, '').trim();
+          link.textContent = text;
+        }
+      });
+    }, 100);
   }
   
   function setupScrollHighlight(headings) {
