@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/vision.css' | relative_url }}">
+</head>
+<body class="vision-page">
+  <nav class="vision-nav">
+    <div class="nav-container">
+      <a href="{{ '/' | relative_url }}" class="nav-brand">CONNECTS</a>
+      <div class="nav-links">
+        <a href="{{ '/' | relative_url }}" class="nav-link">홈</a>
+        <a href="https://curie.kr" target="_blank" rel="noopener noreferrer" class="nav-link">제품</a>
+        <a href="{{ '/home/' | relative_url }}" class="nav-link">블로그</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="vision-content">
+    <section class="hero-section">
+      <h1 class="hero-title">{{ page.hero_title | default: "우리의 비전" }}</h1>
+      <p class="hero-subtitle">{{ page.hero_subtitle | default: "AI와 구조 생물학의 융합으로 인류 건강의 미래를 열어갑니다" }}</p>
+    </section>
+
+    <div class="content-container">
+      {{ content }}
+    </div>
+  </main>
+
+  <footer class="vision-footer">
+    <div class="footer-container">
+      <p>&copy; 2025 CONNECTS. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

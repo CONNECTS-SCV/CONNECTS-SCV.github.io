@@ -270,7 +270,7 @@ sass:
 # Add links to the sidebar.
 menu:
   - title: Home
-    url: /
+    url: /home
   - title: About
     url: /about/
   - title: Analysis

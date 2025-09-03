@@ -71,4 +71,4 @@ FASTA: >VH_chain\nEVQLVESGGGLV...
 **Immunebuilder는 항체 및 TCR 구조 예측을 빠르게 수행할 수 있는 면역 단백질 특화 모델**입니다.
 Diffdock-PP, GROMACS, PRODIGY 등과 연계하여 **복합체 모델링과 결합력 평가**까지 확장 분석이 가능합니다.
 
-> 지금 바로 <a href="#" onclick="window.open('https://curie.kr/Analysis/immunebuilder', '_blank'); return false;" rel="noopener noreferrer">Immunebuilder 분석 페이지</a>에서 직접 사용해보세요!
+> 지금 바로 <a href="#" onclick="window.open('https://curie.kr:444/Analysis/immunebuilder', '_blank'); return false;" rel="noopener noreferrer">Immunebuilder 분석 페이지</a>에서 직접 사용해보세요!
