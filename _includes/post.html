@@ -1,7 +1,7 @@
 {% assign post = include.post %}
 {% assign link_title = include.link_title %}
 
-<article id="post{{ post.id | replace:'/','-' }}" class="page post{% if link_title %} mb6{% endif %}" role="article">
+<article id="post{{ post.id | replace:'/','-' }}" class="page post notion-style{% if link_title %} mb6{% endif %}" role="article">
   <header>
     <h1 class="post-title">
       {% if link_title %}<a href="{{ post.url | relative_url }}" class="flip-title">{% endif %}
@@ -28,6 +28,8 @@
     <!-- TOC 스타일시트 및 스크립트 로드 -->
     <link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}?v={{ site.time | date: '%s' }}&t={{ 'now' | date: '%s' }}">
     <script src="{{ '/assets/js/toc.js' | relative_url }}?v={{ site.time | date: '%s' }}&t={{ 'now' | date: '%s' }}" defer></script>
+    <script src="{{ '/assets/js/notion-callout.js' | relative_url }}?v={{ site.time | date: '%s' }}&t={{ 'now' | date: '%s' }}" defer></script>
+    <script src="{{ '/assets/js/disable-flip-animation.js' | relative_url }}?v={{ site.time | date: '%s' }}&t={{ 'now' | date: '%s' }}" defer></script>
 
     <!-- 진행률 링 -->
     <div class="progress-ring-container" id="progress-ring-container">
