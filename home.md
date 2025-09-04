@@ -32,9 +32,3 @@ CONNECTS는 전 세계 연구자들이 함께 협력할 수 있는 플랫폼을 
 ### 📞 지원 및 문의
 
 CONNECTS 사용 중 궁금한 점이 있으시면 언제든지 연락주세요. 전문 지원팀이 24시간 대기하고 있으며, 상세한 사용 가이드와 튜토리얼도 제공합니다.
-
----
-
-<div style="text-align: center; margin-top: 3rem;">
-  <a href="{{ '/' | relative_url }}" style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(135deg, #00b894, #00cec9); color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">메인 페이지로 돌아가기</a>
-</div>

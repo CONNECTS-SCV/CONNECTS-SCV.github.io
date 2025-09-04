@@ -271,8 +271,6 @@ sass:
 menu:
   - title: Home
     url: /home
-  - title: About
-    url: /about/
   - title: Analysis
     url: /analysis/
     submenu:
