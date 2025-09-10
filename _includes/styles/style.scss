@@ -63,6 +63,7 @@ $font-family: {{ font }};
 
   // @import "my-inline";
   @import "my-style";
+  @import "notion-style";
 
   {% unless site.hydejack.no_google_fonts or site.no_google_fonts %}
     .wf-active {
@@ -106,6 +107,7 @@ $font-family: {{ font }};
 
   @import "my-inline";
   @import "my-style";
+  @import "notion-style";
 
   html {
     font-family: {{ font }};

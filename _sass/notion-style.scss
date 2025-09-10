@@ -314,6 +314,92 @@ body {
     font-style: italic;
   }
   
+  // aside 태그를 노션 스타일 콜아웃으로 변환
+  aside {
+    width: 100%;
+    padding: 16px 16px 16px 12px;
+    margin: 4px 0 4px 0;
+    border-radius: 3px;
+    display: flex;
+    align-items: flex-start;
+    background: rgb(251, 251, 250);
+    border: none;
+    
+    &:not(:last-child) {
+      margin-bottom: 1em;
+    }
+    
+    // 첫 번째 텍스트 노드(이모지)를 스타일링
+    > p:first-child {
+      font-size: 1.25em;
+      line-height: 1;
+      flex-shrink: 0;
+      user-select: none;
+      margin-right: 12px;
+      margin-top: 2px;
+      width: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    // 콘텐츠 래퍼
+    > div {
+      flex: 1;
+      min-width: 0;
+      
+      // div 안의 단독 텍스트 (리스트가 아닌 경우)
+      > p:only-child,
+      > p:first-child:last-child {
+        padding-left: 0.5em;
+      }
+    }
+    
+    // 모든 내용 요소들
+    p, ul, ol {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--fg-color-6);
+      margin: 0;
+    }
+    
+    // 리스트 스타일
+    ul, ol {
+      padding-left: 1.5em;
+      margin: 0;
+      
+      &:first-child {
+        margin-top: 0;
+      }
+      
+      li {
+        margin: 0.25em 0;
+        line-height: 1.5;
+      }
+    }
+    
+    // 이모지 다음의 텍스트나 리스트
+    > p:nth-child(2),
+    > ul:first-child,
+    > ol:first-child {
+      margin-top: 0;
+    }
+    
+    // Bold 텍스트 처리
+    strong, b {
+      font-weight: 600;
+      color: var(--fg-color-6);
+    }
+    
+    // 콜아웃 내부 코드 스타일
+    code {
+      font-size: 85%;
+      padding: 0.2em 0.4em;
+      background: rgba(135, 131, 120, 0.15);
+      border-radius: 3px;
+      color: #eb5757;
+    }
+  }
+  
   // 노션 스타일 콜아웃 블록 (실제 노션 디자인)
   .notion-callout {
     width: 100%;
