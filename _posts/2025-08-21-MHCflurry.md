@@ -100,4 +100,4 @@ MHC class I 분자와 펩타이드의 결합 친화도(IC50)를 예측하여 면
 
 * **사용 링크**
 
-    * <a href="https://curie.kr:444/Analysis/mhcflurry" target="_blank" rel="noopener noreferrer">MHCflurry 사용하러 가기</a>
+    * <a href="#" onclick="window.open('https://curie.kr:444/Analysis/mhcflurry', '_blank'); return false;" rel="noopener noreferrer">MHCflurry 사용하러 가기</a>
