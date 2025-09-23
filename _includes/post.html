@@ -1,7 +1,7 @@
 {% assign post = include.post %}
 {% assign link_title = include.link_title %}
 
-<article id="post{{ post.id | replace:'/','-' }}" class="page post notion-style{% if link_title %} mb6{% endif %}" role="article">
+<article id="post{{ post.id | replace:'/','-' }}" class="page post{% if link_title %} mb6{% endif %}" role="article">
   <header>
     <h1 class="post-title">
       {% if link_title %}<a href="{{ post.url | relative_url }}" class="flip-title">{% endif %}
@@ -9,72 +9,21 @@
       {% if link_title %}</a>{% endif %}
     </h1>
 
-    <p class="post-date">{{ post.date | date: "%Y년 %m월 %d일" }}</p>
-
-    {% if post.tags and post.tags.size > 0 %}
-    <div class="tags">
-      {% for tag in post.tags %}
-        <span class="tag">{{ tag }}</span>
-      {% endfor %}
-    </div>
-    {% endif %}
+    <p class="post-date heading">
+      {% assign post_format = site.data.strings.date_formats.post | default:"%d %b %Y" %}
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date:post_format }}</time>
+      {% assign category_start     = site.data.strings.category_start     | default:"in " %}
+      {% assign tag_start          = site.data.strings.tag_start          | default:"on " %}
+      {% assign category_separator = site.data.strings.category_separator | default:" / " %}
+      {% assign tag_separator      = site.data.strings.tag_separator      | default:", "  %}
+      {% include tag-list.html tags=post.categories meta=site.featured_categories start_with=category_start separator=category_separator %}
+      {% include tag-list.html tags=post.tags meta=site.featured_tags start_with=tag_start separator=tag_separator %}
+    </p>
 
     {% include message.html text=post.description hide=page.hide_description %}
   </header>
 
   {% unless include.excerpt %}
-    <!-- 플로팅 목차 - 진행률 표시 스타일 -->
-    {% if post.toc != false %}
-    <!-- TOC 스타일시트 및 스크립트 로드 -->
-    <link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}?v={{ site.time | date: '%s' }}&t={{ 'now' | date: '%s' }}">
-    <script src="{{ '/assets/js/toc.js' | relative_url }}?v={{ site.time | date: '%s' }}&t={{ 'now' | date: '%s' }}" defer></script>
-    <script src="{{ '/assets/js/notion-callout.js' | relative_url }}?v={{ site.time | date: '%s' }}&t={{ 'now' | date: '%s' }}" defer></script>
-    <script src="{{ '/assets/js/disable-flip-animation.js' | relative_url }}?v={{ site.time | date: '%s' }}&t={{ 'now' | date: '%s' }}" defer></script>
-
-    <!-- 진행률 링 -->
-    <div class="progress-ring-container" id="progress-ring-container">
-      <svg class="progress-ring" width="60" height="60">
-        <circle class="progress-ring__circle" stroke="#e6e6e6" stroke-width="3" fill="transparent" r="27" cx="30" cy="30"/>
-        <circle class="progress-ring__progress" stroke="url(#gradient)" stroke-width="3" fill="transparent" r="27" cx="30" cy="30"/>
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <div class="progress-percentage">0%</div>
-    </div>
-
-    <!-- 확장형 TOC -->
-    <div class="floating-toc modern" id="floating-toc">
-      <div class="toc-header">
-        <div class="toc-title">목차</div>
-      </div>
-      <nav id="toc-nav">
-        <!-- 목차는 JavaScript로 생성됩니다 -->
-      </nav>
-    </div>
-
-    <!-- 모바일용 목차 토글 버튼 -->
-    <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">
-      📑
-    </button>
-
-    <!-- 모바일 목차 오버레이 -->
-    <div class="mobile-toc" id="mobile-toc">
-      <div class="toc-content">
-        <button class="close-btn" id="toc-close" aria-label="목차 닫기">✕</button>
-        <div class="toc-title">목차</div>
-        <nav id="mobile-toc-nav">
-          <!-- 목차는 JavaScript로 생성됩니다 -->
-        </nav>
-      </div>
-    </div>
-
-    <!-- JavaScript는 외부 파일 /assets/js/toc.js 에서 처리됩니다 -->
-    {% endif %}
-
     {{ post.content }}
   {% else %}
     {{ post.excerpt }}

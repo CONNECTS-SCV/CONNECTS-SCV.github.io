@@ -34,6 +34,23 @@ description: >
 tagline: >
   AI 기반 구조 생물학<br>분석 플랫폼
 
+# Menu structure
+menu:
+  - title: Home
+    url: /
+  - title: Products
+    submenu:
+      - title: CURIE
+        url: https://curie.kr
+      - title: TWIN
+        url: /products/twin/
+      - title: PENSIVE
+        url: /products/pensive/
+  - title: Labs
+    url: /labs/
+  - title: Updates
+    url: /updates/
+
 # A list of keywords for your blog
 keywords:              []
 
@@ -160,6 +177,10 @@ collections:
   projects:
     permalink:         /projects/:path/
     output:            true
+    
+  updates:
+    permalink:         /updates/:path/
+    output:            true
 
 
 # File inclusion/exclusion
@@ -266,23 +287,3 @@ sass:
 # so that the location of the feed XML stays the same.
 # feed:
 #   path:                atom.xml
-
-# Add links to the sidebar.
-menu:
-  - title: Home
-    url: /home
-  - title: Analysis
-    url: /analysis/
-    submenu:
-      - title: Protein
-        url: /analysis/protein/
-      - title: Ligand
-        url: /analysis/ligand/
-      - title: Interaction
-        url: /analysis/interaction/
-      - title: Docking
-        url: /analysis/docking/
-      - title: Prediction
-        url: /analysis/prediction/
-  - title: Release
-    url: /release/

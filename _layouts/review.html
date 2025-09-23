@@ -1,0 +1,26 @@
+---
+layout: base
+---
+
+<article class="post" role="article">
+  <h1 class="post-title">{{ page.title | remove: "[리뷰] " }}</h1>
+  
+  <div class="post-meta">
+    <span class="post-date">{{ page.date | date: "%Y년 %m월 %d일" }}</span>
+    {% if page.model %}
+    <span class="post-model"> | Model: {{ page.model }}</span>
+    {% endif %}
+  </div>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  {% if page.tags %}
+  <div class="post-tags">
+    {% for tag in page.tags %}
+    <span class="tag">#{{ tag }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+</article>

@@ -1,0 +1,7 @@
+// Review 섹션 전용 스타일
+// 간단한 기본 스타일만 포함
+
+.review-post,
+.post[class*="review"] {
+  // 기본 포스트 스타일을 따름
+}

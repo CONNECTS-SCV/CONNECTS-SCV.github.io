@@ -6,7 +6,7 @@
   --notion-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --notion-max-width: 1000px;
   --notion-indent: 27px;
-  
+
   // Notion Colors
   --fg-color: rgb(55, 53, 47);
   --fg-color-0: rgba(55, 53, 47, 0.09);
@@ -16,15 +16,15 @@
   --fg-color-4: rgba(55, 53, 47, 0.8);
   --fg-color-5: rgba(55, 53, 47, 0.65);
   --fg-color-6: rgba(55, 53, 47, 1);
-  
+
   --bg-color: #fff;
   --bg-color-0: rgba(135, 131, 120, 0.15);
   --bg-color-1: rgb(251, 251, 250);
   --bg-color-2: rgba(135, 131, 120, 0.1);
-  
+
   --select-color: rgba(45, 170, 219, 0.3);
   --main-border-color: rgba(55, 53, 47, 0.09);
-  
+
   // Link colors
   --link-color: rgb(35, 131, 226);
   --link-hover: rgba(35, 131, 226, 0.8);
@@ -45,15 +45,15 @@ body {
   font-size: 16px;
   line-height: 1.65;
   word-break: break-word;
-  
+
   @media (max-width: 768px) {
     padding: 24px 16px 16px;
   }
-  
+
   // 포스트 헤더
   > header {
     margin-bottom: 48px;
-    
+
     .post-title {
       font-size: 40px;
       font-weight: 700;
@@ -61,24 +61,24 @@ body {
       margin-bottom: 8px;
       color: var(--fg-color-6);
       letter-spacing: -0.003em;
-      
+
       @media (max-width: 768px) {
         font-size: 32px;
       }
     }
-    
+
     .post-date {
       font-size: 14px;
       color: var(--fg-color-5);
       margin-bottom: 16px;
       line-height: 1.5;
     }
-    
+
     .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      
+
       .tag {
         display: inline-flex;
         align-items: center;
@@ -92,12 +92,12 @@ body {
         white-space: nowrap;
       }
     }
-    
+
     .message {
       display: none;
     }
   }
-  
+
   // Typography
   h1, h2, h3 {
     font-weight: 600;
@@ -106,22 +106,22 @@ body {
     margin-bottom: 4px;
     color: var(--fg-color-6);
   }
-  
+
   h1 {
     font-size: 2em;
     margin-top: 2em;
   }
-  
+
   h2 {
     font-size: 1.5em;
     margin-top: 1.4em;
   }
-  
+
   h3 {
     font-size: 1.25em;
     margin-top: 1em;
   }
-  
+
   h4, h5, h6 {
     font-size: 1.125em;
     font-weight: 600;
@@ -130,38 +130,38 @@ body {
     margin-bottom: 1px;
     color: var(--fg-color-6);
   }
-  
+
   p {
     margin: 1px 0 1px 0;
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
   }
-  
+
   // Lists
   ul, ol {
     margin: 1px 0;
     padding-left: var(--notion-indent);
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
-    
+
     li {
       margin: 0.25em 0;
       line-height: 1.65;
-      
+
       p {
         margin: 0;
       }
-      
+
       > ul, > ol {
         margin: 0.125em 0;
       }
     }
   }
-  
+
   // Links - COMMENTED OUT TO USE ORIGINAL THEME STYLES
   /*
   a {
@@ -171,13 +171,13 @@ body {
     text-decoration-color: var(--fg-color-2);
     text-underline-offset: 0.05em;
     transition: text-decoration-color 120ms ease-in 0s;
-    
+
     &:hover {
       text-decoration-color: var(--fg-color-4);
     }
   }
   */
-  
+
   // Blockquotes
   blockquote {
     width: 100%;
@@ -187,15 +187,15 @@ body {
     font-size: 1em;
     line-height: 1.65;
     color: var(--fg-color-6);
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
-    
+
     p {
       margin: 0;
     }
-    
+
     // Fix double underline issue in blockquote links - NOT NEEDED ANYMORE
     /*
     a {
@@ -203,14 +203,14 @@ body {
       text-decoration: underline;
       text-decoration-color: var(--fg-color-2);
       text-underline-offset: 0.05em;
-      
+
       &:hover {
         text-decoration-color: var(--fg-color-4);
       }
     }
     */
   }
-  
+
   // Code
   code {
     color: #eb5757;
@@ -221,18 +221,18 @@ body {
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
     line-height: normal;
   }
-  
+
   pre {
     margin: 4px 0;
     padding: 16px;
     overflow: auto;
     background: var(--bg-color-1);
     border-radius: 3px;
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
-    
+
     code {
       color: var(--fg-color-6);
       background: transparent;
@@ -244,47 +244,47 @@ body {
       border-radius: 0;
     }
   }
-  
+
   // Tables
   table {
     width: 100%;
     border-collapse: collapse;
     margin: 1px 0;
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
-    
+
     th, td {
       border: 1px solid var(--main-border-color);
       padding: 8px;
       text-align: left;
       font-size: 14px;
     }
-    
+
     th {
       background: var(--bg-color-1);
       color: var(--fg-color-6);
       font-weight: 500;
     }
-    
+
     tbody tr:hover {
       background-color: var(--bg-color-2);
     }
   }
-  
+
   // Images
   img {
     max-width: 100%;
     height: auto;
     margin: 4px 0;
     border-radius: 1px;
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
   }
-  
+
   // Horizontal rules
   hr {
     width: 100%;
@@ -292,13 +292,13 @@ body {
     border-bottom: 1px solid var(--main-border-color);
     margin: 2em 0;
   }
-  
+
   // Strong and emphasis
   strong, b, **:not(ul):not(ol) {
     font-weight: 600 !important;
     color: var(--fg-color-6) !important;
   }
-  
+
   // Ensure bold in paragraphs, lists, tables, etc
   p strong, p b,
   li strong, li b,
@@ -309,11 +309,11 @@ body {
     font-weight: 600 !important;
     color: inherit !important;
   }
-  
+
   em, i {
     font-style: italic;
   }
-  
+
   // aside 태그를 노션 스타일 콜아웃으로 변환
   aside {
     width: 100%;
@@ -324,11 +324,11 @@ body {
     align-items: flex-start;
     background: rgb(251, 251, 250);
     border: none;
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
-    
+
     // 첫 번째 텍스트 노드(이모지)를 스타일링
     > p:first-child {
       font-size: 1.25em;
@@ -341,19 +341,19 @@ body {
       display: flex;
       justify-content: center;
     }
-    
+
     // 콘텐츠 래퍼
     > div {
       flex: 1;
       min-width: 0;
-      
+
       // div 안의 단독 텍스트 (리스트가 아닌 경우)
       > p:only-child,
       > p:first-child:last-child {
         padding-left: 0.5em;
       }
     }
-    
+
     // 모든 내용 요소들
     p, ul, ol {
       font-size: 16px;
@@ -361,35 +361,35 @@ body {
       color: var(--fg-color-6);
       margin: 0;
     }
-    
+
     // 리스트 스타일
     ul, ol {
       padding-left: 1.5em;
       margin: 0;
-      
+
       &:first-child {
         margin-top: 0;
       }
-      
+
       li {
         margin: 0.25em 0;
         line-height: 1.5;
       }
     }
-    
+
     // 이모지 다음의 텍스트나 리스트
     > p:nth-child(2),
     > ul:first-child,
     > ol:first-child {
       margin-top: 0;
     }
-    
+
     // Bold 텍스트 처리
     strong, b {
       font-weight: 600;
       color: var(--fg-color-6);
     }
-    
+
     // 콜아웃 내부 코드 스타일
     code {
       font-size: 85%;
@@ -399,7 +399,7 @@ body {
       color: #eb5757;
     }
   }
-  
+
   // 노션 스타일 콜아웃 블록 (실제 노션 디자인)
   .notion-callout {
     width: 100%;
@@ -410,11 +410,11 @@ body {
     align-items: flex-start;
     background: rgb(251, 251, 250);
     border: none;
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
-    
+
     .callout-emoji {
       font-size: 1.25em;
       line-height: 1;
@@ -426,53 +426,53 @@ body {
       display: flex;
       justify-content: center;
     }
-    
+
     .callout-content {
       flex: 1;
       min-width: 0;
       font-size: 16px;
       line-height: 1.5;
       color: var(--fg-color-6);
-      
+
       p {
         margin: 0;
         line-height: 1.5;
-        
+
         &:not(:last-child) {
           margin-bottom: 0.5em;
         }
-        
+
         // Bold 텍스트 처리
         strong, b {
           font-weight: 600;
           color: var(--fg-color-6);
         }
       }
-      
+
       h1, h2, h3, h4, h5, h6 {
         margin-top: 0;
         margin-bottom: 0.5em;
         font-weight: 600;
       }
-      
+
       ul, ol {
         margin: 0.5em 0;
         padding-left: 1.5em;
       }
-      
+
       // 콜아웃 내부 링크 스타일 - COMMENTED OUT TO USE ORIGINAL
       /*
       a {
         color: inherit;
         text-decoration: underline;
         text-decoration-color: var(--fg-color-2);
-        
+
         &:hover {
           text-decoration-color: var(--fg-color-4);
         }
       }
       */
-      
+
       // 콜아웃 내부 코드 스타일
       code {
         font-size: 85%;
@@ -482,84 +482,84 @@ body {
         color: #eb5757;
       }
     }
-    
+
     // 노션의 기본 회색 배경 스타일
     &.default {
       background: rgb(251, 251, 250);
     }
-    
+
     // 파란색 정보 스타일
     &.info {
       background: rgb(227, 243, 255);
-      
+
       .callout-content {
         color: rgb(12, 71, 113);
-        
+
         strong, b {
           color: rgb(12, 71, 113);
         }
       }
     }
-    
+
     // 노란색 경고 스타일
     &.warning {
       background: rgb(251, 243, 219);
-      
+
       .callout-content {
         color: rgb(90, 71, 11);
-        
+
         strong, b {
           color: rgb(90, 71, 11);
         }
       }
     }
-    
+
     // 빨간색 에러/위험 스타일
     &.error {
       background: rgb(253, 235, 236);
-      
+
       .callout-content {
         color: rgb(119, 33, 46);
-        
+
         strong, b {
           color: rgb(119, 33, 46);
         }
       }
     }
-    
+
     // 초록색 성공 스타일
     &.success {
       background: rgb(227, 252, 239);
-      
+
       .callout-content {
         color: rgb(15, 81, 50);
-        
+
         strong, b {
           color: rgb(15, 81, 50);
         }
       }
     }
-    
+
     // 보라색 노트 스타일
     &.note {
       background: rgb(241, 238, 252);
-      
+
       .callout-content {
         color: rgb(60, 45, 109);
-        
+
         strong, b {
           color: rgb(60, 45, 109);
         }
       }
     }
-    
+
     // 청록색 팁 스타일
     &.tip {
       background: rgb(227, 252, 250);
-      
+
       .callout-content {
         color: rgb(15, 81, 73);
-        
+
         strong, b {
           color: rgb(15, 81, 73);
         }
@@ -575,15 +575,15 @@ body {
   padding: 0 48px 200px;
   font-family: var(--notion-font);
   color: var(--fg-color-6);
-  
+
   @media (max-width: 768px) {
     padding: 0 24px 150px;
   }
-  
+
   hr.dingbat {
     display: none;
   }
-  
+
   // About 섹션 깔끔하고 세련된 스타일
   .about {
     margin-bottom: 2rem;
@@ -591,7 +591,7 @@ body {
     background: transparent;
     border: none;
     border-bottom: 2px solid var(--fg-color-0);
-    
+
     .author {
       .page-title {
         font-size: 14px !important;
@@ -602,28 +602,28 @@ body {
         border: none !important;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        
+
         &::after {
           display: none !important;
         }
       }
-      
+
       p {
         font-size: 13px !important;
         line-height: 1.5 !important;
         color: var(--fg-color-5) !important;
         margin: 0 0 6px 0 !important;
-        
+
         &:last-child {
           margin-bottom: 0 !important;
         }
       }
-      
+
       .sidebar-social {
         margin-top: 8px;
         display: flex;
         gap: 4px;
-        
+
         a {
           color: var(--fg-color-3) !important;
           text-decoration: none;
@@ -633,7 +633,7 @@ body {
           border-radius: 3px;
           transition: all 120ms ease;
           border: 1px solid transparent;
-          
+
           &:hover {
             background: var(--bg-color-0);
             color: var(--link-color) !important;
@@ -643,14 +643,14 @@ body {
       }
     }
   }
-  
+
   // Related Posts 컴팩트한 리스트 스타일 - COMMENTED OUT TO USE ORIGINAL
   /*
   .related {
     margin: 0;
     padding-top: 16px;
     background: var(--bg-color);
-    
+
     .hr {
       font-size: 14px !important;
       font-weight: 600 !important;
@@ -660,17 +660,17 @@ body {
       border: none !important;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      
+
       &::after {
         display: none !important;
       }
     }
-    
+
     .related-posts {
       list-style: none;
       padding: 0;
       margin: 0;
-      
+
       li {
         padding: 2px 0 !important;
         border-bottom: 1px solid rgba(55, 53, 47, 0.08);
@@ -678,11 +678,11 @@ body {
         min-height: unset !important;
         max-height: none !important;
         line-height: 1.2 !important;
-        
+
         &:last-child {
           border-bottom: none;
         }
-        
+
         .flip-title {
           display: inline-block !important;
           margin: 0 !important;
@@ -698,14 +698,14 @@ body {
           transition: none !important;
           animation: none !important;
           will-change: auto !important;
-          
+
           &.h4 {
             font-size: 13px !important;
             margin: 0 !important;
             padding: 0 !important;
             line-height: 1.2 !important;
           }
-          
+
           span {
             font-size: 13px !important;
             font-weight: 500 !important;
@@ -716,12 +716,12 @@ body {
             transform: none !important;
             position: static !important;
           }
-          
+
           &:hover span {
             color: var(--link-color) !important;
           }
         }
-        
+
         time {
           font-size: 11px !important;
           color: var(--fg-color-5) !important;
@@ -730,7 +730,7 @@ body {
           line-height: 1.2 !important;
           padding: 0 !important;
           height: auto !important;
-          
+
           &.heading {
             font-size: 11px !important;
             margin: 0 0 0 8px !important;
@@ -748,16 +748,16 @@ body {
 .post.notion-style {
   .highlighter-rouge {
     margin: 4px 0;
-    
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
-    
+
     .highlight {
       background: var(--bg-color-1);
       padding: 16px;
       border-radius: 3px;
-      
+
       pre {
         margin: 0;
         padding: 0;
@@ -774,13 +774,13 @@ body {
     padding: 0;
     background: var(--bg-color);
   }
-  
+
   .content {
     max-width: 100%;
     padding: 0;
     margin: 0;
   }
-  
+
   #_main {
     max-width: 100%;
   }
@@ -798,7 +798,7 @@ body {
     color: var(--fg-color-6);
     line-height: 1;
     white-space: nowrap;
-    
+
     &.progress-text-fixed {
       // JavaScript에서 추가된 클래스용 추가 스타일
       display: flex;

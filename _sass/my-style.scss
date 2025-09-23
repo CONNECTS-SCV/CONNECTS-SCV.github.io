@@ -1,4 +1,819 @@
-// Custom styles for the site
-@import "notion-style";
+// Custom styles to override theme defaults
 
-// Additional custom styles can go here
+// Fixed sidebar width - no changes based on screen size
+$sidebar-width: 15rem;
+$sidebar-spacing: 2rem;
+
+// Base mobile styles
+@media screen {
+  hy-drawer {
+    > .hy-drawer-content.hy-drawer-left {
+      width: calc(#{$sidebar-width} + 1px) !important;
+      left: calc(-#{$sidebar-width} - 1px) !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    --hy-drawer-width: calc(#{$sidebar-width} + 1px) !important;
+    --hy-drawer-slide-width: #{$sidebar-width} !important;
+    border: none !important;
+  }
+}
+
+// Desktop - when sidebar is fixed (keep same width)
+@media screen and (min-width: 64em) {
+  hy-drawer {
+    width: #{$sidebar-width} !important;
+
+    > .hy-drawer-content.hy-drawer-left {
+      width: #{$sidebar-width} !important;
+      left: 0 !important;
+    }
+  }
+
+  // Remove default padding when sidebar is toggled
+  body {
+    padding-left: 0 !important;
+
+    &.sidebar-open {
+      padding-left: 0 !important;
+    }
+  }
+
+  main {
+    margin-left: 0 !important;
+  }
+
+  // Home page without padding
+  body.home-page {
+    padding-left: 0 !important;
+  }
+}
+
+// Keep same width for larger screens - no change
+@media screen and (min-width: 90em) {
+  hy-drawer {
+    width: #{$sidebar-width} !important;
+
+    > .hy-drawer-content.hy-drawer-left {
+      width: #{$sidebar-width} !important;
+      left: 0 !important;
+    }
+  }
+
+  body {
+    padding-left: 0 !important;
+  }
+
+  body.home-page {
+    padding-left: 0 !important;
+  }
+}
+
+// Override the problematic 1576px (98.5em) breakpoint
+@media screen and (min-width: 98.5em) {
+  hy-drawer {
+    width: #{$sidebar-width} !important;
+
+    > .hy-drawer-content.hy-drawer-left {
+      width: #{$sidebar-width} !important;
+      left: 0 !important;
+    }
+
+    --hy-drawer-width: #{$sidebar-width} !important;
+    --hy-drawer-slide-width: #{$sidebar-width} !important;
+  }
+
+  body {
+    padding-left: 0 !important;
+  }
+
+  body.home-page {
+    padding-left: 0 !important;
+  }
+}
+
+// Very large screens - still keep same width
+@media screen and (min-width: 104.25em) {
+  hy-drawer {
+    width: #{$sidebar-width} !important;
+
+    > .hy-drawer-content.hy-drawer-left {
+      width: #{$sidebar-width} !important;
+      left: 0 !important;
+    }
+
+    --hy-drawer-width: #{$sidebar-width} !important;
+    --hy-drawer-slide-width: #{$sidebar-width} !important;
+  }
+
+  body {
+    padding-left: 0 !important;
+  }
+
+  body.home-page {
+    padding-left: 0 !important;
+  }
+
+  // Prevent any centering or offset calculations
+  .sidebar,
+  .sidebar-sticky {
+    margin-left: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+}
+
+// Override any dynamic calculations at all breakpoints
+@media screen and (min-width: 64em) {
+  .sidebar,
+  .sidebar-sticky {
+    position: fixed !important;
+    top: 0;
+    bottom: 0;
+    left: 0 !important;
+    width: #{$sidebar-width} !important;
+    will-change: transform;
+    margin-left: 0 !important;
+    transform: none !important;
+    border-right: none !important;  // Also remove border here
+    box-shadow: none !important;  // Remove any shadow that might look like a border
+  }
+
+  // Prevent any offset or centering
+  hy-drawer.loaded {
+    > .hy-drawer-content {
+      position: fixed !important;
+      left: 0 !important;
+      margin-left: 0 !important;
+      transform: none !important;
+    }
+  }
+}
+
+// Sidebar default state and smooth transition
+#_sidebar,
+hy-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  width: #{$sidebar-width} !important;
+  transform: translateX(-#{$sidebar-width}) !important;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  z-index: 1001 !important;
+  will-change: transform;
+
+  > .hy-drawer-content {
+    width: #{$sidebar-width} !important;
+    height: 100% !important;
+    position: relative !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+}
+
+// Sidebar open state with smooth transition
+body.sidebar-open {
+  #_sidebar,
+  hy-drawer {
+    transform: translateX(0) !important;
+  }
+}
+
+// Ensure smooth closing animation
+body:not(.sidebar-open) {
+  #_sidebar,
+  hy-drawer {
+    transform: translateX(-#{$sidebar-width}) !important;
+  }
+}
+
+// Add keyframes for smooth fade effect
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// Override sidebar-bg emerald color
+.sidebar-bg {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+
+  &::after {
+    display: none !important;
+  }
+
+  &.sidebar-overlay::after {
+    display: none !important;
+  }
+}
+
+.sidebar {
+  border-right: none !important;
+  overflow: hidden !important;
+  background: rgba(18, 18, 18, 0.92) !important;
+  backdrop-filter: blur(30px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(120%) !important;
+  position: relative;
+
+  // Very subtle gradient overlay for natural depth
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.02) 0%,
+      transparent 40%,
+      transparent 60%,
+      rgba(0, 0, 0, 0.05) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .sidebar-nav {
+    --link-height: 80px;
+    --transition-time: 500ms;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-bottom: none;
+  }
+
+  // Dropdown navigation styles
+  .sidebar-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    position: relative;
+    border: none;
+    border-bottom: none;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .sidebar-nav-item {
+    position: relative;
+    width: 100%;
+    height: var(--link-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    opacity: 1;
+    transition: all var(--transition-time) cubic-bezier(0.8, 0, 0.33, 0.9);
+    cursor: pointer;
+    z-index: 8;
+    margin: 0;
+    border: none;
+
+    &:hover {
+      background: radial-gradient(
+        circle at var(--mousex, 50%) var(--mousey, 50%),
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+      );
+    }
+
+    // Remove any borders or separators
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    &.has-submenu {
+      .dropdown-arrow {
+        position: absolute;
+        right: 2rem;
+        opacity: 0.6;
+        transition: all 0.3s ease;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      &.open {
+        .dropdown-arrow {
+          transform: rotate(180deg);
+          opacity: 1;
+          color: var(--primary);
+        }
+
+        .sidebar-nav-link {
+          color: var(--primary);
+        }
+      }
+    }
+  }
+
+  .sidebar-nav-link,
+  .sidebar-sublink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    user-select: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    border-bottom: none;
+    outline: none;
+
+    &.dropdown-toggle {
+      pointer-events: all;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+
+  // Hover effect layer
+  .hover-el {
+    position: absolute;
+    width: 100%;
+    height: var(--link-height);
+    top: var(--y, 0);
+    left: 0;
+    opacity: 0;
+    background: radial-gradient(
+      circle at var(--mousex, 50%) var(--mousey, 50%),
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.01) 100%
+    );
+    transition: all 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  // Submenu styles
+  .sidebar-submenu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 15, 15, 0.9);
+    backdrop-filter: blur(16px);
+    z-index: 10;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    .sidebar-sublink {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--link-height);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.85);
+      transition: all var(--transition-time) ease;
+      opacity: 0;
+      transform: translateY(30%);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+
+      &.on-menu {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .sidebar-nav-item.open .sidebar-submenu {
+    display: flex;
+  }
+
+  // Sub menu back button
+  .sub-menu-back {
+    position: absolute;
+    top: 2rem;
+    left: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: all var(--transition-time) cubic-bezier(0.8, 0, 0.33, 1.25);
+    z-index: 15;
+
+    &.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 2px;
+      background: #fff;
+    }
+
+    &::before {
+      transform: rotate(-35deg) translate(-1px, 4px);
+    }
+
+    &::after {
+      transform: rotate(35deg) translate(-1px, -4px);
+    }
+  }
+
+  // Ensure all sidebar content stays within bounds
+  * {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+// Menu toggle button
+.menu-btn {
+  --icon-size: 20px;
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  z-index: 10000;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.08),
+              0 2px 8px rgba(0, 0, 0, 0.03),
+              inset 0 0 0 0.5px rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  // Inner container for icon
+  .menu-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.04),
+                inset 0 0 0 0.5px rgba(255, 255, 255, 0.6);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  &.nav-open {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      background: rgba(15, 15, 15, 0.85);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2),
+                  0 4px 12px rgba(0, 0, 0, 0.1),
+                  inset 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+    }
+
+    .line {
+      background: rgba(255, 255, 255, 0.9);
+    }
+  }
+
+  // Hide when submenu is open to avoid overlap
+  &.submenu-open {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  // Hamburger lines
+  .line {
+    width: var(--icon-size);
+    height: 2px;
+    background: rgba(30, 30, 30, 0.8);
+    border-radius: 3px;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &__1 {
+      top: 0;
+    }
+    &__2 {
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      width: calc(var(--icon-size) - 4px);
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    &__3 {
+      bottom: 0;
+      width: calc(var(--icon-size) - 2px);
+    }
+  }
+
+  &.close {
+    .line {
+      &__1 {
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%) rotate(45deg);
+        width: var(--icon-size);
+      }
+      &__2 {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-50%) scaleX(0);
+      }
+      &__3 {
+        bottom: 50%;
+        transform: translateX(-50%) translateY(50%) rotate(-45deg);
+        width: var(--icon-size);
+      }
+    }
+  }
+
+  // Focus state
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 177, 186, 0.2),
+                0 8px 32px rgba(31, 38, 135, 0.12);
+  }
+}
+
+// Always show menu button
+.menu-btn {
+  display: flex !important;
+}
+
+// Dark overlay for mobile
+@media screen and (max-width: 63.9375em) {
+  body.sidebar-open::after {
+    content: '' !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 999 !important;
+    pointer-events: auto !important;
+    display: block !important;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+}
+
+// Main content adjustment when sidebar opens
+body {
+  &.sidebar-open {
+    // Show sidebar
+    #_sidebar,
+    .sidebar {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    hy-drawer {
+      transform: translateX(0) !important;
+      visibility: visible !important;
+
+      > .hy-drawer-content {
+        transform: translateX(0) !important;
+      }
+    }
+
+    // Desktop - push content to the side
+    @media screen and (min-width: 64em) {
+      main {
+        margin-left: #{$sidebar-width} !important;
+        margin-right: 0 !important;
+        width: calc(100% - #{$sidebar-width}) !important;
+        max-width: none !important;
+      }
+
+      .page {
+        max-width: 100% !important;
+      }
+    }
+
+    // Mobile/Tablet - overlay mode, don't push content
+    @media screen and (max-width: 63.9375em) {
+      main {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+      }
+
+      .page {
+        max-width: 100% !important;
+      }
+
+      // Ensure sidebar is above overlay
+      #_sidebar,
+      hy-drawer {
+        z-index: 1001 !important;
+      }
+    }
+  }
+}
+
+main {
+  transition: margin-left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  will-change: margin-left, width;
+  background: white;
+  min-height: 100vh;
+}
+
+// Main content width adjustments with smooth transitions
+.page {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 1rem !important;
+  margin: 0 !important;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  @media screen and (min-width: 48em) {
+    padding: 1.5rem 2rem !important;
+  }
+
+  @media screen and (min-width: 64em) {
+    padding: 2rem 3rem !important;
+  }
+
+  @media screen and (min-width: 90em) {
+    padding: 2rem 4rem !important;
+  }
+
+  @media screen and (min-width: 120em) {
+    padding: 2.5rem 5rem !important;
+  }
+}
+
+// Article page specific - always full width regardless of sidebar state
+article.page {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 1rem !important;
+
+  @media screen and (min-width: 48em) {
+    padding: 1.5rem 2rem !important;
+  }
+
+  @media screen and (min-width: 64em) {
+    padding: 2rem 3rem !important;
+  }
+
+  @media screen and (min-width: 90em) {
+    padding: 2rem 4rem !important;
+  }
+
+  @media screen and (min-width: 120em) {
+    padding: 2.5rem 5rem !important;
+  }
+
+  // Content inside article should also be full width
+  .content,
+  .wrapper,
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+// Override sidebar-open state for article pages
+body.sidebar-open {
+  article.page {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+.content {
+  max-width: 100% !important;
+  margin: 0 auto;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  @media screen and (min-width: 64em) {
+    max-width: 90% !important;
+  }
+
+  @media screen and (min-width: 90em) {
+    max-width: 1400px !important;
+  }
+}
+
+// Hide footer globally
+footer,
+.footer,
+.content > .footer-content {
+  display: none !important;
+}
+
+// Home page iframe positioning based on sidebar state
+body.home-page {
+  .landing-frame-container {
+    left: 0 !important;
+    width: 100vw !important;
+    transition: all 0.8s cubic-bezier(0.8, 0, 0.33, 1);
+  }
+
+  &.sidebar-open {
+    .landing-frame-container {
+      left: #{$sidebar-width} !important;
+      width: calc(100vw - #{$sidebar-width}) !important;
+    }
+  }
+}
+
+// Author section width fix for posts
+.layout-post {
+  .about.related {
+    max-width: 100% !important;
+    margin: 0 auto;
+    padding: 0 80px;
+
+    @media (max-width: 768px) {
+      padding: 0 32px;
+    }
+  }
+
+  // Make main content use full width
+  .post.notion-style {
+    max-width: 100% !important;
+    padding: 32px 100px 24px !important;
+
+    @media (max-width: 768px) {
+      padding: 24px 32px 16px !important;
+    }
+  }
+}

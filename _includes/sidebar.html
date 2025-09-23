@@ -1,3 +1,11 @@
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="메뉴 토글">
+  <div class="menu-icon">
+    <span class="line line__1"></span>
+    <span class="line line__2"></span>
+    <span class="line line__3"></span>
+  </div>
+</button>
+
 <hy-drawer>
   <header id="_sidebar" class="sidebar" role="banner">
     {% if image.background %}
@@ -7,54 +15,47 @@
       {% capture bg_style %}background-color:{{ color }};{% if image != 'none' %}background-image:url({% include smart-url url=image %}){% endif %}{% endcapture %}
       {% capture bg_class %}sidebar-bg {% if image != 'none' %}sidebar-overlay{% endif %}{% endcapture %}
     {% endif %}
-    <div class="{{ bg_class }}" style="{{ bg_style }}">
-      <div class="dna-container">
-        <!-- DNA Strand 1 -->
-        <div class="dna-strand">
-          {% for i in (1..30) %}
-          <div class="base-pair">
-            <span></span>
-          </div>
-          {% endfor %}
-        </div>
-        
-        <!-- DNA Strand 2 -->
-        <div class="dna-strand-2">
-          {% for i in (1..25) %}
-          <div class="base-pair">
-            <span></span>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
+    <div class="{{ bg_class }}" style="{{ bg_style }}"></div>
 
     <div class="sidebar-sticky">
-      <div class="sidebar-about-container">
-      <div class="sidebar-about">
-        <h2 class="h1"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h2>
-        {% assign text = site.tagline | default:site.description %}
-        {% if text %}
-          <p class="{% if text.size > 100 %}fine{% endif %}">
-            AI 기반 구조 생물학<br>
-            분석 플랫폼
-          </p>
-        {% endif %}
-      </div>
-
-      </div>
-
-      <div class="sidebar-nav-container">
-      <nav class="sidebar-nav heading" role="navigation">
+      <nav class="sidebar-nav" role="navigation">
         {% include nav.html %}
       </nav>
-
-      {% assign author = site.data.authors.first[1] | default:site.author %}
-
-      <div class="sidebar-social">
-        {% include social.html author=author %}
-      </div>
-      </div>
     </div>
   </header>
 </hy-drawer>
+
+<script>
+function toggleSidebar() {
+  const drawer = document.querySelector('hy-drawer');
+  const menuBtn = document.querySelector('.menu-btn');
+  const body = document.body;
+  
+  if (drawer && menuBtn) {
+    drawer.classList.toggle('nav-open');
+    menuBtn.classList.toggle('nav-open');
+    menuBtn.classList.toggle('close');
+    body.classList.toggle('sidebar-open');
+    
+    // Save state to localStorage
+    const isOpen = drawer.classList.contains('nav-open');
+    localStorage.setItem('sidebarState', isOpen ? 'open' : 'closed');
+  }
+}
+
+// Initialize on page load - restore saved state
+document.addEventListener('DOMContentLoaded', function() {
+  const savedState = localStorage.getItem('sidebarState');
+  const drawer = document.querySelector('hy-drawer');
+  const menuBtn = document.querySelector('.menu-btn');
+  const body = document.body;
+  
+  // Restore previous state
+  if (savedState === 'open' && drawer && menuBtn) {
+    drawer.classList.add('nav-open');
+    menuBtn.classList.add('nav-open');
+    menuBtn.classList.add('close');
+    body.classList.add('sidebar-open');
+  }
+});
+</script>

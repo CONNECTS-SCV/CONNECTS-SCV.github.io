@@ -300,15 +300,15 @@
     right: 20px;
     display: flex !important;
   }
-  
+
   .floating-toc.modern.hide {
     right: -300px;
   }
-  
+
   .progress-ring-container {
     display: flex !important;
   }
-  
+
   .toc-toggle {
     display: none !important;
   }
@@ -322,15 +322,15 @@
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex !important;
   }
-  
+
   .floating-toc.modern.show {
     right: 0;
   }
-  
+
   .progress-ring-container {
     display: none !important;
   }
-  
+
   .toc-toggle {
     display: flex !important;
     align-items: center;
@@ -350,29 +350,29 @@
     z-index: 999;
     transition: transform 0.3s ease;
   }
-  
+
   .toc-toggle:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
   }
 }
 
-/* 소형 화면 (768px-1023px) - 플로팅 버튼으로 토글 */  
+/* 소형 화면 (768px-1023px) - 플로팅 버튼으로 토글 */
 @media (min-width: 768px) and (max-width: 1023px) {
   .floating-toc.modern {
     width: 260px;
     right: -280px;
     display: flex !important;
   }
-  
+
   .floating-toc.modern.show {
     right: 0;
   }
-  
+
   .progress-ring-container {
     display: none !important;
   }
-  
+
   .toc-toggle {
     display: flex !important;
     align-items: center;
@@ -386,17 +386,17 @@
   .floating-toc.modern {
     display: none !important;
   }
-  
+
   .toc-toggle {
     display: flex !important;
     align-items: center;
     justify-content: center;
   }
-  
+
   .mobile-toc {
     display: block;
   }
-  
+
   .content {
     max-width: 100% !important;
   }
@@ -407,7 +407,7 @@
   .layout-post .content {
     max-width: 42rem;
   }
-  
+
   .floating-toc.modern.show ~ main .content,
   .has-toc .content {
     max-width: 42rem;
@@ -444,7 +444,7 @@
 .mobile-toc .permalink,
 .floating-toc [aria-label*="permalink"],
 .mobile-toc [aria-label*="permalink"],
-.floating-toc [title*="permalink"], 
+.floating-toc [title*="permalink"],
 .mobile-toc [title*="permalink"],
 .floating-toc [title*="Permalink"],
 .mobile-toc [title*="Permalink"] {

@@ -115,19 +115,14 @@ hy-drawer {
 
   @media screen {
     position: absolute;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    right: 1.5rem;
+    left: 1.5rem;
+    bottom: 1rem;
   }
 
   @media screen and (min-width: $break-point-dynamic) {
-    left: 0;
-    right: 0;
-    width: 100%;
+    left: auto;
+    width: 15rem;
   }
   // >>>>>
 }

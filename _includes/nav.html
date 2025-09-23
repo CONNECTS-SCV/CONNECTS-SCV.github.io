@@ -1,43 +1,178 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<script src="/assets/js/sidebar-folder.js"></script>
+<div class="sub-menu-back" onclick="closeSubmenu()"></div>
 
-<span class="sr-only">
-  {{ site.data.strings.navigation | default:"Navigation" }}
-  {{ site.data.strings.colon | default:":" }}
-</span>
-
-<ul class="sidebar-nav">
-  {% assign count = 0 %}
+<ul class="sidebar-nav-list">
   {% for item in site.menu %}
-  {% assign count = count | plus: 1 %}
-  <li>
-    {% if item.submenu %}
-    <input type="checkbox" id="folder-checkbox-{{ count }}" />
-    {% endif %}
-
-    <div class="list-wrapper">
-      <a class="sidebar-nav-item" href="{{ item.url | relative_url }}">
-        {{ item.title }}
-      </a>
-
+    <li class="sidebar-nav-item{% if item.submenu %} has-submenu{% endif %}" data-index="{{ forloop.index0 }}">
       {% if item.submenu %}
-      <button class="spread-btn" onclick="javascript:spread({{ count }})">
-        <label id="spread-icon-{{ count }}" class="material-icons">arrow_right</label>
-      </button>
-      {% endif %}
-    </div>
-
-    {% if item.submenu %}
-    <ul class="list-body">
-      {% for subitem in item.submenu %}
-      <li>
-        <a class="sidebar-nav-subitem" href="{{ subitem.url | relative_url }}">
-          {{ subitem.title }}
+        <a href="javascript:void(0)" class="sidebar-nav-link dropdown-toggle">
+          {{ item.title }}
+          <span class="dropdown-arrow">▼</span>
         </a>
-      </li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-  </li>
+      {% else %}
+        <a href="{{ item.url | relative_url }}" class="sidebar-nav-link">
+          {{ item.title }}
+        </a>
+      {% endif %}
+    </li>
   {% endfor %}
 </ul>
+
+<!-- Submenu Container -->
+<div class="sidebar-submenu">
+  <ul>
+    <!-- Submenu items will be dynamically inserted here -->
+  </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const navItems = document.querySelectorAll('.sidebar-nav-item');
+  const navList = document.querySelector('.sidebar-nav-list');
+  const submenuContainer = document.querySelector('.sidebar-submenu');
+  const submenuList = submenuContainer.querySelector('ul');
+  const backBtn = document.querySelector('.sub-menu-back');
+  
+  // Create hover effect element
+  const hoverEl = document.createElement('div');
+  hoverEl.className = 'hover-el';
+  navList.appendChild(hoverEl);
+  
+  // Setup hover effect
+  navItems.forEach((item, index) => {
+    item.addEventListener('mousemove', function(e) {
+      const rect = item.getBoundingClientRect();
+      hoverEl.style.setProperty('--y', `${index * 80}px`); // 80px height, no margin
+      hoverEl.style.setProperty('--mousex', `${e.clientX - rect.left}px`);
+      hoverEl.style.setProperty('--mousey', `${e.clientY - rect.top}px`);
+      hoverEl.style.opacity = '1';
+    });
+  });
+  
+  navList.addEventListener('mouseleave', function() {
+    hoverEl.style.opacity = '0';
+  });
+  
+  // Handle clicks
+  navItems.forEach(item => {
+    const link = item.querySelector('.sidebar-nav-link');
+    
+    if (item.classList.contains('has-submenu')) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        openSubmenu(item);
+      });
+    } else {
+      link.addEventListener('click', function(e) {
+        // Allow normal navigation for non-dropdown items
+        if (link.href && link.href !== '#' && link.href !== 'javascript:void(0)') {
+          window.location.href = link.href;
+        }
+      });
+    }
+  });
+  
+  // Menu data from Jekyll
+  const menuData = {
+    {% for item in site.menu %}
+      {% if item.submenu %}
+      '{{ forloop.index0 }}': [
+        {% for subitem in item.submenu %}
+        { title: '{{ subitem.title }}', url: '{{ subitem.url | relative_url }}' }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]{% unless forloop.last %},{% endunless %}
+      {% endif %}
+    {% endfor %}
+  };
+  
+  function openSubmenu(item) {
+    const index = item.dataset.index;
+    const submenuItems = menuData[index];
+    const menuBtn = document.querySelector('.menu-btn');
+    
+    if (submenuItems) {
+      // Clear and populate submenu
+      submenuList.innerHTML = '';
+      submenuItems.forEach((subitem, i) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = subitem.url;
+        a.className = 'sidebar-sublink';
+        a.textContent = subitem.title;
+        a.style.setProperty('--delay', `${i * 50}ms`);
+        
+        // Add click handler for submenu links
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (a.href) {
+            window.location.href = a.href;
+          }
+        });
+        
+        li.appendChild(a);
+        submenuList.appendChild(li);
+      });
+      
+      // Hide menu button first
+      if (menuBtn) {
+        menuBtn.classList.add('submenu-open');
+      }
+      
+      // Show submenu with slight delay for menu button to fade
+      setTimeout(() => {
+        submenuContainer.style.display = 'flex';
+        
+        // Show back button after submenu is visible
+        setTimeout(() => {
+          backBtn.classList.add('show');
+        }, 50);
+      }, 200);
+      
+      // Animate items in
+      setTimeout(() => {
+        submenuList.querySelectorAll('.sidebar-sublink').forEach(link => {
+          link.classList.add('on-menu');
+        });
+      }, 300);
+      
+      // Hide main menu items
+      navItems.forEach(navItem => {
+        navItem.style.opacity = '0';
+        navItem.style.pointerEvents = 'none';
+      });
+    }
+  }
+  
+  window.closeSubmenu = function() {
+    const menuBtn = document.querySelector('.menu-btn');
+    
+    // Hide back button first
+    backBtn.classList.remove('show');
+    
+    // Animate items out
+    submenuList.querySelectorAll('.sidebar-sublink').forEach(link => {
+      link.classList.remove('on-menu');
+    });
+    
+    // Hide submenu after back button animation
+    setTimeout(() => {
+      submenuContainer.style.display = 'none';
+      
+      // Show menu button after submenu is hidden
+      if (menuBtn) {
+        setTimeout(() => {
+          menuBtn.classList.remove('submenu-open');
+        }, 50);
+      }
+    }, 200);
+    
+    // Show main menu items
+    navItems.forEach(navItem => {
+      navItem.style.opacity = '1';
+      navItem.style.pointerEvents = 'auto';
+    });
+  }
+  
+  // Handle back button
+  backBtn.addEventListener('click', closeSubmenu);
+});
+</script>
