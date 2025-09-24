@@ -1,34 +1,43 @@
 ---
-# Copyright (c) 2017 Florian Klampfer <https://qwtel.com/>
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-layout: base
+layout: compress
 ---
 
-{% assign plugins = site.plugins | default:site.gems %}
-{% if plugins contains 'jekyll-paginate' %}
-  {% include blog.html %}
-{% else %}
-  {% capture text %}To use this layout,
-include the `jekyll-paginate` plugin in your `Gemfile` and in your `_config.yml` under `plugins`.
-For more, see [Jekyll Pagination](https://jekyllrb.com/docs/pagination/).
-  {% endcapture %}
-  {% include message.html text=text %}
-{% endif %}
+<!DOCTYPE html>
+<html>
+
+{% include head.html %}
+
+<body>
+    {% include navbar.html %}
+
+    <section class="hero is-fullheight" id="blog">
+        <div class="hero-body">
+            <div class="container">
+                {% include blogpage-heading.html %}
+            </div>
+        </div>
+        <div id="results-container"></div>
+        <!--Blog Cards Section-->
+        {% for post in site.posts %}
+            {% include blog-card.html %}
+        {% endfor %}
+        </div>
+    </section>
+    <br>
+    <!--Footer begins here-->
+    {% include footer.html %}
+    <script src="{{site.url}}{{site.baseurl}}/assets/js/simple-jekyll-search.js"></script>
+
+    <script>
+        SimpleJekyllSearch({
+            searchInput: document.getElementById('search'),
+            resultsContainer: document.getElementById('results-container'),
+            json: '{{site.url}}{{site.baseurl}}/search.json',
+            searchResultTemplate: '<div style="border: 0.15rem dashed black" class="searchResult columns has-text-centered" id="blog-card"><div class="column is-marginless is-paddingless is-one-third-desktop is-one-third-fullhd is-one-third-tablet"><div class="image is-16by9" style="background-image: url({image});"></div></div><a href="{url}"><div class="column has-text-left-desktop has-text-left-tablet"><h1 class="title is-size-4-touch">{title}</h1><div class="content has-text-grey">{content}<hr class="has-background-grey"><span class="has-text-grey">Published on <span class="has-text-weight-semibold">{date}</span></span> | <i class="fas fa-clock"></i> <span class="has-text-weight-semibold">{readtime} min</span> read</div></div></a></div>',
+            noResultsText: '<div class="subtitle has-text-centered is-uppercase">No Results Found</div><hr class="has-background-black" style="margin: 0.5rem 5rem 2.5rem 5rem">',
+            fuzzy: true,
+        });
+    </script>
+</body>
+
+</html>

@@ -1,41 +1,301 @@
 ---
-# Copyright (c) 2017 Florian Klampfer <https://qwtel.com/>
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-layout: base
+layout: main
 ---
 
-{% include post.html post=page link_title=false %}
+<style>
+  /* Hero Section Styles */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 40vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
 
-<div class="post-addons-container">
-  <hr class="dingbat related" />
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 122%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 0;
+  }
 
-  {% assign addons = site.hydejack.post_addons %}
-  {% unless addons %}{% assign addons = "about,newsletter,related,random" | split:"," %}{% endunless %}
-  {% for addon in addons %}
-    {% case addon %}
-    {% when 'about' %}
-       {% include about.html %}
-    {% when 'related' %}
-      {% include related-posts.html post=post %}
-    {% else %}
-    {% endcase %}
-  {% endfor %}
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 25, 38, 0.75);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    color: white;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .hero-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 400;
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+  }
+
+  .hero-meta {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .hero-meta a {
+    color: #A6F0FF;
+  }
+
+  /* Content Section */
+  .content-section {
+    padding: 0 20px 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .post-content {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .post-content h1, .post-content h2, .post-content h3, 
+  .post-content h4, .post-content h5, .post-content h6 {
+    color: white;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .post-content p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .post-content ul, .post-content ol {
+    color: rgba(255, 255, 255, 0.9);
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .post-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .post-content a {
+    color: #A6F0FF;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(166, 240, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .post-content a:hover {
+    color: #67d4e8;
+    border-bottom-color: #67d4e8;
+  }
+
+  .post-content code {
+    background: rgba(0, 136, 204, 0.1);
+    color: #A6F0FF;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+  }
+
+  .post-content pre {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(166, 240, 255, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .post-content pre code {
+    background: none;
+    padding: 0;
+  }
+
+  .post-content blockquote {
+    border-left: 4px solid #A6F0FF;
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+  }
+
+  .post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+  }
+
+  .post-content th {
+    background: rgba(0, 136, 204, 0.2);
+    color: white;
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid rgba(166, 240, 255, 0.2);
+  }
+
+  .post-content td {
+    padding: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(166, 240, 255, 0.1);
+  }
+
+  .post-content aside {
+    background: rgba(166, 240, 255, 0.1);
+    border: 1px solid rgba(166, 240, 255, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  /* Tags */
+  .tags-container {
+    margin: 2rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(166, 240, 255, 0.15);
+    color: #A6F0FF;
+    padding: 0.4rem 0.8rem;
+    margin: 0.25rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover {
+    background: rgba(166, 240, 255, 0.25);
+  }
+
+  /* Comments Section */
+  .comments-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 3rem;
+  }
+
+  .comments-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  #disqus_thread {
+    margin-top: 1rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .post-content {
+      padding: 2rem 1.5rem;
+    }
+
+    .content-section {
+      padding: 0 10px 40px;
+    }
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-background"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="hero-description">{{ page.description | strip_html | strip_newlines | truncate: 200 }}</p>
+    {% endif %}
+    <div class="hero-meta">
+      <span>Published on <strong>{{ page.date | date: "%B %d, %Y" }}</strong></span>
+      {% if site.author-name %}
+      <span> by <a href="{% if site.author-url %}{{site.author-url}}{% else %}{{site.url}}{{site.baseurl}}/#about{% endif %}" target="_blank"><strong>{{ site.author-name }}</strong></a></span>
+      {% endif %}
+      {% assign words = content | number_of_words %}
+      {% if words > 0 %}
+      <span> • {{ words | divided_by: 180 }} min read</span>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- Content Section -->
+<div class="content-section">
+  <!-- Post Content -->
+  <article class="post-content">
+    {{ content }}
+  </article>
+
+  <!-- Tags -->
+  {% if page.tags.size > 0 %}
+  <div class="tags-container">
+    {% for tag in page.tags %}
+    <span class="tag">{{ tag }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Comments -->
+  {% unless site.disqus-shortname == "" %}
+  <div class="comments-section">
+    <h2 class="comments-title">Comments</h2>
+    <div id="disqus_thread"></div>
+  </div>
+  {% endunless %}
 </div>
+
+<script>
+  (function () {
+    var d = document,
+      s = d.createElement('script');
+    s.src = 'https://{{site.disqus-shortname}}.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>

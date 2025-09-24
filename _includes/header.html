@@ -1,0 +1,715 @@
+<!-- Global Header -->
+<header class="site-header" id="site-header">
+  <div class="header-wrapper">
+    <div class="header-container">
+      <!-- Logo -->
+      <div class="logo">
+        <a href="/">Connects</a>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="main-nav" id="main-nav">
+        <div class="nav-line"></div>
+        <ul class="nav-list">
+          <li class="nav-item" data-menu="products">
+            <a href="/products/" class="nav-link">Products</a>
+          </li>
+          <li class="nav-item" data-menu="labs">
+            <a href="/labs/" class="nav-link">Labs</a>
+          </li>
+          <li class="nav-item" data-menu="updates">
+            <a href="/updates/" class="nav-link">Updates</a>
+          </li>
+          <li class="nav-item" data-menu="about">
+            <a href="/about/" class="nav-link">About us</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Mobile Toggle -->
+      <button class="mobile-toggle" id="mobile-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mega Menu Container -->
+    <div class="mega-menu" id="mega-menu">
+      <div class="mega-menu-container">
+        <div class="mega-menu-grid">
+          <!-- Products Column -->
+          <div class="mega-menu-column">
+            <h3 class="mega-menu-title">Products</h3>
+            <ul class="mega-menu-list">
+              <li><a href="https://curie.kr" target="_blank" class="mega-menu-link">Curie</a></li>
+              <li><span class="mega-menu-link disabled">Twin</span></li>
+              <li><span class="mega-menu-link disabled">Pensive</span></li>
+            </ul>
+          </div>
+
+          <!-- Labs Column -->
+          <div class="mega-menu-column">
+            <h3 class="mega-menu-title">Labs</h3>
+            <ul class="mega-menu-list">
+              <li><a href="/labs/" class="mega-menu-link">All Tools</a></li>
+              <li><a href="/labs/protein/" class="mega-menu-link">Protein Structure</a></li>
+              <li><a href="/labs/docking/" class="mega-menu-link">Docking & Binding</a></li>
+              <li><a href="/labs/compound/" class="mega-menu-link">Drug Discovery</a></li>
+              <li><a href="/labs/utilities/" class="mega-menu-link">Utilities</a></li>
+            </ul>
+          </div>
+
+          <!-- Updates Column -->
+          <div class="mega-menu-column">
+            <h3 class="mega-menu-title">Updates</h3>
+            <ul class="mega-menu-list">
+              <li><a href="/updates/release-notes/" class="mega-menu-link">Release Notes</a></li>
+              <li><a href="/updates/feature-improvements/" class="mega-menu-link">Feature Improvements</a></li>
+              <li><a href="/updates/announcements/" class="mega-menu-link">Announcements</a></li>
+            </ul>
+          </div>
+
+          <!-- About Column -->
+          <div class="mega-menu-column">
+            <h3 class="mega-menu-title">About us</h3>
+            <ul class="mega-menu-list">
+              <li><a href="/about/history/" class="mega-menu-link">History</a></li>
+              <li><a href="/about/vision/" class="mega-menu-link">Vision</a></li>
+              <li><a href="/about/contact/" class="mega-menu-link">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-section">
+        <h3 class="mobile-menu-title">Products</h3>
+        <ul class="mobile-menu-list">
+          <li><a href="/products/" class="mobile-menu-link">All Products</a></li>
+          <li><a href="https://curie.kr" target="_blank" class="mobile-menu-link">Curie</a></li>
+          <li><span class="mobile-menu-link disabled">Twin</span></li>
+          <li><span class="mobile-menu-link disabled">Pensive</span></li>
+        </ul>
+      </div>
+      <div class="mobile-menu-section">
+        <h3 class="mobile-menu-title">Labs</h3>
+        <ul class="mobile-menu-list">
+          <li><a href="/labs/" class="mobile-menu-link">All Tools</a></li>
+          <li><a href="/labs/protein/" class="mobile-menu-link">Protein Structure</a></li>
+          <li><a href="/labs/docking/" class="mobile-menu-link">Docking & Binding</a></li>
+          <li><a href="/labs/compound/" class="mobile-menu-link">Drug Discovery</a></li>
+          <li><a href="/labs/utilities/" class="mobile-menu-link">Utilities</a></li>
+        </ul>
+      </div>
+      <div class="mobile-menu-section">
+        <h3 class="mobile-menu-title">Updates</h3>
+        <ul class="mobile-menu-list">
+          <li><a href="/updates/" class="mobile-menu-link">All Updates</a></li>
+          <li><a href="/updates/release-notes/" class="mobile-menu-link">Release Notes</a></li>
+          <li><a href="/updates/feature-improvements/" class="mobile-menu-link">Feature Improvements</a></li>
+          <li><a href="/updates/announcements/" class="mobile-menu-link">Announcements</a></li>
+        </ul>
+      </div>
+      <div class="mobile-menu-section">
+        <h3 class="mobile-menu-title">About us</h3>
+        <ul class="mobile-menu-list">
+          <li><a href="/about/" class="mobile-menu-link">About</a></li>
+          <li><a href="/about/history/" class="mobile-menu-link">History</a></li>
+          <li><a href="/about/vision/" class="mobile-menu-link">Vision</a></li>
+          <li><a href="/about/contact/" class="mobile-menu-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Header Base */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+  }
+
+  .header-wrapper {
+    position: relative;
+    background: transparent;
+  }
+
+  .header-container {
+    max-width: 1680px;
+    margin: 0 auto;
+    padding: 1.5rem 120px 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
+  }
+
+  .site-header.scrolled .header-container {
+    padding: 1rem 120px;
+  }
+
+  /* Logo */
+  .logo a {
+    color: #A6F0FF;
+    font-size: 3rem;
+    font-weight: 900;
+    text-decoration: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .logo a:hover {
+    color: #67d4e8;
+    transform: translateY(-1px);
+  }
+
+  .site-header.scrolled .logo a {
+    font-size: 2.5rem;
+  }
+
+  /* Navigation */
+  .main-nav {
+    margin-left: auto;
+    position: relative;
+  }
+
+  .nav-line {
+    height: 3px;
+    position: absolute;
+    bottom: -12px;
+    background: linear-gradient(90deg, #A6F0FF, #67d4e8);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    width: 0;
+    left: 0;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(166, 240, 255, 0.5);
+  }
+
+  .nav-list {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.3s ease;
+    display: block;
+    text-transform: capitalize;
+    letter-spacing: 0.02em;
+    padding: 0.5rem 0;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: #A6F0FF;
+  }
+
+  .site-header.scrolled .nav-link {
+    font-size: 1rem;
+  }
+
+  /* Mega Menu */
+  .mega-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    width: calc(100% - 240px);
+    max-width: 1440px;
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(248, 250, 252, 0.98) 100%);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04),
+      0 0 0 1px rgba(0, 0, 0, 0.02);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
+    overflow: hidden;
+  }
+
+  .mega-menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(166, 240, 255, 0.2),
+      transparent);
+  }
+
+  .mega-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .mega-menu-container {
+    padding: 2.5rem 3rem;
+  }
+
+  .mega-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .mega-menu-column {
+    position: relative;
+    animation: fadeInUp 0.3s ease forwards;
+    opacity: 0;
+    padding: 0 2.5rem;
+  }
+
+  .mega-menu-column:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 0;
+    bottom: 10px;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(0, 0, 0, 0.06) 30%,
+      rgba(0, 0, 0, 0.06) 70%,
+      transparent
+    );
+  }
+
+  .mega-menu-column:first-child {
+    padding-left: 0;
+  }
+
+  .mega-menu-column:last-child {
+    padding-right: 0;
+  }
+
+  .mega-menu-column:nth-child(1) { animation-delay: 0.05s; }
+  .mega-menu-column:nth-child(2) { animation-delay: 0.1s; }
+  .mega-menu-column:nth-child(3) { animation-delay: 0.15s; }
+  .mega-menu-column:nth-child(4) { animation-delay: 0.2s; }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  .mega-menu.active .mega-menu-column {
+    opacity: 1;
+  }
+
+  .mega-menu-title {
+    color: #001926;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 25, 38, 0.1);
+    position: relative;
+    opacity: 0.7;
+  }
+
+  .mega-menu-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: #0088CC;
+    border-radius: 2px;
+  }
+
+  .mega-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mega-menu-list li {
+    margin-bottom: 0.25rem;
+  }
+
+  .mega-menu-link {
+    color: #001926;
+    font-size: 0.925rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.5rem 0.75rem;
+    margin: 0 -0.75rem;
+    border-radius: 8px;
+  }
+
+  .mega-menu-link:hover {
+    color: #0088CC;
+    background: rgba(0, 136, 204, 0.08);
+  }
+
+  .mega-menu-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: #0088CC;
+    border-radius: 3px;
+    transition: height 0.2s ease;
+  }
+
+  .mega-menu-link:hover::before {
+    height: 16px;
+  }
+
+  .mega-menu-link.disabled {
+    color: rgba(0, 25, 38, 0.3);
+    cursor: not-allowed;
+    pointer-events: none;
+    position: relative;
+  }
+
+  .mega-menu-link.disabled::after {
+    content: '(Coming Soon)';
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .mega-menu-count {
+    display: inline-block;
+    background: rgba(0, 136, 204, 0.1);
+    color: #0088CC;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.1rem 0.4rem;
+    border-radius: 10px;
+    margin-left: 0.5rem;
+  }
+
+  .mega-menu-sublist {
+    list-style: none;
+    margin: 0.5rem 0 0 1rem;
+    padding: 0;
+    border-left: 2px solid rgba(0, 136, 204, 0.1);
+  }
+
+  .mega-menu-sublink {
+    display: block;
+    color: rgba(0, 25, 38, 0.6);
+    font-size: 0.85rem;
+    padding: 0.3rem 0.75rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .mega-menu-sublink:hover {
+    color: #0088CC;
+    background: rgba(0, 136, 204, 0.05);
+  }
+
+  .mega-menu-sublink::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #0088CC;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .mega-menu-sublink:hover::before {
+    opacity: 1;
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 25, 38, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-menu-content {
+    padding: 100px 20px 40px;
+  }
+
+  .mobile-menu-section {
+    margin-bottom: 2rem;
+  }
+
+  .mobile-menu-title {
+    color: #A6F0FF;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(166, 240, 255, 0.2);
+  }
+
+  .mobile-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-menu-list li {
+    margin-bottom: 0.5rem;
+  }
+
+  .mobile-menu-link {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu-link:hover,
+  .mobile-menu-link:active {
+    color: #A6F0FF;
+    transform: translateX(10px);
+  }
+
+  .mobile-menu-link.disabled {
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .mobile-menu-link.disabled::after {
+    content: '(Coming Soon)';
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+    opacity: 0.5;
+    font-style: italic;
+  }
+
+  .mobile-submenu {
+    list-style: none;
+    margin: 0.5rem 0 0.5rem 1.5rem;
+    padding: 0;
+  }
+
+  .mobile-submenu-link {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+    padding: 0.3rem 0;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-submenu-link:hover,
+  .mobile-submenu-link:active {
+    color: #A6F0FF;
+    transform: translateX(5px);
+  }
+
+
+  /* Mobile Toggle */
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: 2rem;
+    z-index: 10000;
+    position: relative;
+  }
+
+  .mobile-toggle span {
+    width: 28px;
+    height: 3px;
+    background: white;
+    margin: 3px 0;
+    border-radius: 3px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-toggle.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .mobile-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-toggle.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  /* Responsive */
+  @media (max-width: 1400px) {
+    .header-container {
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+
+    .mega-menu {
+      width: calc(100% - 120px);
+    }
+
+    .nav-list {
+      gap: 2.5rem;
+    }
+
+    .mega-menu-grid {
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .header-container {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .mega-menu {
+      width: calc(100% - 80px);
+    }
+
+    .mega-menu-container {
+      padding: 2.5rem 3rem;
+    }
+
+    .nav-list {
+      gap: 2rem;
+    }
+
+    .logo a {
+      font-size: 2.5rem;
+    }
+
+    .site-header.scrolled .logo a {
+      font-size: 2rem;
+    }
+
+    .nav-link {
+      font-size: 1rem;
+    }
+
+    .mega-menu-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .mega-menu-column::after {
+      display: none;
+    }
+
+    .mega-menu-column {
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header-container {
+      padding: 1rem 20px;
+    }
+
+    .logo a {
+      font-size: 2rem;
+    }
+
+    .main-nav {
+      display: none;
+    }
+
+    .mega-menu {
+      display: none !important;
+    }
+
+    .mobile-toggle {
+      display: flex;
+    }
+
+    .header-border {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo a {
+      font-size: 1.75rem;
+    }
+
+    .mobile-menu-content {
+      padding: 80px 15px 30px;
+    }
+
+    .mobile-menu-title {
+      font-size: 1.1rem;
+    }
+
+    .mobile-menu-link {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+

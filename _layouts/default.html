@@ -1,61 +1,410 @@
 ---
-# Copyright (c) 2017 Florian Klampfer <https://qwtel.com/>
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-layout: base
+layout: compress
 ---
 
-{% assign strings = site.data.strings %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
 
-<article class="page" role="article">
-  <header>
-    <h1 class="page-title">{{ page.title | default:strings.home | default:"Home" }}</h1>
-    {% include message.html text=page.description hide=page.hide_description %}
-  </header>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 
-  {{ content }}
+  <!-- Base Styles -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <hr class="dingbat"/>
+    html {
+      scroll-behavior: smooth;
+    }
 
-  {% if site.posts.size > 0 %}
-  <h2 class="hr">{{ strings.posts | default:"Posts" }}</h2>
-  <ul class="related-posts">
-    {% for post in site.posts limit:5 %}
-    {% include post-list-item.html post=post %}
-    {% endfor %}
-  </ul>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      overflow-x: hidden;
+      background: #001926;
+      color: white;
+      line-height: 1.6;
+      /* Prevent scrollbar jump */
+      padding-right: 0 !important;
+      overflow-y: scroll;
+    }
+
+    .main-content {
+      min-height: 100vh;
+      position: relative;
+      padding-top: 120px; /* Account for fixed header */
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    a {
+      color: #A6F0FF;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #67d4e8;
+    }
+
+    /* Responsive images */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Utility classes */
+    .text-center {
+      text-align: center;
+    }
+
+    .text-left {
+      text-align: left;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
+    .mt-4 { margin-top: 2rem; }
+    .mt-5 { margin-top: 3rem; }
+
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 1rem; }
+    .mb-3 { margin-bottom: 1.5rem; }
+    .mb-4 { margin-bottom: 2rem; }
+    .mb-5 { margin-bottom: 3rem; }
+
+    .pt-1 { padding-top: 0.5rem; }
+    .pt-2 { padding-top: 1rem; }
+    .pt-3 { padding-top: 1.5rem; }
+    .pt-4 { padding-top: 2rem; }
+    .pt-5 { padding-top: 3rem; }
+
+    .pb-1 { padding-bottom: 0.5rem; }
+    .pb-2 { padding-bottom: 1rem; }
+    .pb-3 { padding-bottom: 1.5rem; }
+    .pb-4 { padding-bottom: 2rem; }
+    .pb-5 { padding-bottom: 3rem; }
+
+    /* Button styles */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid white;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: white;
+      color: #001926;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary {
+      background: #A6F0FF;
+      border-color: #A6F0FF;
+      color: #001926;
+    }
+
+    .btn-primary:hover {
+      background: #67d4e8;
+      border-color: #67d4e8;
+      color: #001926;
+    }
+
+    /* Grid system */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -15px;
+    }
+
+    .col {
+      flex: 1;
+      padding: 0 15px;
+    }
+
+    .col-12 { flex: 0 0 100%; max-width: 100%; }
+    .col-6 { flex: 0 0 50%; max-width: 50%; }
+    .col-4 { flex: 0 0 33.333%; max-width: 33.333%; }
+    .col-3 { flex: 0 0 25%; max-width: 25%; }
+
+    @media (max-width: 768px) {
+      .main-content {
+        padding-top: 80px;
+      }
+
+      .col-6,
+      .col-4,
+      .col-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+
+      .row {
+        margin: 0;
+      }
+
+      .col {
+        padding: 0;
+      }
+    }
+
+    /* Page header */
+    .page-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 4rem 0;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 25, 38, 0.7);
+      z-index: 1;
+    }
+
+    .page-header > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+
+  {% if page.custom_css %}
+  <style>
+    {{ page.custom_css }}
+  </style>
   {% endif %}
+</head>
+<body>
+  {% include header.html %}
 
-  {% assign pages = site.html_pages | where:"layout","page" | where_exp:"page","page.sitemap != false" %}
-  {% if pages.size > 0 %}
-  <h2 class="hr">{{ strings.pages | default:"Pages" }}</h2>
-  <ul class="related-posts">
-    {% for page in pages limit:5 %}
-    {% if page.layout == 'page' %}
-    <li class="h4">
-      <a href="{{ page.url | relative_url }}" class="flip-title">
-        <span>{{ page.title }}</span>
-      </a>
-    </li>
-    {% endif %}
-    {% endfor %}
-  </ul>
-  {% endif %}
-</article>
+  <main class="main-content">
+    {{ content }}
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var megaMenu = document.getElementById('mega-menu');
+      var mobileToggle = document.getElementById('mobile-toggle');
+      var mobileMenu = document.getElementById('mobile-menu');
+      var navItems = document.querySelectorAll('.nav-item');
+      var navLine = document.querySelector('.nav-line');
+      var navList = document.querySelector('.nav-list');
+      var hideTimeout;
+
+      if (navLine) {
+        navLine.style.opacity = '0';
+        navLine.style.width = '0px';
+        navLine.style.left = '0px';
+      }
+
+      function animateLineTo(item) {
+        if (!item || !navLine || !navList) return;
+        
+        var rect = item.getBoundingClientRect();
+        var navRect = navList.getBoundingClientRect();
+        var left = rect.left - navRect.left;
+        var width = rect.width;
+
+        navLine.style.opacity = '1';
+        navLine.style.left = left + 'px';
+        navLine.style.width = width + 'px';
+      }
+
+      function showMegaMenu() {
+        clearTimeout(hideTimeout);
+        if (megaMenu) {
+          megaMenu.classList.add('active');
+        }
+      }
+
+      function hideMegaMenu() {
+        hideTimeout = setTimeout(function() {
+          if (megaMenu) {
+            megaMenu.classList.remove('active');
+          }
+          if (navLine) {
+            navLine.style.opacity = '0';
+          }
+        }, 200);
+      }
+
+      if (navList && megaMenu && window.innerWidth > 768) {
+        navList.addEventListener('mouseenter', showMegaMenu);
+        navList.addEventListener('mouseleave', function() {
+          hideMegaMenu();
+        });
+        
+        megaMenu.addEventListener('mouseenter', function() {
+          clearTimeout(hideTimeout);
+          megaMenu.classList.add('active');
+        });
+        
+        megaMenu.addEventListener('mouseleave', function() {
+          hideMegaMenu();
+        });
+      }
+
+      navItems.forEach(function(item) {
+        item.addEventListener('mouseenter', function() {
+          animateLineTo(item);
+          item.classList.add('active');
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          item.classList.remove('active');
+        });
+      });
+
+      if (mobileToggle) {
+        mobileToggle.addEventListener('click', function() {
+          mobileToggle.classList.toggle('active');
+          if (mobileMenu) {
+            mobileMenu.classList.toggle('active');
+            if (mobileMenu.classList.contains('active')) {
+              document.body.style.overflow = 'hidden';
+            } else {
+              document.body.style.overflow = '';
+            }
+          }
+        });
+      }
+
+      if (mobileMenu) {
+        var mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            mobileToggle.classList.remove('active');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          if (window.innerWidth > 768) {
+            if (mobileMenu) mobileMenu.classList.remove('active');
+            if (mobileToggle) mobileToggle.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        }, 250);
+      });
+
+      var header = document.getElementById('site-header');
+      if (header) {
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        });
+      }
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerOffset = 100;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

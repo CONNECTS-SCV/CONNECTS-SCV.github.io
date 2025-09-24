@@ -1,43 +1,144 @@
 ---
-layout: page
-title: "Release Notes"
-description: >
-  CONNECTS 플랫폼 업데이트 및 릴리즈 정보
+layout: main
+title: Release Notes | CONNECTS
+description: CONNECTS 플랫폼 업데이트 및 릴리즈 정보
 permalink: /release/
 ---
 
-## 📢 릴리즈 노트
+<style>
+  /* Hero Section Styles */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 30vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
 
-<div class="message">
-📝 릴리즈 노트 작성 예정입니다. CONNECTS 플랫폼의 새로운 기능, 개선사항, 버그 수정 등 모든 업데이트 내역을 확인하실 수 있습니다. 저희는 지속적으로 플랫폼을 개선하고 새로운 기능을 추가하여 연구자 여러분께 최고의 분석 경험을 제공하고자 노력하고 있습니다.
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 122%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 0;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 25, 38, 0.5);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    color: white;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .hero-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 400;
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.4;
+  }
+
+  /* Content Section */
+  .content-section {
+    padding: 0 20px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .release-notice {
+    background: rgba(166, 240, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(166, 240, 255, 0.3);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .release-notice-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .release-notice-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .release-notice-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .release-notice {
+      padding: 2rem;
+    }
+
+    .release-notice-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-background"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Release Notes</h1>
+    <p class="hero-description">{{ page.description }}</p>
+  </div>
+</section>
+
+<!-- Content Section -->
+<div class="content-section">
+  <div class="release-notice">
+    <div class="release-notice-icon">📝</div>
+    <h2 class="release-notice-title">릴리즈 노트 작성 예정</h2>
+    <p class="release-notice-text">
+      CONNECTS 플랫폼의 새로운 기능, 개선사항, 버그 수정 등 모든 업데이트 내역을 곧 확인하실 수 있습니다.<br>
+      저희는 지속적으로 플랫폼을 개선하고 새로운 기능을 추가하여<br>
+      연구자 여러분께 최고의 분석 경험을 제공하고자 노력하고 있습니다.
+    </p>
+  </div>
 </div>
-
-[//]: # ()
-[//]: # (### 🚀 예정된 업데이트 및 로드맵)
-
-[//]: # (<p>Version 2.0.0이 2025년 1분기에 출시될 예정입니다. 주요 업데이트로는 AlphaFold 3 통합을 통한 최신 단백질 구조 예측 모델 지원, 연구팀과 함께 분석 결과를 공유할 수 있는 실시간 협업 기능, GPU 가속 지원으로 대규모 시뮬레이션 속도 10배 향상, WebGL 기반 3D 분자 렌더링을 위한 새로운 시각화 엔진이 포함됩니다. 또한 머신러닝 모델의 정확도 개선과 사용자 인터페이스의 추가 최적화도 진행될 예정입니다.</p>)
-
-[//]: # ()
-[//]: # (### 📋 최근 업데이트 내역 및 변경사항)
-
-[//]: # (<p>Version 1.5.0 베타 릴리즈가 2024년 12월 15일에 출시되었습니다. 이는 CONNECTS 플랫폼의 첫 공개 베타 버전으로, 단백질 구조 분석과 리간드 도킹 기능을 포함한 핵심 기능들이 구현되었습니다. Version 1.4.0에서는 2024년 11월 20일에 ToxinPred3.0 펩타이드 독성 예측 도구가 플랫폼에 통합되어 머신러닝 기반 독성 평가로 신약 개발 과정을 더욱 안전하게 만들었습니다. Version 1.3.0에서는 2024년 10월 30일에 사용자 인터페이스를 전면 개편하여 더욱 직관적이고 편리한 분석 환경을 제공하게 되었으며, 다크 모드 지원과 반응형 디자인이 추가되었습니다.</p>)
-
-[//]: # ()
-[//]: # (### 🐛 버그 수정 및 성능 개선)
-
-[//]: # (<p>최근 업데이트에서 단백질 구조 시각화 시 발생하던 메모리 누수 문제를 해결했으며, 대용량 파일 업로드 시 타임아웃 오류가 발생하던 문제를 수정했습니다. 또한 API 응답 속도를 평균 30% 개선했고, 사용자 인증 시스템의 보안을 강화했습니다. 분석 결과 다운로드 기능의 안정성도 크게 향상되었으며, 다양한 브라우저 환경에서의 호환성 문제들도 해결되었습니다.</p>)
-
-[//]: # ()
-[//]: # (### 💡 새로운 기능 및 도구)
-
-[//]: # (<p>최근 추가된 주요 기능으로는 배치 분석 기능으로 여러 개의 구조를 동시에 분석할 수 있게 되었고, 분석 히스토리 관리 시스템으로 이전 분석 결과를 쉽게 찾아볼 수 있습니다. 또한 고급 필터링 옵션이 추가되어 분석 결과를 더 세밀하게 정렬하고 검색할 수 있으며, 결과 내보내기 형식도 다양화되어 PDF, PNG, SVG 등 다양한 형식으로 결과를 저장할 수 있습니다.</p>)
-
-[//]: # ()
-[//]: # (### 📮 피드백 및 제안사항)
-
-[//]: # (<p>새로운 기능 제안이나 버그 리포트는 GitHub Issues &#40;github.com/CONNECTS-SCV/platform/issues&#41;를 통해 알려주시거나 contact@connects.so로 직접 연락주세요. 여러분의 소중한 의견이 CONNECTS를 더 나은 플랫폼으로 만듭니다. 사용자 피드백을 바탕으로 지속적인 개선을 진행하고 있으며, 정기적인 사용자 설문조사를 통해 향후 개발 방향을 결정하고 있습니다.</p>)
-
-[//]: # ()
-[//]: # (### 🔄 업데이트 주기 및 알림)
-
-[//]: # (<p>CONNECTS는 매월 정기 업데이트를 제공하며, 중요한 보안 패치나 긴급 버그 수정은 즉시 배포됩니다. 업데이트 알림을 받고 싶으시면 플랫폼 내 설정에서 이메일 알림을 활성화하거나 GitHub 저장소를 구독해주세요.</p>)

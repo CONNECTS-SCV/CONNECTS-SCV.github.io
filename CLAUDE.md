@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Jekyll-based website for CONNECTS, an AI-powered structural biology analysis platform. The site uses the Hydejack theme (v7.5.2) and is hosted on GitHub Pages at https://connects-scv.github.io/.
+This is a Jekyll-based website for CONNECTS, an AI-powered structural biology analysis platform. The site uses a customized Hydejack theme (v7.5.2) with significant navigation and styling modifications, hosted on GitHub Pages at https://connects-scv.github.io/.
 
 ## Build and Development Commands
 
@@ -26,10 +26,13 @@ This is a Jekyll-based website for CONNECTS, an AI-powered structural biology an
 - `npm run dev` - Primary development command (runs watch + serve concurrently)
 - `npm run prepare` - Lint, test, clean, and build before committing
 
+### Port Management
+- If port 4000 is already in use, find and kill processes: `lsof -i :4000` then `kill <PID>`
+
 ## Architecture
 
 ### Jekyll Structure
-The site follows standard Jekyll conventions with Hydejack theme customizations:
+The site follows Jekyll conventions with extensive Hydejack theme customizations:
 
 - **_config.yml**: Main Jekyll configuration. Key settings include:
   - Site URL, title, descriptions in Korean
@@ -39,10 +42,36 @@ The site follows standard Jekyll conventions with Hydejack theme customizations:
 
 - **Content Organization**:
   - `_posts/`: Blog posts about tools and releases
-  - `analysis/`: Analysis tool pages (protein and ligand subdirectories)
-  - `release/`: Release notes and updates
+  - `products/`: Product pages (Curie, Twin, Pensive)
+  - `labs/`: Lab sections (Protein, Ligand, Interaction, Docking, Prediction)
+  - `updates/`: Update sections (Release Notes, Features, Announcements)
+  - `about/`: About sections (History, Vision, Contact)
   - `_layouts/`: HTML templates for different page types
   - `_includes/`: Reusable HTML components
+
+### Layout Architecture
+The site uses a multi-layout system:
+
+- **`main.html`**: Primary layout with custom navigation system and advanced dropdown functionality
+- **`default.html`**: Secondary layout with identical navigation system for consistency
+- **`compress.html`**: Base layout that compresses HTML output
+- **Specialized layouts**: `blog.html`, `post.html`, `page.html`, etc.
+
+### Custom Navigation System
+**Critical Implementation Details:**
+
+The navigation system (`_includes/header.html`) includes:
+- **Fixed header** with glassmorphism effects and backdrop blur
+- **Animated navigation line** that moves on hover using `animateLineTo()` function
+- **Individual dropdown menus** for each main navigation item (Products, Labs, Updates, About us)
+- **Advanced hover management** with timeout-based state tracking to prevent premature hiding
+- **Connection areas** using CSS pseudo-elements to maintain dropdown visibility during mouse movement
+
+**JavaScript Architecture (in `main.html` and `default.html`):**
+- `showDropdown()` / `hideDropdown()` functions manage visibility
+- `checkMenuArea()` function tracks hover state across menu items and dropdowns
+- Timeout management with 150ms delays and 50ms state checking intervals
+- Event listeners for `mouseenter` and `mouseleave` with sophisticated timing logic
 
 ### Asset Pipeline
 The project uses a dual build system:
@@ -63,19 +92,46 @@ The project uses a dual build system:
 - **Progressive Enhancement**: Uses hy-push-state and hy-drawer for SPA-like navigation
 - **Performance Optimizations**: 
   - Inline critical CSS option
-  - JavaScript code splitting
+  - JavaScript code splitting with webpack
   - Asset preloading capabilities
-- **Responsive Design**: Mobile-first with drawer navigation
-- **Internationalization**: Korean language support with configurable strings
+  - HTML compression via jekyll-compress-html
+- **Custom JavaScript Components**:
+  - RxJS-based reactive programming patterns
+  - FLIP animations for smooth transitions
+  - Modern ES6+ with Babel transpilation
+- **Responsive Design**: Mobile-first with custom dropdown navigation on desktop, hamburger menu on mobile
+- **Styling Architecture**: SCSS with component-based organization and CSS-in-JS style effects
+
+### SCSS Architecture
+**Critical Understanding:**
+- **`_sass/hydejack/`**: Theme-specific styles with `.pre.scss` files that generate `__inline/` and `__link/` variants
+- **`_sass/pooleparty/`**: Base framework styles following same pattern
+- **`_sass/my-*.scss`**: Custom site-specific overrides
+- **Build process**: `npm run build:css` processes all SCSS and generates final stylesheets
+
+### Development Patterns
+**Navigation System Modifications:**
+- When modifying navigation, update both `main.html` and `default.html` layouts identically
+- Navigation JavaScript must be loaded before header include to avoid timing issues
+- Dropdown positioning uses `calc(100% + 5px)` with connection areas via `::before` pseudo-elements
+- Hover state management requires careful timeout coordination (150ms/50ms intervals)
+
+**Layout Inheritance:**
+- Most pages inherit from `main.html` (homepage, landing pages)
+- Content pages use `default.html` (blog posts, documentation)
+- Both layouts include identical navigation JavaScript for consistency
 
 ### Deployment
 The site is configured for GitHub Pages deployment:
-- Branch: main
+- Branch: main_ver3 (currently active development branch)  
+- Main branch: main (for production deployments)
 - URL: https://connects-scv.github.io/
 - Automatic Jekyll build on push
 
 ## Important Notes
-- The project mixes pre-compiled assets in `assets/` with source files
-- Some CSS is generated dynamically from `.pre.scss` files
-- The webpack config uses environment-based builds (dev vs prod)
-- Korean language is the primary locale (lang: ko in _config.yml)
+- The project mixes pre-compiled assets in `assets/` with source files in `_sass/` and `_js/`
+- CSS is generated dynamically from `.pre.scss` files using custom build scripts
+- Webpack config (`webpack.config.js`) uses environment-based builds (dev vs prod)
+- Korean language is the primary locale (`lang: ko` in `_config.yml`)
+- Port conflicts are common - always check for running processes on port 4000
+- Navigation system requires both CSS and JavaScript coordination - test thoroughly after changes
