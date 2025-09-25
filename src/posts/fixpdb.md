@@ -63,4 +63,4 @@ slug: fixpdb-structure-cleaning-tool
 * 경미한 에너지 최소화
 
 ### 사용 링크
-* [FixPDB 사용하러 가기](https://curie.kr:444/Analysis/fixpdb)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/fixpdb?from=blog', '_blank'); return false;">FixPDB 사용하러 가기</a>

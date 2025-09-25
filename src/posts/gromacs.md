@@ -83,4 +83,4 @@ gmx sasa -s md.tpr -f md.xtc -o sasa.xvg
 ```
 
 ### 사용 링크
-* [GROMACS 사용하러 가기](https://curie.kr:444/Analysis/GROMACS)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/gromacs?from=blog', '_blank'); return false;">GROMACS 사용하러 가기</a>

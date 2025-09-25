@@ -61,4 +61,4 @@ slug: diffdock-ligand-docking-prediction
 * 결과는 확률적이므로 후속 평가 필요
 
 ### 사용 링크
-* [DiffDock 사용하러 가기](https://curie.kr:444/Analysis/DiffDock)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/DiffDock?from=blog', '_blank'); return false;">DiffDock 사용하러 가기</a>

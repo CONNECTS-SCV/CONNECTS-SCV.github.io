@@ -62,4 +62,4 @@ slug: chai-protein-ligand-glycan-docking
 * 별도 설정 필요 없음 (기본값 자동 적용)
 
 ### 사용 링크
-* [Chai 사용하러 가기](https://curie.kr:444/Analysis/chai)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/chai-1?from=blog', '_blank'); return false;">Chai 사용하러 가기</a>

@@ -68,4 +68,4 @@ slug: toxinpred3-peptide-toxicity-prediction
 * 0.5 기준으로 toxic/non-toxic 분류
 
 ### 사용 링크
-* [ToxinPred3.0 사용하러 가기](https://curie.kr:444/Analysis/toxinpred3)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/toxinpred3?from=blog', '_blank'); return false;">ToxinPred3.0 사용하러 가기</a>

@@ -60,4 +60,4 @@ slug: antifold-antibody-sequence-optimization
 * **ESM-IF1 Evaluation Mode**: 신뢰도 지표 출력 여부
 
 ### 사용 링크
-* [Antifold 사용하러 가기](https://curie.kr:444/Analysis/antifold)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/antifold?from=blog', '_blank'); return false;">Antifold 사용하러 가기</a>

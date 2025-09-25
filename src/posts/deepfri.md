@@ -66,4 +66,4 @@ slug: deepfri-protein-function-residue-prediction
 * 단독 사용보다 보조 도구로 활용 권장
 
 ### 사용 링크
-* [DeepFRI 사용하러 가기](https://curie.kr:444/Analysis/deepfri)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/deepfri?from=blog', '_blank'); return false;">DeepFRI 사용하러 가기</a>

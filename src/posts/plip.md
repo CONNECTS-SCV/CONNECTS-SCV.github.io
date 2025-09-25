@@ -69,4 +69,4 @@ slug: plip-protein-ligand-interaction-profiler
 * 복합체 구조 입력 필수
 
 ### 사용 링크
-* [PLIP 사용하러 가기](https://curie.kr:444/Analysis/plip)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/plip?from=blog', '_blank'); return false;">PLIP 사용하러 가기</a>

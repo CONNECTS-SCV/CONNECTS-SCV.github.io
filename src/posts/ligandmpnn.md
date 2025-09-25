@@ -65,4 +65,4 @@ slug: ligandmpnn-protein-ligand-optimization
 * AlphaFold2 등으로 결과 검증 권장
 
 ### 사용 링크
-* [LigandMPNN 사용하러 가기](https://curie.kr:444/Analysis/ligandmpnn)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/ligandmpnn?from=blog', '_blank'); return false;">LigandMPNN 사용하러 가기</a>

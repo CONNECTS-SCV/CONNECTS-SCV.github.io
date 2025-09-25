@@ -56,4 +56,4 @@ slug: admet-ai-drug-properties-prediction
 * 별도 파라미터 설정 없음 (기본값 자동 적용)
 
 ### 사용 링크
-* [ADMET-AI 사용하러 가기](https://curie.kr:444/Analysis/admet-ai)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/admet-ai?from=blog', '_blank'); return false;">ADMET-AI 사용하러 가기</a>

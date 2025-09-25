@@ -62,4 +62,4 @@ slug: netsolp-protein-solubility-prediction
 * 위치별 hotspot 제공 안 됨 (residue-level 분석 불가)
 
 ### 사용 링크
-* [NetsolP 사용하러 가기](https://curie.kr:444/Analysis/netsolp)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/netsolp?from=blog', '_blank'); return false;">NetsolP 사용하러 가기</a>

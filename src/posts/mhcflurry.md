@@ -59,4 +59,4 @@ MHC class I 분자와 펩타이드의 결합 친화도(IC50)를 예측하여 면
     * HLA-C 계열: C04:01, C07:02
 
 ### 사용 링크
-* [MHCflurry 사용하러 가기](https://curie.kr:444/Analysis/mhcflurry)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/mhcflurry2?from=blog', '_blank'); return false;">MHCflurry 사용하러 가기</a>

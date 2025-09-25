@@ -60,4 +60,4 @@ slug: dlkcat-enzyme-activity-prediction
 * Kcat은 비교용 수치이므로 절대값보다 상대 비교에 적합
 
 ### 사용 링크
-* [DLKcat 사용하러 가기](https://curie.kr:444/Analysis/dlkcat)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/dlkcat?from=blog', '_blank'); return false;">DLKcat 사용하러 가기</a>

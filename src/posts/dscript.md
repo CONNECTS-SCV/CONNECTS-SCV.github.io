@@ -62,4 +62,4 @@ slug: dscript-protein-interaction-prediction
 * Threshold 값은 실험 목적에 따라 조정 필요
 
 ### 사용 링크
-* [Dscript 사용하러 가기](https://curie.kr:444/Analysis/dscript)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/dscript?from=blog', '_blank'); return false;">Dscript 사용하러 가기</a>

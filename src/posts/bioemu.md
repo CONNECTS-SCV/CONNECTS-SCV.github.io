@@ -62,4 +62,4 @@ slug: bioemu-protein-structure-sampling
 * Backbone만 예측 (side-chain은 별도 복원 필요)
 
 ### 사용 링크
-* [Bioemu 사용하러 가기](https://curie.kr:444/Analysis/bioemu)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/biolemo?from=blog', '_blank'); return false;">Bioemu 사용하러 가기</a>

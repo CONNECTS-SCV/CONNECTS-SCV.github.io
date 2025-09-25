@@ -64,4 +64,4 @@ slug: immunebuilder-antibody-tcr-structure
 * 항체-항원 도킹은 별도 도구 필요
 
 ### 사용 링크
-* [Immunebuilder 사용하러 가기](https://curie.kr:444/Analysis/immunebuilder)
+* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/immunebuilder?from=blog', '_blank'); return false;">Immunebuilder 사용하러 가기</a>
