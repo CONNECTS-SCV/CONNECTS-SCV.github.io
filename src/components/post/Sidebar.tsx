@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useAnalyticsData, getPopularPostsFromAnalytics } from "@/lib/useAnalytics";
-
 interface Post {
     metadata: {
         title: string;
@@ -26,19 +23,14 @@ interface SidebarProps {
 }
 
 export function Sidebar({ posts }: SidebarProps) {
-    const [popularPosts, setPopularPosts] = useState<Post[]>([]);
-    const { viewData, loading } = useAnalyticsData();
-
-    useEffect(() => {
-        // GA 데이터 기반 인기 포스트 선정
-        if (!loading && viewData.size > 0) {
-            const popular = getPopularPostsFromAnalytics(posts, viewData, 3);
-            setPopularPosts(popular);
-        } else {
-            // 로딩 중이거나 데이터가 없으면 최신 포스트 표시
-            setPopularPosts(posts.slice(0, 3));
-        }
-    }, [posts, viewData, loading]);
+    // 최근 포스트 5개를 인기 포스트로 표시
+    const popularPosts = [...posts]
+        .sort((a, b) => {
+            const dateA = new Date(a.metadata.date || '');
+            const dateB = new Date(b.metadata.date || '');
+            return dateB.getTime() - dateA.getTime();
+        })
+        .slice(0, 5);
 
     // 모든 태그 추출 및 빈도 계산
     const tagCount = new Map<string, number>();
@@ -70,9 +62,9 @@ export function Sidebar({ posts }: SidebarProps) {
     });
 
     // 카테고리별 포스트 수가 많은 순으로 정렬
-    const topCategories = Array.from(categorizedPosts.entries())
-        .sort((a, b) => b[1].length - a[1].length)
-        .slice(0, 4); // 상위 4개 카테고리만 표시
+    // const topCategories = Array.from(categorizedPosts.entries())
+    //     .sort((a, b) => b[1].length - a[1].length)
+    //     .slice(0, 4); // 상위 4개 카테고리만 표시
 
     return (
         <div className="w-full sticky">
@@ -93,14 +85,6 @@ export function Sidebar({ posts }: SidebarProps) {
                                 <span>{post.author?.name || post.metadata.author}</span>
                                 <span>·</span>
                                 <span>{post.metadata.date}</span>
-                                {viewData.has(post.metadata.slug) && viewData.get(post.metadata.slug)! > 0 && (
-                                    <>
-                                        <span>·</span>
-                                        <span className="text-blue-600">
-                                            조회 {viewData.get(post.metadata.slug)}회
-                                        </span>
-                                    </>
-                                )}
                             </div>
                         </a>
                     ))}

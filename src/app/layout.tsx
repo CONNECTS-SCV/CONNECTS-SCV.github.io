@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
-import { Footer } from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import PageViewTracker from "@/components/analytics/PageViewTracker";

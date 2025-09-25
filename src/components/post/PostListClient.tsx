@@ -31,7 +31,7 @@ const POSTS_PER_PAGE = 10;
 
 export function PostListClient({ initialPosts }: PostListClientProps) {
     const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
-    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [, setSelectedCategory] = useState("all");
     const [currentPage, setCurrentPage] = useState(1);
 
     // 페이지네이션 계산

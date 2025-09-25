@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getPostBySlug, getAllPosts } from '@/lib/posts';
 import { getAuthor } from '@/data/authors';
-import PostViewTracker from '@/components/analytics/PostViewTracker';
 
 // Custom components for react-markdown with enhanced styles
 const markdownComponents: any = {
@@ -209,11 +208,6 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
 
   return (
     <>
-      <PostViewTracker
-        slug={id}
-        title={post.metadata.title}
-        author={author?.name || 'CONNECTS Team'}
-      />
       <div className="w-[80%] mx-auto px-4 pt-10 pb-20">
       {/* Header */}
       <header className="mb-10">
