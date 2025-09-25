@@ -8,7 +8,7 @@ import {Button} from "../ui/button/button";
 
 export default function Header() {
     return (
-        <header className="w-full h-[60px] flex justify-between items-center bg-white">
+        <header className="w-full h-[60px] flex justify-between items-center bg-white px-4 lg:px-0">
             <Link href="/">
                 <Image src={'/image/curie_tech.webp'} alt="Logo" width={110} height={20}/>
             </Link>
