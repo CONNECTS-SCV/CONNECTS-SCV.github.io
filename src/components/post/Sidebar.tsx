@@ -69,27 +69,27 @@ export function Sidebar({ posts }: SidebarProps) {
     return (
         <div className="w-full sticky">
             {/* 인기있는 글 */}
-            <div className="px-4 xl:px-6 pt-1">
-                <h3 className="text-xs font-bold text-gray-500 mb-4">인기있는 글</h3>
-                <div className="space-y-6">
-                    {popularPosts.map((post) => (
-                        <a
-                            key={post.metadata.slug}
-                            href={`/post/${post.metadata.slug}`}
-                            className="block cursor-pointer hover:opacity-80"
-                        >
-                            <p className="text-sm font-bold text-gray-900 leading-normal mb-2 line-clamp-2">
-                                {post.metadata.title}
-                            </p>
-                            <div className="flex items-center gap-2 text-xs text-gray-600">
-                                <span>{post.author?.name || post.metadata.author}</span>
-                                <span>·</span>
-                                <span>{post.metadata.date}</span>
-                            </div>
-                        </a>
-                    ))}
-                </div>
-            </div>
+            {/*<div className="px-4 xl:px-6 pt-1">*/}
+            {/*    <h3 className="text-xs font-bold text-gray-500 mb-4">인기있는 글</h3>*/}
+            {/*    <div className="space-y-6">*/}
+            {/*        {popularPosts.map((post) => (*/}
+            {/*            <a*/}
+            {/*                key={post.metadata.slug}*/}
+            {/*                href={`/post/${post.metadata.slug}`}*/}
+            {/*                className="block cursor-pointer hover:opacity-80"*/}
+            {/*            >*/}
+            {/*                <p className="text-sm font-bold text-gray-900 leading-normal mb-2 line-clamp-2">*/}
+            {/*                    {post.metadata.title}*/}
+            {/*                </p>*/}
+            {/*                <div className="flex items-center gap-2 text-xs text-gray-600">*/}
+            {/*                    <span>{post.author?.name || post.metadata.author}</span>*/}
+            {/*                    <span>·</span>*/}
+            {/*                    <span>{post.metadata.date}</span>*/}
+            {/*                </div>*/}
+            {/*            </a>*/}
+            {/*        ))}*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
             {/* 카테고리별 시리즈 */}
             {/*{topCategories.length > 0 && (*/}
@@ -122,7 +122,7 @@ export function Sidebar({ posts }: SidebarProps) {
 
             {/* 태그 클라우드 */}
             {sortedTags.length > 0 && (
-                <div className="px-4 xl:px-6 pt-8 pb-10">
+                <div className="px-4 xl:px-6 pb-10">
                     <h3 className="text-xs font-bold text-gray-500 mb-6">태그</h3>
                     <div className="flex flex-wrap gap-2">
                         {sortedTags.map((tag) => (
@@ -140,19 +140,19 @@ export function Sidebar({ posts }: SidebarProps) {
             )}
 
             {/* 통계 정보 */}
-            <div className="px-4 xl:px-6 pt-4 pb-6 border-t border-gray-100">
-                <h3 className="text-xs font-bold text-gray-500 mb-4">통계</h3>
-                <div className="grid grid-cols-2 gap-3">
-                    <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <p className="text-2xl font-bold text-gray-800">{posts.length}</p>
-                        <p className="text-xs text-gray-500 mt-1">전체 포스트</p>
-                    </div>
-                    <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <p className="text-2xl font-bold text-gray-800">{tagCount.size}</p>
-                        <p className="text-xs text-gray-500 mt-1">전체 태그</p>
-                    </div>
-                </div>
-            </div>
+            {/*<div className="px-4 xl:px-6 pt-4 pb-6 border-t border-gray-100">*/}
+            {/*    <h3 className="text-xs font-bold text-gray-500 mb-4">통계</h3>*/}
+            {/*    <div className="grid grid-cols-2 gap-3">*/}
+            {/*        <div className="text-center p-3 bg-gray-50 rounded-lg">*/}
+            {/*            <p className="text-2xl font-bold text-gray-800">{posts.length}</p>*/}
+            {/*            <p className="text-xs text-gray-500 mt-1">전체 포스트</p>*/}
+            {/*        </div>*/}
+            {/*        <div className="text-center p-3 bg-gray-50 rounded-lg">*/}
+            {/*            <p className="text-2xl font-bold text-gray-800">{tagCount.size}</p>*/}
+            {/*            <p className="text-xs text-gray-500 mt-1">전체 태그</p>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     );
 }
