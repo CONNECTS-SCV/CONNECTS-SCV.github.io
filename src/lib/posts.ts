@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { parseMarkdownFrontmatter, generateSlug, extractExcerpt, BlogPost } from './markdown';
+import { parseMarkdownFrontmatter, extractExcerpt, BlogPost } from './markdown';
 import { getAuthor } from '../data/authors';
 
-const postsDirectory = path.join(process.cwd(), 'posts');
+const postsDirectory = path.join(process.cwd(), 'src', 'posts');
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   // Check if posts directory exists

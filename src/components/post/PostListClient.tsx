@@ -1,0 +1,261 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { CategoryFilter, CategoryFilterMobile } from "./CategoryFilter";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+interface Post {
+    metadata: {
+        title: string;
+        description?: string;
+        author: string;
+        date?: string;
+        slug: string;
+        tags: string[];
+        categories: string[];
+    };
+    excerpt: string;
+    author: {
+        name: string;
+        title: string;
+        department: string;
+    } | null;
+}
+
+interface PostListClientProps {
+    initialPosts: Post[];
+}
+
+const POSTS_PER_PAGE = 10;
+
+export function PostListClient({ initialPosts }: PostListClientProps) {
+    const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
+    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // 페이지네이션 계산
+    const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+    const endIndex = startIndex + POSTS_PER_PAGE;
+    const currentPosts = filteredPosts.slice(startIndex, endIndex);
+
+    // 표시할 페이지 번호 계산
+    const getPageNumbers = () => {
+        const pages = [];
+        const maxVisible = 5; // 최대 표시할 페이지 수
+
+        let start = Math.max(1, currentPage - 2);
+        const end = Math.min(totalPages, start + maxVisible - 1);
+
+        // 시작 페이지 조정
+        if (end - start < maxVisible - 1) {
+            start = Math.max(1, end - maxVisible + 1);
+        }
+
+        for (let i = start; i <= end; i++) {
+            pages.push(i);
+        }
+
+        return pages;
+    };
+
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategory(category);
+        setCurrentPage(1); // 카테고리 변경시 첫 페이지로 이동
+
+        if (category === "all") {
+            setFilteredPosts(initialPosts);
+        } else {
+            const filtered = initialPosts.filter(post => {
+                // categories 배열에 선택된 카테고리가 포함되어 있는지 확인
+                if (post.metadata.categories?.includes(category)) {
+                    return true;
+                }
+                // tags에서도 확인 (더 넓은 매칭을 위해)
+                if (category === "protein" && post.metadata.tags?.some(tag =>
+                    ["protein", "단백질", "antibody", "항체", "TCR", "enzyme", "효소"].includes(tag.toLowerCase())
+                )) {
+                    return true;
+                }
+                if (category === "ligand" && post.metadata.tags?.some(tag =>
+                    ["ligand", "리간드", "compound", "화합물", "small-molecule", "drug", "약물"].includes(tag.toLowerCase())
+                )) {
+                    return true;
+                }
+                if (category === "interaction" && post.metadata.tags?.some(tag =>
+                    ["interaction", "상호작용", "PPI", "binding", "결합"].includes(tag.toLowerCase())
+                )) {
+                    return true;
+                }
+                if (category === "docking" && post.metadata.tags?.some(tag =>
+                    ["docking", "도킹", "pose", "포즈"].includes(tag.toLowerCase())
+                )) {
+                    return true;
+                }
+                if (category === "prediction" && post.metadata.tags?.some(tag =>
+                    ["prediction", "예측", "AI", "ML", "deep-learning", "딥러닝"].includes(tag.toLowerCase())
+                )) {
+                    return true;
+                }
+                return false;
+            });
+            setFilteredPosts(filtered);
+        }
+    };
+
+    const handlePageChange = (page: number) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+            // 페이지 변경시 스크롤을 상단으로
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+    return (
+        <>
+            {/* 카테고리 필터 - 데스크톱 */}
+            <div className="hidden lg:block sticky top-0 z-10 bg-white mb-4">
+                <CategoryFilter onCategoryChange={handleCategoryChange} />
+            </div>
+
+            {/* 카테고리 필터 - 모바일 */}
+            <CategoryFilterMobile
+                onCategoryChange={handleCategoryChange}
+                className="lg:hidden sticky top-0 z-10 mb-4"
+            />
+
+            {/* 포스트 목록 */}
+            <div className="min-h-[600px]">
+                {filteredPosts.length === 0 ? (
+                    <div className="text-center py-10 text-gray-500">
+                        해당 카테고리에 포스트가 없습니다.
+                    </div>
+                ) : (
+                    <>
+                        {currentPosts.map((post) => (
+                            <div key={post.metadata.slug} className="border-b border-gray-100 last:border-b-0">
+                                <Link
+                                    href={`/post/${post.metadata.slug}`}
+                                    className="flex flex-col sm:flex-row justify-between items-start gap-5 py-6 cursor-pointer hover:opacity-80"
+                                >
+                                    <div className="flex flex-col flex-1 min-w-0">
+                                        <h4 className="text-base lg:text-lg font-bold mb-2 break-words">
+                                            {String(post.metadata.title || 'Untitled')}
+                                        </h4>
+                                        <p className="text-sm text-gray-500 mb-4 line-clamp-2 break-words">
+                                            {String(post.excerpt || '')}
+                                        </p>
+                                        <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                                            <span>{String(post.metadata.date || 'No date')}</span>
+                                            {post.author?.name && (
+                                                <>
+                                                    <span>·</span>
+                                                    <span>{String(post.author.name)}</span>
+                                                </>
+                                            )}
+                                            {post.metadata.tags && post.metadata.tags.length > 0 && (
+                                                <>
+                                                    <span>·</span>
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {post.metadata.tags.slice(0, 3).map((tag, index) => (
+                                                            <span
+                                                                key={index}
+                                                                className="inline-block px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs"
+                                                            >
+                                                                {tag}
+                                                            </span>
+                                                        ))}
+                                                        {post.metadata.tags.length > 3 && (
+                                                            <span className="text-gray-400">+{post.metadata.tags.length - 3}</span>
+                                                        )}
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <img
+                                        src={"/image/curie_tech.webp"}
+                                        alt={String(post.metadata.title || 'Post') + " thumbnail"}
+                                        className="w-full sm:w-32 h-24 sm:h-20 rounded-lg object-contain flex-shrink-0"
+                                    />
+                                </Link>
+                            </div>
+                        ))}
+                    </>
+                )}
+            </div>
+
+            {/* 페이지네이션 */}
+            {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 py-8">
+                    {/* 이전 페이지 버튼 */}
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <ChevronLeft className="w-4 h-4" />
+                    </button>
+
+                    {/* 페이지 번호들 */}
+                    <div className="flex items-center gap-1">
+                        {/* 첫 페이지 */}
+                        {getPageNumbers()[0] > 1 && (
+                            <>
+                                <button
+                                    onClick={() => handlePageChange(1)}
+                                    className="w-9 h-9 flex items-center justify-center rounded hover:bg-gray-100 text-sm font-medium"
+                                >
+                                    1
+                                </button>
+                                {getPageNumbers()[0] > 2 && (
+                                    <span className="px-1 text-gray-400">...</span>
+                                )}
+                            </>
+                        )}
+
+                        {/* 중간 페이지들 */}
+                        {getPageNumbers().map((page) => (
+                            <button
+                                key={page}
+                                onClick={() => handlePageChange(page)}
+                                className={`w-9 h-9 flex items-center justify-center rounded text-sm font-medium transition-colors ${
+                                    currentPage === page
+                                        ? 'bg-gray-900 text-white'
+                                        : 'hover:bg-gray-100 text-gray-700'
+                                }`}
+                            >
+                                {page}
+                            </button>
+                        ))}
+
+                        {/* 마지막 페이지 */}
+                        {getPageNumbers()[getPageNumbers().length - 1] < totalPages && (
+                            <>
+                                {getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1 && (
+                                    <span className="px-1 text-gray-400">...</span>
+                                )}
+                                <button
+                                    onClick={() => handlePageChange(totalPages)}
+                                    className="w-9 h-9 flex items-center justify-center rounded hover:bg-gray-100 text-sm font-medium"
+                                >
+                                    {totalPages}
+                                </button>
+                            </>
+                        )}
+                    </div>
+
+                    {/* 다음 페이지 버튼 */}
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <ChevronRight className="w-4 h-4" />
+                    </button>
+                </div>
+            )}
+        </>
+    );
+}
