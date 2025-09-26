@@ -53,6 +53,8 @@ jobs:
         run: npm install
 
       - name: Build with Next.js
+        env:
+          NEXT_PUBLIC_GA_ID: ${{ secrets.NEXT_PUBLIC_GA_ID }}
         run: npm run build
 
       - name: Upload artifact
