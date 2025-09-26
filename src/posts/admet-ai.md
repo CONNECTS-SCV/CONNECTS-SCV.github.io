@@ -1,59 +1,45 @@
 ---
-title: "ADMET-AI: 약물 후보물질의 약동/독성 예측 도구"
-author: author1
-date: 2024-12-20
-categories: [analysis, prediction, compound]
-tags: [ADMET-AI, 약동학, 독성예측, 신약개발, SMILES, 화합물분석, Multi-task-learning]
-description: "ADMET-AI는 신약개발 초기 단계에서 화합물의 ADMET(흡수, 분포, 대사, 배설, 독성) 특성을 빠르게 예측해주는 인공지능 기반 분석 도구입니다."
-slug: admet-ai-drug-properties-prediction
+layout: post
+title: "ADMET-AI : 저분자 화합물 ADMET 예측"
+description: "저분자 화합물의 구조를 기반으로 ADMET를 예측하는 AI 모델"
+categories: [analysis]
+tags: [ADMET-AI, 저분자, 화합물, ADMET, 독성예측, ChEMBL, PubChem, DrugBank]
+author: "author1"
+date: "2025-01-03"
+thumbnail: "/image/admet-ai-thumbnail.png"
 ---
 
-## 목적
+## 개요
 
-신약개발 과정에서 화합물의 ADMET 특성을 사전 평가하여 유망한 후보물질 선별
+ADMET-AI는 저분자 화합물의 구조를 기반으로 물질의 ADMET (Absorption, Distribution, Metabolism, Excretion, Toxicity)를 예측하는 인공지능 모델입니다.
 
 ## 작동 원리
 
-- 화합물의 그래프 구조와 molecular fingerprint를 통합
-- Multi-task learning 기반으로 여러 ADMET 특성 동시 예측
-- 대규모 실험 데이터셋을 학습한 딥러닝 모델 활용
+ChEMBL, PubChem, DrugBank 등에서 수집한 100만 개 이상의 화합물 구조를 그래프 임베딩하고, 용해도, 단백질 결합, CYP 대사, hERG 독성, LD50 등 다양한 특성과 함께 GNN·MPNN 기반 지도학습으로 통합학습한 인공지능 모델입니다.
 
-## 용도
+사용자가 새로운 화합물 구조를 입력하면 입력된 화합물의 다양한 특성을 빠르게 한번에 예측합니다.
 
-- **신약 후보물질 필터링**: 흡수율이나 독성 기준 미달 물질 제외
-- **Virtual screening 후속 분석**: Diffdock 등과 결합하여 유망 물질 선별
-- **약물동태 예측**: 대사 반응성, 체내 분포 경향 등 예측
+## 입력・출력・설정 옵션
 
-## 차별 포인트
+- **입력** : 화합물 (SMILES 포맷)
+- **출력** : 화합물의 기본 특성, ADMET 관련 특성 예측 값, 시각화 그래프 (예정)
+- 따로 설정이 필요한 옵션은 없음.
 
-- Multi-task learning으로 여러 ADMET 특성 동시 예측
-- 빠른 처리 속도 (수초~수분 내 결과)
-- 시각화 자료(heatmap, plot) 제공으로 직관적 해석
+## 용도・차별 포인트
 
-## 비교해 볼 만한 모델
+- 약물 스크리닝 과정에서  ADMET에 대한 초기 스크리닝 용도로 활용할 수 있습니다.
+- 특히 독성이나 대사 안정성을 예측하는 영역에서 성능이 특화되어 있습니다.
 
-- **SwissADME**: 약동학 중심 예측, 무료
-- **admetSAR**: 더 많은 독성 endpoint 제공
-- **pkCSM**: 구조 기반 ADMET 예측
+## 비교해 볼만한 모델
+
+- 해당 용도로 사용할 수 있는 모듈 중에서는 ADMET-AI가 SOTA입니다.
+- 다만 대규모의 결과를 효율적으로 시각화할 수 있는 방법을 찾는 것이 중요한 숙제입니다.
 
 ## 연계해 볼 만한 모델
 
-- **DiffDock**: 결합 예측 후 ADMET 특성으로 필터링
-- **ToxinPred3**: 독성 예측 교차 검증
-- **DILI, Amesformer, hERG-prediction**: 특정 독성 세부 평가
+- DILI, hERGAI 등 화합물의 개별 독성을 예측할 수 있는 전문 분석도구로 교차검증하여 신뢰도를 높일 수 있습니다.
+- 화합물과 표적의 결합 구조를 출력하는 Diffdock이나, binding affinity를 수치화할 수 있는 PIGNET2와 함께 사용하여 특성과 효능을 동시에 필터링 할 수 있습니다.
 
-## 사용 방법
+---
 
-### 입력
-* **화합물 구조** (SMILES 포맷)
-
-### 출력
-* 예측된 ADMET 특성 값 (흡수율, 대사 안정성, 독성 등)
-* Confidence score 및 예측값 ranking
-* 시각화 자료 (heatmap, plot 등)
-
-### 설정 옵션
-* 별도 파라미터 설정 없음 (기본값 자동 적용)
-
-### 사용 링크
-* <a href="#" onclick="window.open('https://curie.kr:444/Analysis/admet-ai?from=blog', '_blank'); return false;">ADMET-AI 사용하러 가기</a>
+[tool-button:ADMET-AI]
