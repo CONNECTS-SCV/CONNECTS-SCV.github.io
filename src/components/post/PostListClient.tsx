@@ -14,6 +14,7 @@ interface Post {
         slug: string;
         tags: string[];
         categories: string[];
+        thumbnail?: string;
     };
     excerpt: string;
     author: {
@@ -146,9 +147,9 @@ export function PostListClient({ initialPosts }: PostListClientProps) {
                                         </div>
                                     </div>
                                     <img
-                                        src={"/image/curie_tech.webp"}
+                                        src={post.metadata.thumbnail || "/image/default.webp"}
                                         alt={String(post.metadata.title || 'Post') + " thumbnail"}
-                                        className="w-full sm:w-32 h-24 sm:h-20 rounded-lg object-contain flex-shrink-0"
+                                        className="w-full sm:w-32 h-24 sm:h-20 rounded-lg object-cover flex-shrink-0"
                                     />
                                 </Link>
                             </div>

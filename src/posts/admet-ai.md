@@ -6,7 +6,7 @@ categories: [analysis]
 tags: [ADMET-AI, 저분자, 화합물, ADMET, 독성예측, ChEMBL, PubChem, DrugBank]
 author: "author1"
 date: "2025-01-03"
-thumbnail: "/image/admet-ai-thumbnail.png"
+thumbnail: "/image/default.webp"
 ---
 
 ## 개요
