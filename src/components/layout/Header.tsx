@@ -45,12 +45,12 @@ export default function Header({onSearchClick}: HeaderProps) {
                         <span>CURIE</span>
                     </Link>
                 </div>
-                <div className="mx-2 flex gap-[6px] items-center">
-                    <Link href="https://curie.kr" className="flex items-center gap-1">
-                        <Image src={linkSVG} alt="link" width={20} height={20}/>
-                        <span>About Us</span>
-                    </Link>
-                </div>
+                {/*<div className="mx-2 flex gap-[6px] items-center">*/}
+                {/*    <Link href="https://curie.kr" className="flex items-center gap-1">*/}
+                {/*        <Image src={linkSVG} alt="link" width={20} height={20}/>*/}
+                {/*        <span>About Us</span>*/}
+                {/*    </Link>*/}
+                {/*</div>*/}
                 {/*<div className="ml-2">*/}
                 {/*  <Button variant="default">구독하기</Button>*/}
                 {/*</div>*/}
