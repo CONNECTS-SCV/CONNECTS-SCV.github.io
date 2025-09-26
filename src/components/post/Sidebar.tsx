@@ -24,13 +24,13 @@ interface SidebarProps {
 
 export function Sidebar({ posts }: SidebarProps) {
     // 최근 포스트 5개를 인기 포스트로 표시
-    const popularPosts = [...posts]
-        .sort((a, b) => {
-            const dateA = new Date(a.metadata.date || '');
-            const dateB = new Date(b.metadata.date || '');
-            return dateB.getTime() - dateA.getTime();
-        })
-        .slice(0, 5);
+    // const popularPosts = [...posts]
+    //     .sort((a, b) => {
+    //         const dateA = new Date(a.metadata.date || '');
+    //         const dateB = new Date(b.metadata.date || '');
+    //         return dateB.getTime() - dateA.getTime();
+    //     })
+    //     .slice(0, 5);
 
     // 모든 태그 추출 및 빈도 계산
     const tagCount = new Map<string, number>();
