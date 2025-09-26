@@ -6,13 +6,18 @@ import rehypeRaw from 'rehype-raw';
 
 // Custom components for react-markdown with enhanced styles
 const markdownComponents: any = {
+  h1: ({ children, ...props }: any) => (
+    <h1 className="text-5xl font-bold mt-8 mb-6 text-black leading-tight" {...props}>
+      {children}
+    </h1>
+  ),
   h2: ({ children, ...props }: any) => (
-    <h2 className="text-2xl font-bold mt-10 mb-5 pb-2 border-b border-gray-200 text-gray-900" {...props}>
+    <h2 className="text-3xl font-bold mt-10 mb-5 text-gray-900" {...props}>
       {children}
     </h2>
   ),
   h3: ({ children, ...props }: any) => (
-    <h3 className="text-xl font-semibold mt-8 mb-4 text-gray-800" {...props}>
+    <h3 className="text-xl font-bold mt-8 mb-4 text-gray-800" {...props}>
       {children}
     </h3>
   ),
@@ -22,37 +27,47 @@ const markdownComponents: any = {
     </h4>
   ),
   p: ({ children, ...props }: any) => (
-    <p className="mb-4 leading-[1.7] text-gray-700 text-base" {...props}>
+    <p className="mb-4 leading-relaxed text-gray-600 text-base break-keep" {...props}>
       {children}
     </p>
   ),
   ul: ({ children, ...props }: any) => (
-    <ul className="list-disc list-inside mb-4 space-y-1 text-gray-700 pl-4" {...props}>
+    <ul className="list-disc list-outside mb-6 space-y-3 text-gray-600 ml-6" {...props}>
       {children}
     </ul>
   ),
   ol: ({ children, ...props }: any) => (
-    <ol className="list-decimal list-inside mb-4 space-y-1 text-gray-700 pl-4" {...props}>
+    <ol className="list-decimal list-outside mb-4 space-y-1 text-gray-700 ml-6" {...props}>
       {children}
     </ol>
   ),
   li: ({ children, ...props }: any) => (
-    <li className="leading-relaxed" {...props}>
+    <li className="leading-loose break-keep pl-2" {...props}>
       {children}
     </li>
   ),
-  a: ({ href, children, ...props }: any) => {
+  a: ({ href, children, className, ...props }: any) => {
+    // no-underline 클래스가 있으면 underline 제거
+    const isNoUnderline = className && className.includes('no-underline');
     // Check if this is a special link with onclick in the href
     const isSpecialLink = href === '#';
 
     const handleClick = (e: React.MouseEvent) => {
       e.preventDefault();
 
-      // Check children for the URL pattern (e.g., "ADMET-AI 사용하러 가기")
-      const childText = children?.toString() || '';
+      // Extract text from complex children structure
+      const extractText = (node: any): string => {
+        if (typeof node === 'string') return node;
+        if (Array.isArray(node)) return node.map(extractText).join('');
+        if (node?.props?.children) return extractText(node.props.children);
+        return '';
+      };
+
+      const childText = extractText(children);
 
       // Map tool names to their URLs
       const toolUrls: { [key: string]: string } = {
+        'AbDev': 'https://curie.kr:444/Analysis/abdev?from=blog',
         'ADMET-AI': 'https://curie.kr:444/Analysis/admet-ai?from=blog',
         'Antifold': 'https://curie.kr:444/Analysis/antifold?from=blog',
         'Bioemu': 'https://curie.kr:444/Analysis/biolemo?from=blog',
@@ -94,7 +109,7 @@ const markdownComponents: any = {
     return (
       <a
         href={href || '#'}
-        className="text-blue-600 hover:text-blue-800 underline transition-colors cursor-pointer"
+        className={className || (isNoUnderline ? "text-blue-600 hover:text-blue-800 transition-colors cursor-pointer" : "text-blue-600 hover:text-blue-800 underline transition-colors cursor-pointer")}
         target={href?.startsWith('http') ? '_blank' : undefined}
         rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
         onClick={isSpecialLink ? handleClick : undefined}
@@ -158,8 +173,19 @@ const markdownComponents: any = {
   hr: ({ ...props }: any) => (
     <hr className="my-8 border-t border-gray-200" {...props} />
   ),
+  div: ({ className, children, ...props }: any) => {
+    // Callout box 스타일 처리
+    if (className && className.includes('bg-calloutbox')) {
+      return (
+        <div className="bg-calloutbox rounded-xl px-12 py-8 my-6" {...props}>
+          {children}
+        </div>
+      );
+    }
+    return <div className={className} {...props}>{children}</div>;
+  },
   strong: ({ children, ...props }: any) => (
-    <strong className="font-bold text-gray-900" {...props}>
+    <strong className="font-bold text-gray-800" {...props}>
       {children}
     </strong>
   ),
@@ -184,13 +210,60 @@ interface MarkdownContentProps {
 }
 
 export default function MarkdownContent({ content }: MarkdownContentProps) {
+  // Process custom syntax for callout boxes
+  let processedContent = content.replace(
+    /::callout\s*([\s\S]*?)\s*::\/callout/g,
+    (match, boxContent) => {
+      return `<div class="bg-calloutbox rounded-xl p-6 my-6">\n\n${boxContent.trim()}\n\n</div>`;
+    }
+  );
+
+  // Process custom syntax for tool buttons
+  processedContent = processedContent.replace(
+    /\[tool-button:([^\]]+)\]/g,
+    (match, toolName) => {
+      const toolUrls: { [key: string]: string } = {
+        'AbDev': 'https://curie.kr:444/Analysis/abdev?from=blog',
+        'ADMET-AI': 'https://curie.kr:444/Analysis/admet-ai?from=blog',
+        'Antifold': 'https://curie.kr:444/Analysis/antifold?from=blog',
+        'Bioemu': 'https://curie.kr:444/Analysis/biolemo?from=blog',
+        'Boltz-2': 'https://curie.kr:444/Analysis/boltz?from=blog',
+        'Chai': 'https://curie.kr:444/Analysis/chai-1?from=blog',
+        'DeepFRI': 'https://curie.kr:444/Analysis/deepfri?from=blog',
+        'DiffDock': 'https://curie.kr:444/Analysis/DiffDock?from=blog',
+        'DLKcat': 'https://curie.kr:444/Analysis/dlkcat?from=blog',
+        'D-SCRIPT': 'https://curie.kr:444/Analysis/dscript?from=blog',
+        'FixPDB': 'https://curie.kr:444/Analysis/fixpdb?from=blog',
+        'GROMACS': 'https://curie.kr:444/Analysis/gromacs?from=blog',
+        'ImmuneBuilder': 'https://curie.kr:444/Analysis/immunebuilder?from=blog',
+        'LigandMPNN': 'https://curie.kr:444/Analysis/ligandmpnn?from=blog',
+        'MHCflurry': 'https://curie.kr:444/Analysis/mhcflurry2?from=blog',
+        'NetSolP': 'https://curie.kr:444/Analysis/netsolp?from=blog',
+        'PLIP': 'https://curie.kr:444/Analysis/plip?from=blog',
+        'ToxinPred3': 'https://curie.kr:444/Analysis/toxinpred3?from=blog',
+      };
+
+      const url = toolUrls[toolName] || '#';
+
+      return `
+<div class="text-center mt-12 mb-8">
+  <p class="text-base font-bold text-gray-800 mb-8">아래 버튼을 통해 직접 사용해보세요.</p>
+
+  <a href="#" onclick="window.open('${url}', '_blank'); return false;" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full mb-6 no-underline hover:opacity-80 transition-opacity" style="background-color: rgba(0, 0, 0, 0.15);">
+    <div class="w-5 h-5" style="display: inline-block;"><svg enable-background="new 0 0 16 16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="#000000"><path d="m12.432 8.948c-.368 0-.668.3-.668.668v1.575c0 .317-.258.575-.575.575h-6.379c-.317 0-.574-.258-.574-.575v-6.38c0-.317.257-.574.574-.574h1.574c.369 0 .669-.3.669-.668s-.301-.668-.669-.668h-1.574c-1.053 0-1.91.857-1.91 1.91v6.379c0 1.053.857 1.91 1.91 1.91h6.379c1.053 0 1.91-.856 1.91-1.91v-1.574c0-.368-.299-.668-.667-.668z"></path><path d="m12.903 3.085c-.136-.133-.316-.192-.494-.184h-3.807c-.369 0-.668.3-.668.669s.299.668.668.668h2.217l-3.192 3.191c-.125.124-.196.297-.196.472 0 .369.3.668.668.668v-.099.099c.179 0 .346-.069.472-.195l3.193-3.194v2.218c0 .369.3.668.668.668s.668-.3.668-.668v-3.815c.005-.18-.057-.362-.197-.498z"></path></g></svg></div>
+    <span class="text-sm font-bold" style="color: black;">${toolName} 사용하러 가기</span>
+  </a>
+</div>`;
+    }
+  );
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw]}
       components={markdownComponents}
     >
-      {content}
+      {processedContent}
     </ReactMarkdown>
   );
 }

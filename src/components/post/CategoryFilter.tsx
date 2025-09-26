@@ -11,11 +11,9 @@ interface Category {
 
 const categories: Category[] = [
   { id: "all", label: "전체", value: "all" },
-  { id: "protein", label: "Protein", value: "protein" },
-  { id: "ligand", label: "Ligand", value: "ligand" },
-  { id: "interaction", label: "Interaction", value: "interaction" },
-  { id: "docking", label: "Docking", value: "docking" },
-  { id: "prediction", label: "Prediction", value: "prediction" },
+  { id: "analysis", label: "분석 모델", value: "analysis" },
+  { id: "release", label: "릴리즈 노트", value: "release" },
+  { id: "feature", label: "기능 개선", value: "feature" },
 ];
 
 interface CategoryFilterProps {

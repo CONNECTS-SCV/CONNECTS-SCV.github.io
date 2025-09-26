@@ -69,36 +69,7 @@ export function PostListClient({ initialPosts }: PostListClientProps) {
         } else {
             const filtered = initialPosts.filter(post => {
                 // categories 배열에 선택된 카테고리가 포함되어 있는지 확인
-                if (post.metadata.categories?.includes(category)) {
-                    return true;
-                }
-                // tags에서도 확인 (더 넓은 매칭을 위해)
-                if (category === "protein" && post.metadata.tags?.some(tag =>
-                    ["protein", "단백질", "antibody", "항체", "TCR", "enzyme", "효소"].includes(tag.toLowerCase())
-                )) {
-                    return true;
-                }
-                if (category === "ligand" && post.metadata.tags?.some(tag =>
-                    ["ligand", "리간드", "compound", "화합물", "small-molecule", "drug", "약물"].includes(tag.toLowerCase())
-                )) {
-                    return true;
-                }
-                if (category === "interaction" && post.metadata.tags?.some(tag =>
-                    ["interaction", "상호작용", "PPI", "binding", "결합"].includes(tag.toLowerCase())
-                )) {
-                    return true;
-                }
-                if (category === "docking" && post.metadata.tags?.some(tag =>
-                    ["docking", "도킹", "pose", "포즈"].includes(tag.toLowerCase())
-                )) {
-                    return true;
-                }
-                if (category === "prediction" && post.metadata.tags?.some(tag =>
-                    ["prediction", "예측", "AI", "ML", "deep-learning", "딥러닝"].includes(tag.toLowerCase())
-                )) {
-                    return true;
-                }
-                return false;
+                return post.metadata.categories?.includes(category);
             });
             setFilteredPosts(filtered);
         }
@@ -137,7 +108,7 @@ export function PostListClient({ initialPosts }: PostListClientProps) {
                             <div key={post.metadata.slug} className="border-b border-gray-100 last:border-b-0">
                                 <Link
                                     href={`/post/${post.metadata.slug}`}
-                                    className="flex flex-col sm:flex-row justify-between items-start gap-5 py-6 cursor-pointer hover:opacity-80"
+                                    className="flex flex-col sm:flex-row justify-between items-start gap-10 py-6 cursor-pointer hover:opacity-80"
                                 >
                                     <div className="flex flex-col flex-1 min-w-0">
                                         <h4 className="text-base lg:text-lg font-bold mb-2 break-words">

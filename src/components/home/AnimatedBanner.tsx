@@ -11,7 +11,7 @@ export function AnimatedBanner() {
   }, []);
 
   return (
-    <div className="w-full mt-6 mb-10">
+    <div className="w-full mb-10 px-4 xl:px-2">
       <div className="relative w-full max-w-[1140px] h-32 sm:h-40 lg:h-[180px] mx-auto rounded-xl lg:rounded-2xl overflow-hidden group bg-white shadow-sm border border-gray-100">
         {/* Animated Gradient Background - Toss Blue Style */}
         <div 

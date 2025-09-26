@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { getPostBySlug, getAllPosts } from '@/lib/posts';
 import { getAuthor } from '@/data/authors';
+import { getCategoryLabel } from '@/lib/categoryMapping';
 import MarkdownContent from '@/components/post/MarkdownContent';
 
 // Generate static params for all posts
@@ -105,7 +106,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
               key={String(category)}
               className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs"
             >
-              {String(category)}
+              {getCategoryLabel(String(category))}
             </span>
           ))}
         </div>
@@ -142,9 +143,12 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
       <div className="mt-10 pt-6 border-t border-gray-200">
         <a
           href="/"
-          className="text-blue-600 hover:text-blue-800"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 hover:text-gray-900 font-medium"
         >
-          ← 목록으로 돌아가기
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          목록으로 돌아가기
         </a>
       </div>
       </div>

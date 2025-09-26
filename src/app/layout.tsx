@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
-import Header from "@/components/layout/Header";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import PageViewTracker from "@/components/analytics/PageViewTracker";
+import LayoutClient from "./layout-client";
+import { getAllPosts } from "@/lib/posts";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -40,11 +41,13 @@ export const viewport = {
   maximumScale: 5,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const posts = await getAllPosts();
+
   return (
     <html lang="ko" className={notoSans.variable}>
       <head>
@@ -57,14 +60,9 @@ export default function RootLayout({
       <body className={notoSans.className}>
         <GoogleAnalytics />
         <PageViewTracker />
-        <div className="w-full fixed top-0 z-50 bg-white">
-          <div className="w-full max-w-[1140px] mx-auto">
-            <Header />
-          </div>
-        </div>
-        <div className="w-full h-full min-h-screen mx-auto flex flex-col items-center pt-[60px]">
-          <div className="w-full max-w-[1140px] px-4">{children}</div>
-        </div>
+        <LayoutClient posts={posts}>
+          {children}
+        </LayoutClient>
         {/*<Footer />*/}
       </body>
     </html>

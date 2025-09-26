@@ -122,7 +122,7 @@ export function Sidebar({ posts }: SidebarProps) {
 
             {/* 태그 클라우드 */}
             {sortedTags.length > 0 && (
-                <div className="px-4 xl:px-6 pb-10">
+                <div className="px-2 pb-10 pt-12">
                     <h3 className="text-xs font-bold text-gray-500 mb-6">태그</h3>
                     <div className="flex flex-wrap gap-2">
                         {sortedTags.map((tag) => (
