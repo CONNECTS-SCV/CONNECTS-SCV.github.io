@@ -109,7 +109,7 @@ const markdownComponents: any = {
     return (
       <a
         href={href || '#'}
-        className={className || (isNoUnderline ? "text-blue-600 hover:text-blue-800 transition-colors cursor-pointer" : "text-blue-600 hover:text-blue-800 underline transition-colors cursor-pointer")}
+        className={className || "text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"}
         target={href?.startsWith('http') ? '_blank' : undefined}
         rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
         onClick={isSpecialLink ? handleClick : undefined}
@@ -210,8 +210,33 @@ interface MarkdownContentProps {
 }
 
 export default function MarkdownContent({ content }: MarkdownContentProps) {
-  // Process custom syntax for callout boxes
+  // Process custom syntax for nested lists with callout
   let processedContent = content.replace(
+    /::list-callout\s*([\s\S]*?)\s*::\/list-callout/g,
+    (match, listContent) => {
+      // Convert nested list format to HTML
+      const htmlList = listContent
+        .trim()
+        .split('\n')
+        .map((line: string) => {
+          // Main list item (starts with -)
+          if (line.match(/^-\s+(.+)/)) {
+            return `<li class="mb-3"><strong>${line.substring(2)}</strong>`;
+          }
+          // Nested list item (starts with spaces/tabs and -)
+          else if (line.match(/^\s+-\s+(.+)/)) {
+            return `<ul class="mt-2 ml-4"><li class="mb-1 text-gray-600">${line.trim().substring(2)}</li></ul></li>`;
+          }
+          return line;
+        })
+        .join('\n');
+
+      return `<div class="bg-calloutbox rounded-xl p-6 my-6">\n<ul class="space-y-2">\n${htmlList}\n</ul>\n</div>`;
+    }
+  );
+
+  // Process custom syntax for callout boxes
+  processedContent = processedContent.replace(
     /::callout\s*([\s\S]*?)\s*::\/callout/g,
     (match, boxContent) => {
       return `<div class="bg-calloutbox rounded-xl p-6 my-6">\n\n${boxContent.trim()}\n\n</div>`;
