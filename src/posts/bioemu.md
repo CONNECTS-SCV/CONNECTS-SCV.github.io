@@ -4,7 +4,7 @@ title: "Bioemu : 아미노산 서열로부터 동적 평형 상태인 구조를 
 description: "Diffusion 기반으로 동적 평형 상태의 단백질 구조를 예측하는 생성 모델"
 categories: [analysis]
 tags: [Bioemu, 단백질구조, Diffusion, MD시뮬레이션, AlphaFold]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

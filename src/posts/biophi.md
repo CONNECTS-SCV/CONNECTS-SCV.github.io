@@ -4,7 +4,7 @@ title: "BioPhi : 항체 인간화, 유사도 평가, 서열 설계를 지원하�
 description: "대규모 항체 데이터를 이용한 항체 인간화 및 humanness 평가 모델"
 categories: [analysis]
 tags: [BioPhi, 항체, humanization, humanness, OAS, 딥러닝]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

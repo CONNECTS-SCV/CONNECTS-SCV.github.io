@@ -4,7 +4,7 @@ title: "Immunebuilder : 항체/ TCR 구조 예측에 전문화된 alphafold 기�
 description: "항체(nanobody, antibody)와 T세포 수용체(TCR)의 3차원 구조를 예측하는 데 특화된 인공지능 모델입니다."
 categories: [분석 모델]
 tags: [항체 구조 예측, TCR, 3D 구조, Immunebuilder, Alphafold]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

@@ -4,7 +4,7 @@ title: "Antifold : 항체 서열 설계 및 최적화 모듈"
 description: "항체 구조로부터 최적화된 서열을 예측하는 AI 모델"
 categories: [analysis]
 tags: [Antifold, 항체, inverse-folding, ESM-IF1, 서열최적화]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

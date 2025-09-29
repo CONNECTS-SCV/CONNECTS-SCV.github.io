@@ -4,7 +4,7 @@ title: "Dscript : 단백질의 상호작용 여부를 예측하는 CNN 기반 �
 description: "두 단백질의 아미노산 서열 정보만을 이용해 상호작용(PPI) 여부를 예측하는 딥러닝 모델"
 categories: [분석 모델]
 tags: [PPI, protein interaction, CNN, sequence analysis]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

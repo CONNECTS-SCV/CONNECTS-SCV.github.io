@@ -4,7 +4,7 @@ title: "Chai-1 : 단백질 구조설계 및 화합물 도킹 모델 (Transformer
 description: "단백질 구조 예측과 도킹을 지원하는 Transformer 기반 AI 모델"
 categories: [analysis]
 tags: [Chai-1, 단백질구조, 도킹, Transformer, 리간드결합, Glycan]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

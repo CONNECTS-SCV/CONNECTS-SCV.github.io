@@ -4,7 +4,7 @@ title: "PLIP : 단백질과 리간드 사이의 결합의 종류와 위치를 �
 description: "단백질-리간드 복합체 구조에서 수소결합, 소수성 상호작용 등 다양한 비공유 결합을 자동으로 탐지하고 시각화하는 도구입니다."
 categories: [분석 모델]
 tags: [PLIP, 단백질-리간드, 상호작용 분석, 비공유 결합, 시각화]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

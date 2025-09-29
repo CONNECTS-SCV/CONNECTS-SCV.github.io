@@ -4,7 +4,7 @@ title: "RDKit : 화합물을 다루기 위한 통합 라이브러리"
 description: "화합물 데이터 처리, SMARTS 패턴 탐색, descriptor 계산, 3D 구조 생성 등 소분자(small molecule)를 다루기 위한 오픈소스 라이브러리입니다."
 categories: [분석 모델]
 tags: [RDKit, 화학 정보학, Cheminformatics, SMILES, 분자 모델링]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

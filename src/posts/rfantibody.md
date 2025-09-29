@@ -4,7 +4,7 @@ title: "RFantibody : De novo 항체 설계 모델 (in-silico 항체 라이브러
 description: "RFdiffusion, ProteinMPNN, RoseTTAFold2 모델을 통합하여 항원 구조 기반으로 새로운 항체를 설계하는 End-to-End 워크플로우입니다."
 categories: [분석 모델]
 tags: [RFantibody, 항체 설계, De Novo Design, RFdiffusion, ProteinMPNN]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

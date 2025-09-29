@@ -4,7 +4,7 @@ title: "ThermoMPNN : 열 안정성에 최적화된 단백질 서열을 설계"
 description: "단백질의 특정 돌연변이가 열역학적 안정성(ΔG)에 미치는 영향을 예측하는 MPNN 기반 3D 구조 모델입니다."
 categories: [분석 모델]
 tags: [ThermoMPNN, 단백질 안정성, ΔΔG, 돌연변이, MPNN]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

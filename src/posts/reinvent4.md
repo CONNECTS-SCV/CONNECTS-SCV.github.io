@@ -4,7 +4,7 @@ title: "REINVENT4 : 약물 설계를 위한 분자 생성 모델"
 description: "특정 제약조건 하에서 강화학습을 통해 새로운 화합물을 생성하거나 기존 화합물을 최적화하는 오픈소스 분자 설계 도구입니다."
 categories: [분석 모델]
 tags: [REINVENT4, 분자 생성, 강화학습, 신약 개발, De Novo Design]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

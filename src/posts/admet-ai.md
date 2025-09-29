@@ -4,7 +4,7 @@ title: "ADMET-AI : 후보물질의 ADMET를 예측하는 모델"
 description: "저분자 화합물의 구조를 기반으로 ADMET를 예측하는 AI 모델"
 categories: [analysis]
 tags: [ADMET-AI, 저분자, 화합물, ADMET, 독성예측, ChEMBL, PubChem, DrugBank]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

@@ -4,7 +4,7 @@ title: "DeepViscosity : 항체의 점도를 예측하는 이진분류 모델"
 description: "단일클론 항체의 고농도 제형에서 점도를 예측하는 AI 모델"
 categories: [analysis]
 tags: [DeepViscosity, 항체, 점도, mAb, 제형개발]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

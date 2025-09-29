@@ -4,7 +4,7 @@ title: "MHCflurry : MHC class I 분자와 펩타이드의 결합 친화도 (면�
 description: "MHC class I 분자와 펩타이드의 결합 친화도를 예측하여 암 신생항원 예측이나 면역원성 평가에 활용하는 딥러닝 모델입니다."
 categories: [분석 모델]
 tags: [MHCflurry, 면역원성 예측, 신생항원, MHC, 딥러닝]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

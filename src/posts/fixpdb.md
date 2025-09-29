@@ -4,7 +4,7 @@ title: "FixPDB : PDB 파일 구조 정리 모델"
 description: "PDB 파일의 누락된 원자, 비정상적 구조 등을 감지하고 자동으로 교정하여 분자동역학 시뮬레이션 전처리를 돕는 도구"
 categories: [분석 모델]
 tags: [PDB repair, structure correction, GROMACS, molecular dynamics]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

@@ -4,7 +4,7 @@ title: "PRODIGY : 단백질 복합체 사이의 결합 친화도를 예측"
 description: "단백질-단백질 복합체의 3D 구조로부터 접촉 수(ICs) 및 비상호작용 표면(NIS) 특성을 활용하여 결합 친화도를 예측하는 구조 기반 회귀 모델입니다."
 categories: [분석 모델]
 tags: [PRODIGY, 결합 친화도, 단백질-단백질 상호작용, PPI, 회귀 모델]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

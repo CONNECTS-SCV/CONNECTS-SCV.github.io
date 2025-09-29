@@ -4,7 +4,7 @@ title: "NetsolP : 단백질 용해도 및 활용도 예측 도구"
 description: "아미노산 서열만으로 E. coli 발현 기준 단백질의 용해도와 정제 가능성을 예측하는 트랜스포머 기반 모델입니다."
 categories: [분석 모델]
 tags: [NetsolP, 단백질 용해도, 단백질 발현, ESM, 예측 모델]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---

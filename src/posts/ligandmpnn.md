@@ -4,7 +4,7 @@ title: "LigandMPNN : 특정 리간드에 잘 결합하도록 단백질 서열을
 description: "단백질이 특정 리간드에 잘 결합할 수 있도록 단백질 서열을 최적화하는 MPNN 기반 인공지능 모델입니다."
 categories: [분석 모델]
 tags: [LigandMPNN, 단백질 서열 최적화, 리간드 결합, MPNN, 단백질 디자인]
-author: "author1"
+author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
