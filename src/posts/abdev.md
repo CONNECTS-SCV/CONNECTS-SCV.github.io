@@ -5,7 +5,7 @@ description: "항체의 물리적 특성을 기반으로 개발 가능성을 예
 categories: [analysis]
 tags: [AbDev, 항체, 개발가능성, 물리화학적 특성, DeepSP]
 author: "author1"
-date: "2025-01-02"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 

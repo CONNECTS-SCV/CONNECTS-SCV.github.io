@@ -5,7 +5,7 @@ description: "단백질 구조 예측과 도킹을 동시에 지원하는 Diffus
 categories: [analysis]
 tags: [Boltz-2, 단백질구조, 도킹, Diffusion, 리간드결합]
 author: "author1"
-date: "2025-01-07"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 

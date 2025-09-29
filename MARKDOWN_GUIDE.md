@@ -16,6 +16,48 @@
 ::/callout
 ```
 
+## 중첩 리스트 Callout Box
+두 단계 깊이의 리스트를 callout으로 감쌀 때:
+
+```markdown
+::list-callout
+- 주요 항목 1
+    - 세부 설명 1
+- 주요 항목 2
+    - 세부 설명 2
+::/list-callout
+```
+
+## 깊은 중첩 리스트
+세 단계 깊이의 리스트 (callout 없이):
+
+```markdown
+::deep-list
+- 레벨 1
+  - 레벨 2
+    - 레벨 3
+    - 레벨 3
+  - 레벨 2
+- 레벨 1
+::/deep-list
+```
+
+## 이미지 삽입
+간단한 문법으로 이미지 삽입:
+
+```markdown
+![이미지 설명](이미지경로){정렬:너비}
+```
+
+예시:
+- `![PRODIGY 결과](/image/info/prodigy1.webp){center:600}` - 중앙 정렬, 600px 너비
+- `![분석 화면](/image/analysis.png){left:400}` - 왼쪽 정렬, 400px 너비
+- `![그래프](/image/graph.webp){right:300}` - 오른쪽 정렬, 300px 너비
+- `![스크린샷](/image/screen.png){center:full}` - 중앙 정렬, 전체 너비
+
+정렬 옵션: `left`, `center`, `right`
+너비 옵션: 숫자(px) 또는 `full`(100%)
+
 ## 도구 버튼
 간단한 문법으로 도구 사용 버튼 추가:
 

@@ -5,7 +5,7 @@ description: "Diffusion 기반으로 동적 평형 상태의 단백질 구조를
 categories: [analysis]
 tags: [Bioemu, 단백질구조, Diffusion, MD시뮬레이션, AlphaFold]
 author: "author1"
-date: "2025-01-05"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 

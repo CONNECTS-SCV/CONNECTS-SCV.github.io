@@ -5,7 +5,7 @@ description: "효소의 기질 특이적 촉매 속도 상수(Kcat)를 예측하
 categories: [analysis]
 tags: [DeepEnzyme, 효소, Kcat, 촉매속도, Transformer]
 author: "author1"
-date: "2025-01-10"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 

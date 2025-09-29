@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { CategoryFilter, CategoryFilterMobile } from "./CategoryFilter";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 
 interface Post {
     metadata: {
@@ -30,16 +30,62 @@ interface PostListClientProps {
 
 const POSTS_PER_PAGE = 10;
 
+type SortOption = "latest" | "oldest" | "titleAsc" | "titleDesc" | "authorAsc" | "authorDesc";
+
+const sortOptions: { value: SortOption; label: string }[] = [
+    { value: "latest", label: "최신순" },
+    { value: "oldest", label: "오래된순" },
+    { value: "titleAsc", label: "제목순 (ㄱ-ㅎ)" },
+    { value: "titleDesc", label: "제목순 (ㅎ-ㄱ)" },
+    { value: "authorAsc", label: "작성자순 (ㄱ-ㅎ)" },
+    { value: "authorDesc", label: "작성자순 (ㅎ-ㄱ)" },
+];
+
 export function PostListClient({ initialPosts }: PostListClientProps) {
     const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
     const [, setSelectedCategory] = useState("all");
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortOrder, setSortOrder] = useState<SortOption>("latest");
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // 드롭다운 외부 클릭 감지
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    // 정렬된 포스트
+    const sortedPosts = [...filteredPosts].sort((a, b) => {
+        switch (sortOrder) {
+            case "latest":
+                return new Date(b.metadata.date || "").getTime() - new Date(a.metadata.date || "").getTime();
+            case "oldest":
+                return new Date(a.metadata.date || "").getTime() - new Date(b.metadata.date || "").getTime();
+            case "titleAsc":
+                return (a.metadata.title || "").localeCompare(b.metadata.title || "", "ko");
+            case "titleDesc":
+                return (b.metadata.title || "").localeCompare(a.metadata.title || "", "ko");
+            case "authorAsc":
+                return (a.author?.name || "").localeCompare(b.author?.name || "", "ko");
+            case "authorDesc":
+                return (b.author?.name || "").localeCompare(a.author?.name || "", "ko");
+            default:
+                return 0;
+        }
+    });
 
     // 페이지네이션 계산
-    const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+    const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
     const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
     const endIndex = startIndex + POSTS_PER_PAGE;
-    const currentPosts = filteredPosts.slice(startIndex, endIndex);
+    const currentPosts = sortedPosts.slice(startIndex, endIndex);
 
     // 표시할 페이지 번호 계산
     const getPageNumbers = () => {
@@ -96,6 +142,44 @@ export function PostListClient({ initialPosts }: PostListClientProps) {
                 onCategoryChange={handleCategoryChange}
                 className="lg:hidden sticky top-0 z-10 mb-4"
             />
+
+            {/* 정렬 선택기 */}
+            <div className="flex justify-between items-center mb-4">
+                <div className="relative" ref={dropdownRef}>
+                    <button
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-200 rounded-lg hover:border-gray-300 transition-all"
+                    >
+                        <span>{sortOptions.find(opt => opt.value === sortOrder)?.label}</span>
+                        <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
+                    </button>
+
+                    {isDropdownOpen && (
+                        <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
+                            {sortOptions.map((option) => (
+                                <button
+                                    key={option.value}
+                                    onClick={() => {
+                                        setSortOrder(option.value);
+                                        setIsDropdownOpen(false);
+                                        setCurrentPage(1);
+                                    }}
+                                    className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 transition-colors ${
+                                        sortOrder === option.value
+                                            ? "bg-gray-100 font-semibold text-gray-900"
+                                            : "text-gray-700"
+                                    } first:rounded-t-lg last:rounded-b-lg`}
+                                >
+                                    {option.label}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+                <div className="text-sm text-gray-500">
+                    총 {filteredPosts.length}개의 포스트
+                </div>
+            </div>
 
             {/* 포스트 목록 */}
             <div className="min-h-[600px]">

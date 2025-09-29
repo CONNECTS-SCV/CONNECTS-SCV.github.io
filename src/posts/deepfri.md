@@ -5,7 +5,7 @@ description: "단백질의 기능을 예측하고 기능에 필수적인 잔기�
 categories: [analysis]
 tags: [DeepFRI, 단백질기능, 잔기예측, GNN, GO annotation]
 author: "author1"
-date: "2025-01-09"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { parseMarkdownFrontmatter, extractExcerpt, BlogPost } from './markdown';
-import { getAuthor } from '../data/authors';
+import { getAuthor } from '@/data/authors';
 
 const postsDirectory = path.join(process.cwd(), 'src', 'posts');
 

@@ -5,7 +5,7 @@ description: "단일클론 항체의 고농도 제형에서 점도를 예측하�
 categories: [analysis]
 tags: [DeepViscosity, 항체, 점도, mAb, 제형개발]
 author: "author1"
-date: "2025-01-11"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 
@@ -25,6 +25,7 @@ Lys, Arg, His와 같은 양전하 아미노산에 영향을 받는 수치로, �
 - SCM(Surface Charge Map)_neg :
 Asp, Glu와 같은 음전하 아미노산에 영향을 받는 수치로, 비특이적인 결합이나, 점도 등의 위험성을 오히려 완화해주는 좋은 지표입니다.
 ::/list-callout
+위 값을 정규화하여 스케일링한 후 앙상블 ANN을 이용하여 평균과 표준편차를 산출합니다. 이때 평균확률이 0.5를 넘어가게 되면 20cP 이상의 점도를 갖는 고점도 항체로 분류되고, 0.5미만일 경우에는 20cP 이하의 점도를 가지는 저점도 항체로 분류됩니다. 본 모델은 229개 항체의 점도 데이터 실험값을 기반으로 학습되었습니다.
 
 ## 입력・출력・설정 옵션
 

@@ -109,8 +109,21 @@ export function extractExcerpt(content: string, maxLength: number = 200): string
     .replace(/`(.*?)`/g, '$1') // Remove inline code
     .replace(/\n/g, ' ') // Replace newlines with spaces
     .trim();
-  
-  return plainText.length > maxLength 
-    ? plainText.substring(0, maxLength) + '...' 
+
+  return plainText.length > maxLength
+    ? plainText.substring(0, maxLength) + '...'
     : plainText;
+}
+
+// 간단한 이미지 문법을 HTML로 변환
+export function processImageSyntax(content: string): string {
+  // ![설명](경로){정렬:너비} 형식을 파싱
+  const imageRegex = /!\[([^\]]*)\]\(([^)]+)\)(?:\{([^:}]+):([^}]+)\})?/g;
+
+  return content.replace(imageRegex, (match, alt, src, align = 'center', width = '600') => {
+    const widthStyle = width === 'full' ? '100%' : `${width}px`;
+    return `<div class="image-container ${align}" style="max-width: ${widthStyle};">
+  <img src="${src}" alt="${alt}" class="rounded-image" />
+</div>`;
+  });
 }

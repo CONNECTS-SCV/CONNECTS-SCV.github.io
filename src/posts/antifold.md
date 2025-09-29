@@ -5,7 +5,7 @@ description: "항체 구조로부터 최적화된 서열을 예측하는 AI 모�
 categories: [analysis]
 tags: [Antifold, 항체, inverse-folding, ESM-IF1, 서열최적화]
 author: "author1"
-date: "2025-01-04"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 

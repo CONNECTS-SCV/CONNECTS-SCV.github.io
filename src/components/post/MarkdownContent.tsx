@@ -3,6 +3,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import { processImageSyntax } from '@/lib/markdown';
 
 // Custom components for react-markdown with enhanced styles
 const markdownComponents: any = {
@@ -210,8 +211,11 @@ interface MarkdownContentProps {
 }
 
 export default function MarkdownContent({ content }: MarkdownContentProps) {
+  // Process custom image syntax first
+  let processedContent = processImageSyntax(content);
+
   // Process custom syntax for nested lists with callout
-  let processedContent = content.replace(
+  processedContent = processedContent.replace(
     /::list-callout\s*([\s\S]*?)\s*::\/list-callout/g,
     (match, listContent) => {
       // Convert nested list format to HTML

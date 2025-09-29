@@ -5,7 +5,7 @@ description: "대규모 항체 데이터를 이용한 항체 인간화 및 human
 categories: [analysis]
 tags: [BioPhi, 항체, humanization, humanness, OAS, 딥러닝]
 author: "author1"
-date: "2025-01-06"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 

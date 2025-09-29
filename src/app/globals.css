@@ -95,3 +95,88 @@ a {
     text-wrap: balance;
   }
 }
+
+@layer components {
+  /* 이미지 컨테이너 스타일 */
+  .image-container {
+    @apply my-4 mx-auto;
+  }
+
+  .image-container.left {
+    @apply mr-auto ml-0;
+  }
+
+  .image-container.center {
+    @apply mx-auto;
+  }
+
+  .image-container.right {
+    @apply ml-auto mr-0;
+  }
+
+  .rounded-image {
+    @apply rounded-lg w-full h-auto object-cover;
+  }
+
+  /* 모든 리스트의 기본 스타일 */
+  ul, ol {
+    @apply pl-6 space-y-1;
+  }
+
+  ul > li, ol > li {
+    @apply relative;
+  }
+
+  /* 중첩된 리스트 상단 간격 */
+  ul > li > ul,
+  ul > li > ol,
+  ol > li > ul,
+  ol > li > ol {
+    @apply mt-1;
+  }
+
+  /* 1단계 불릿: 검은색 */
+  ul > li::marker,
+  ol > li::marker {
+    @apply text-gray-900 dark:text-gray-100;
+  }
+
+  /* 2단계 불릿: 흰색에 검은 테두리 */
+  ul > li > ul > li,
+  ol > li > ol > li {
+    @apply relative list-none;
+  }
+
+  ul > li > ul > li::before,
+  ol > li > ol > li::before {
+    content: "◦";
+    position: absolute;
+    left: -1.5rem;
+    @apply text-gray-900 dark:text-gray-100;
+    font-weight: bold;
+    text-shadow:
+      1px 1px 0 white,
+      -1px 1px 0 white,
+      1px -1px 0 white,
+      -1px -1px 0 white,
+      0 0 2px white;
+  }
+
+  /* 3단계 불릿: 회색 */
+  ul > li > ul > li > ul > li::marker,
+  ol > li > ol > li > ol > li::marker {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  /* 4단계 불릿: 연한 회색 */
+  ul > li > ul > li > ul > li > ul > li::marker,
+  ol > li > ol > li > ol > li > ol > li::marker {
+    @apply text-gray-400 dark:text-gray-500;
+  }
+
+  /* 5단계 이상: 점점 더 연하게 */
+  ul > li > ul > li > ul > li > ul > li > ul > li::marker,
+  ol > li > ol > li > ol > li > ol > li > ol > li::marker {
+    @apply text-gray-300 dark:text-gray-600;
+  }
+}
