@@ -1,14 +1,18 @@
 "use client";
 
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { processImageSyntax } from '@/lib/markdown';
+import { Copy, Check } from 'lucide-react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 // Custom components for react-markdown with enhanced styles
 const markdownComponents: any = {
   h1: ({ children, ...props }: any) => (
-    <h1 className="text-5xl font-bold mt-8 mb-6 text-black leading-tight" {...props}>
+    <h1 className="text-4xl font-bold mt-20 mb-6 text-black leading-tight" {...props}>
       {children}
     </h1>
   ),
@@ -53,7 +57,15 @@ const markdownComponents: any = {
     // Check if this is a special link with onclick in the href
     const isSpecialLink = href === '#';
 
+    // Check if it's a file download link
+    const isFileLink = href && (href.startsWith('/file/') || href.includes('.zip') || href.includes('.pdf') || href.includes('.csv'));
+
     const handleClick = (e: React.MouseEvent) => {
+      // If it's a file link, let the browser handle the download
+      if (isFileLink) {
+        return;
+      }
+
       e.preventDefault();
 
       // Extract text from complex children structure
@@ -107,6 +119,23 @@ const markdownComponents: any = {
       Object.entries(props).filter(([key]) => key.toLowerCase() !== 'onclick')
     );
 
+    // Style for file download links
+    if (isFileLink) {
+      return (
+        <a
+          href={href}
+          download
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors cursor-pointer underline"
+          {...cleanProps}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          {children}
+        </a>
+      );
+    }
+
     return (
       <a
         href={href || '#'}
@@ -120,9 +149,10 @@ const markdownComponents: any = {
       </a>
     );
   },
-  code: ({ children, ...props }: any) => {
-    // Check if it's inline code (no className prop typically means inline)
-    const isInline = !props.className;
+  code: ({ children, inline, className, ...props }: any) => {
+    // Check if it's inline code
+    const isInline = inline !== undefined ? inline : !className;
+    const [copied, setCopied] = useState(false);
 
     if (isInline) {
       return (
@@ -132,18 +162,65 @@ const markdownComponents: any = {
       );
     }
 
-    // Block code
+    // Block code - extract language from className (e.g., "language-javascript")
+    const match = /language-(\w+)/.exec(className || '');
+    const language = match ? match[1] : '';
+
+    const handleCopy = () => {
+      navigator.clipboard.writeText(String(children));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    };
+
     return (
-      <code className="block bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm" {...props}>
-        {children}
-      </code>
+      <div className="relative group mb-6">
+        <button
+          onClick={handleCopy}
+          className="absolute right-2 top-2 p-2 bg-gray-800 hover:bg-gray-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+          title="Copy code"
+        >
+          {copied ? (
+            <Check className="w-4 h-4 text-green-400" />
+          ) : (
+            <Copy className="w-4 h-4 text-gray-400" />
+          )}
+        </button>
+        <SyntaxHighlighter
+          language={language || 'plaintext'}
+          style={vscDarkPlus}
+          className="syntax-highlighter"
+          customStyle={{
+            margin: 0,
+            padding: '1rem',
+            borderRadius: '0.5rem',
+            fontSize: '0.875rem',
+            lineHeight: '1.5',
+            maxHeight: '500px',
+            overflowY: 'auto',
+          }}
+          showLineNumbers={false}
+          wrapLines={false}
+          wrapLongLines={false}
+          {...props}
+        >
+          {String(children).replace(/\n$/, '')}
+        </SyntaxHighlighter>
+      </div>
     );
   },
-  pre: ({ children, ...props }: any) => (
-    <pre className="mb-6 overflow-hidden rounded-lg" {...props}>
-      {children}
-    </pre>
-  ),
+  pre: ({ children, ...props }: any) => {
+    // If children contains code element, it's already handled by code component
+    if (children?.props?.className?.startsWith('language-')) {
+      return <>{children}</>;
+    }
+
+    // Fallback for pre without language
+    return (
+      <pre className="bg-gray-900 p-4 rounded-lg overflow-x-auto border border-gray-700 shadow-lg mb-6" {...props}>
+        {children}
+      </pre>
+    );
+  },
   blockquote: ({ children, ...props }: any) => (
     <blockquote className="border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-blue-50 italic text-gray-700" {...props}>
       {children}
@@ -195,15 +272,22 @@ const markdownComponents: any = {
       {children}
     </em>
   ),
-  img: ({ src, alt, ...props }: any) => (
-    <img
-      src={src}
-      alt={alt || ''}
-      className="max-w-full h-auto rounded-lg my-6 shadow-sm"
-      loading="lazy"
-      {...props}
-    />
-  ),
+  img: ({ src, alt, ...props }: any) => {
+    // Don't render img if src is empty or undefined
+    if (!src) {
+      return null;
+    }
+
+    return (
+      <img
+        src={src}
+        alt={alt || ''}
+        className="max-w-full h-auto rounded-lg my-6 shadow-sm"
+        loading="lazy"
+        {...props}
+      />
+    );
+  },
 };
 
 interface MarkdownContentProps {

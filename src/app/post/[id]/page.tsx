@@ -128,16 +128,6 @@ export default async function PostPage({params}: { params: Promise<{ id: string 
 
                 <hr className="border-t border-gray-200 mb-10"/>
 
-                {post.metadata.thumbnail && (
-                    <div className="w-full h-60 relative mb-10">
-                        <img
-                            src={post.metadata.thumbnail}
-                            alt={String(post.metadata.title || 'Post') + " thumbnail"}
-                            className="w-full h-60 object-cover rounded-xl"
-                        />
-                    </div>
-                )}
-
                 {/* Content with structured data */}
                 <article itemScope itemType="http://schema.org/BlogPosting">
                     <MarkdownContent content={String(post.content || '')}/>

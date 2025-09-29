@@ -20,18 +20,18 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   for (const fileName of markdownFiles) {
     const filePath = path.join(postsDirectory, fileName);
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    
+
     try {
       const { metadata, content } = parseMarkdownFrontmatter(fileContent);
-      
+
       // Generate slug from filename if not provided
       if (!metadata.slug) {
         metadata.slug = fileName.replace(/\.md$/, '');
       }
-      
+
       // Extract excerpt from content
       const excerpt = metadata.description || extractExcerpt(content);
-      
+
       posts.push({
         metadata,
         content,

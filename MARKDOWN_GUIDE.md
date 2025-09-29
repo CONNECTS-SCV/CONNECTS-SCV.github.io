@@ -46,17 +46,36 @@
 간단한 문법으로 이미지 삽입:
 
 ```markdown
-![이미지 설명](이미지경로){정렬:너비}
+![이미지 설명](이미지경로){정렬:너비}[캡션]
 ```
 
-예시:
+### 단일 이미지 예시:
 - `![PRODIGY 결과](/image/info/prodigy1.webp){center:600}` - 중앙 정렬, 600px 너비
-- `![분석 화면](/image/analysis.png){left:400}` - 왼쪽 정렬, 400px 너비
-- `![그래프](/image/graph.webp){right:300}` - 오른쪽 정렬, 300px 너비
+- `![분석 화면](/image/analysis.png){left:400}[분석 결과 화면]` - 왼쪽 정렬, 400px 너비, 캡션 포함
+- `![그래프](/image/graph.webp){right:300}[그림 1. 성능 비교 그래프]` - 오른쪽 정렬, 300px 너비, 캡션 포함
 - `![스크린샷](/image/screen.png){center:full}` - 중앙 정렬, 전체 너비
+
+### 가로 배치 (연속 입력):
+```markdown
+![WT(회색)와 G121V(핑크)](/image/info/detail/bioemu_6.webp){center:300}
+![WT(회색)와 G121V(핑크)](/image/info/detail/bioemu_7.webp){center:300}
+```
+연속된 이미지는 자동으로 가로로 배치됩니다.
 
 정렬 옵션: `left`, `center`, `right`
 너비 옵션: 숫자(px) 또는 `full`(100%)
+캡션: 선택사항, 대괄호 안에 텍스트 입력
+
+## 파일 다운로드 링크
+파일 다운로드 링크 생성:
+
+```markdown
+[Example File](/file/deepenzyme_detail.zip)
+[PDF 문서](/file/document.pdf)
+[CSV 데이터](/file/data.csv)
+```
+
+파일 링크는 자동으로 다운로드 아이콘이 추가되며, 클릭 시 파일이 다운로드됩니다.
 
 ## 도구 버튼
 간단한 문법으로 도구 사용 버튼 추가:

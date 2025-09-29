@@ -118,6 +118,23 @@ a {
     @apply rounded-lg w-full h-auto object-cover;
   }
 
+  .image-caption {
+    @apply text-xs text-gray-500 dark:text-gray-400 mt-2 text-center italic;
+  }
+
+  /* 가로 이미지 레이아웃 */
+  .image-row {
+    @apply flex flex-wrap gap-8 justify-center items-start my-4;
+  }
+
+  .image-row .image-item {
+    @apply flex-shrink-0;
+  }
+
+  .image-row .rounded-image {
+    @apply w-full h-auto;
+  }
+
   /* 모든 리스트의 기본 스타일 */
   ul, ol {
     @apply pl-6 space-y-1;
@@ -178,5 +195,93 @@ a {
   ul > li > ul > li > ul > li > ul > li > ul > li::marker,
   ol > li > ol > li > ol > li > ol > li > ol > li::marker {
     @apply text-gray-300 dark:text-gray-600;
+  }
+
+  /* 코드 블럭 스타일링 */
+  pre {
+    @apply bg-gray-900 dark:bg-gray-950 text-gray-100 p-4 rounded-lg overflow-x-auto border border-gray-700 dark:border-gray-800 shadow-lg mb-6;
+  }
+
+  pre code {
+    @apply bg-transparent p-0 text-sm leading-relaxed;
+  }
+
+  /* 코드 블럭 스크롤바 스타일 */
+  pre::-webkit-scrollbar,
+  .syntax-highlighter::-webkit-scrollbar {
+    @apply h-2 w-2;
+  }
+
+  pre::-webkit-scrollbar-track,
+  .syntax-highlighter::-webkit-scrollbar-track {
+    @apply bg-gray-800 rounded-full;
+  }
+
+  pre::-webkit-scrollbar-thumb,
+  .syntax-highlighter::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full hover:bg-gray-500 transition-colors;
+  }
+
+  /* Firefox 스크롤바 */
+  pre,
+  .syntax-highlighter {
+    scrollbar-width: thin;
+    scrollbar-color: #4b5563 #1f2937;
+  }
+
+  /* 수평 스크롤이 있을 때 하단 패딩 추가 */
+  pre:has(::-webkit-scrollbar-thumb:horizontal),
+  .syntax-highlighter:has(::-webkit-scrollbar-thumb:horizontal) {
+    @apply pb-6;
+  }
+
+  /* 인라인 코드 스타일 */
+  :not(pre) > code {
+    @apply bg-gray-100 dark:bg-gray-800 text-pink-600 dark:text-pink-400 px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+
+  /* 코드 블럭 내부 syntax highlighting 기본 색상 */
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-built_in,
+  .hljs-tag {
+    @apply text-purple-400;
+  }
+
+  .hljs-string,
+  .hljs-title,
+  .hljs-section,
+  .hljs-attribute,
+  .hljs-literal,
+  .hljs-template-tag,
+  .hljs-template-variable,
+  .hljs-type {
+    @apply text-green-400;
+  }
+
+  .hljs-comment,
+  .hljs-quote,
+  .hljs-deletion,
+  .hljs-meta {
+    @apply text-gray-500 italic;
+  }
+
+  .hljs-variable,
+  .hljs-regexp,
+  .hljs-link,
+  .hljs-selector-attr,
+  .hljs-selector-pseudo {
+    @apply text-yellow-400;
+  }
+
+  .hljs-symbol,
+  .hljs-bullet,
+  .hljs-number,
+  .hljs-addition {
+    @apply text-cyan-400;
+  }
+
+  .hljs-function {
+    @apply text-blue-400;
   }
 }
