@@ -4,6 +4,7 @@ import {getPostBySlug, getAllPosts} from '@/lib/posts';
 import {getAuthor} from '@/data/authors';
 import {getCategoryLabel} from '@/lib/categoryMapping';
 import MarkdownContent from '@/components/post/MarkdownContent';
+import CommentSectionOnline from '@/components/post/CommentSectionOnline';
 
 // Generate static params for all posts
 export async function generateStaticParams() {
@@ -133,6 +134,8 @@ export default async function PostPage({params}: { params: Promise<{ id: string 
                     <MarkdownContent content={String(post.content || '')}/>
                 </article>
 
+                {/* Comment Section */}
+                <CommentSectionOnline postId={id} />
 
                 {/* Navigation */}
                 <div className="mt-10 pt-6 border-t border-gray-200">
