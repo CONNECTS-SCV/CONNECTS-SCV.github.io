@@ -9,6 +9,57 @@ import { Copy, Check } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
+// Separate component for code blocks to handle hooks properly
+function CodeBlock({ children, className, ...props }: any) {
+  const [copied, setCopied] = useState(false);
+
+  // Extract language from className (e.g., "language-javascript")
+  const match = /language-(\w+)/.exec(className || '');
+  const language = match ? match[1] : '';
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(String(children));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="relative group mb-6">
+      <button
+        onClick={handleCopy}
+        className="absolute right-2 top-2 p-2 bg-gray-800 hover:bg-gray-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+        title="Copy code"
+      >
+        {copied ? (
+          <Check className="w-4 h-4 text-green-400" />
+        ) : (
+          <Copy className="w-4 h-4 text-gray-400" />
+        )}
+      </button>
+      <SyntaxHighlighter
+        language={language || 'plaintext'}
+        style={vscDarkPlus}
+        className="syntax-highlighter"
+        customStyle={{
+          margin: 0,
+          padding: '1rem',
+          borderRadius: '0.5rem',
+          fontSize: '0.875rem',
+          lineHeight: '1.5',
+          maxHeight: '500px',
+          overflowY: 'auto',
+        }}
+        showLineNumbers={false}
+        wrapLines={false}
+        wrapLongLines={false}
+        {...props}
+      >
+        {String(children).replace(/\n$/, '')}
+      </SyntaxHighlighter>
+    </div>
+  );
+}
+
 // Custom components for react-markdown with enhanced styles
 const markdownComponents: any = {
   h1: ({ children, ...props }: any) => (
@@ -52,8 +103,6 @@ const markdownComponents: any = {
     </li>
   ),
   a: ({ href, children, className, ...props }: any) => {
-    // no-underline 클래스가 있으면 underline 제거
-    const isNoUnderline = className && className.includes('no-underline');
     // Check if this is a special link with onclick in the href
     const isSpecialLink = href === '#';
 
@@ -152,7 +201,6 @@ const markdownComponents: any = {
   code: ({ children, inline, className, ...props }: any) => {
     // Check if it's inline code
     const isInline = inline !== undefined ? inline : !className;
-    const [copied, setCopied] = useState(false);
 
     if (isInline) {
       return (
@@ -162,51 +210,8 @@ const markdownComponents: any = {
       );
     }
 
-    // Block code - extract language from className (e.g., "language-javascript")
-    const match = /language-(\w+)/.exec(className || '');
-    const language = match ? match[1] : '';
-
-    const handleCopy = () => {
-      navigator.clipboard.writeText(String(children));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    };
-
-    return (
-      <div className="relative group mb-6">
-        <button
-          onClick={handleCopy}
-          className="absolute right-2 top-2 p-2 bg-gray-800 hover:bg-gray-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
-          title="Copy code"
-        >
-          {copied ? (
-            <Check className="w-4 h-4 text-green-400" />
-          ) : (
-            <Copy className="w-4 h-4 text-gray-400" />
-          )}
-        </button>
-        <SyntaxHighlighter
-          language={language || 'plaintext'}
-          style={vscDarkPlus}
-          className="syntax-highlighter"
-          customStyle={{
-            margin: 0,
-            padding: '1rem',
-            borderRadius: '0.5rem',
-            fontSize: '0.875rem',
-            lineHeight: '1.5',
-            maxHeight: '500px',
-            overflowY: 'auto',
-          }}
-          showLineNumbers={false}
-          wrapLines={false}
-          wrapLongLines={false}
-          {...props}
-        >
-          {String(children).replace(/\n$/, '')}
-        </SyntaxHighlighter>
-      </div>
-    );
+    // Block code - moved to separate component to handle hooks properly
+    return <CodeBlock className={className} {...props}>{children}</CodeBlock>;
   },
   pre: ({ children, ...props }: any) => {
     // If children contains code element, it's already handled by code component

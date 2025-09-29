@@ -158,7 +158,7 @@ export function processImageSyntax(content: string): string {
           imageRegex.lastIndex = 0; // 정규식 리셋
 
           if (match) {
-            const [, alt, src, align = 'center', width = '600', caption] = match;
+            const [, alt, src, , width = '600', caption] = match;
             const widthStyle = width === 'full' ? '100%' : `${width}px`;
             const captionHtml = caption ? `<p class="image-caption">${caption}</p>` : '';
 
