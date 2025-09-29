@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Chai-1 : Transformer 기반 구조 예측 및 도킹"
+title: "Chai-1 : 단백질 구조설계 및 화합물 도킹 모델 (Transformer)"
 description: "단백질 구조 예측과 도킹을 지원하는 Transformer 기반 AI 모델"
 categories: [analysis]
 tags: [Chai-1, 단백질구조, 도킹, Transformer, 리간드결합, Glycan]
@@ -28,7 +28,7 @@ Chai는 단백질 구조 예측과 도킹 (docking)을 동시에 지원하는 Tr
 - **PTM** : 단백질 자체 구조의 예측 정확도 (1에 가까울 수록 정확도 높음)
 - **iPTM** : 두 체인 사이의 배치 정확도 (1에 가까울 수록 신뢰도 높음)
 
-**설정 옵션** : 따로 없음
+**설정 옵션** : 사용자 설정 옵션 없음
 
 ## 용도・차별 포인트
 

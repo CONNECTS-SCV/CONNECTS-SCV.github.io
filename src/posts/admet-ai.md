@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "ADMET-AI : 저분자 화합물 ADMET 예측"
+title: "ADMET-AI : 후보물질의 ADMET를 예측하는 모델"
 description: "저분자 화합물의 구조를 기반으로 ADMET를 예측하는 AI 모델"
 categories: [analysis]
 tags: [ADMET-AI, 저분자, 화합물, ADMET, 독성예측, ChEMBL, PubChem, DrugBank]
@@ -25,7 +25,7 @@ ChEMBL, PubChem, DrugBank 등에서 수집한 100만 개 이상의 화합물 구
 
 **출력** : 화합물의 기본 특성, ADMET 관련 특성 예측 값, 시각화 그래프 (예정)
 
-**설정 옵션** : 따로 설정이 필요한 옵션은 없음.
+**설정 옵션** : 사용자 설정 옵션 없음
 
 ## 용도・차별 포인트
 

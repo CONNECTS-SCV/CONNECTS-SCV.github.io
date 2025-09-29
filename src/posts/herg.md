@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "hERG : 화합물의 hERG 채널 차단 여부 예측을 통한 심장 독성 평가"
+title: "hERG : hERG 차단제 독성 예측 모델"
 description: "화합물이 hERG 칼륨 채널을 차단하는지 예측하여 신약 개발의 심장 독성 리스크를 사전에 평가하는 모델"
 categories: [분석 모델]
 tags: [hERG, 심장 독성, 약물 스크리닝, 예측 모델]
@@ -22,7 +22,7 @@ thumbnail: "/image/default.webp"
 
 **출력** : ERG 채널 Blocker 여부 (0 : non-blocker)
 
-**설정 옵션** : 따로 없음
+**설정 옵션** : 사용자 설정 옵션 없음
 
 ## 용도・차별 포인트
 

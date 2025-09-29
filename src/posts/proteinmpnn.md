@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "ProteinMPNN : 3D 구조 기반 단백질 아미노산 서열 설계"
+title: "ProteinMPNN : 단백질 구조에 맞는 서열을 디자인해주는 모델"
 description: "단백질의 3D 구조를 입력받아 해당 구조에 적합한 아미노산 서열을 설계하는 Inverse folding 계열의 MPNN 기반 인공지능 모델입니다."
 categories: [분석 모델]
 tags: [ProteinMPNN, Inverse Folding, 단백질 설계, MPNN, 서열 생성]

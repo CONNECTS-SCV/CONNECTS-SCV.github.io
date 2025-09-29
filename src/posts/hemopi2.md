@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "HEMOPI2 : 펩타이드 서열 기반 용혈성 예측 모델"
+title: "HEMOPI2 : 펩타이드 용혈 독성 예측 모델"
 description: "펩타이드 서열을 분석하여 적혈구 용혈성 여부와 농도(HC50)를 예측하는 혈액 독성 스크리닝 모델"
 categories: [분석 모델]
 tags: [hemolysis, toxicity prediction, peptide, drug safety]

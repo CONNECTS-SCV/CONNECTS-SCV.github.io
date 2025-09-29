@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Boltz-2 : 단백질 구조 예측 및 도킹"
+title: "Boltz-2 : 단백질 구조설계 및 화합물 도킹 모델 (Diffusion)"
 description: "단백질 구조 예측과 도킹을 동시에 지원하는 Diffusion 기반 AI 모델"
 categories: [analysis]
 tags: [Boltz-2, 단백질구조, 도킹, Diffusion, 리간드결합]

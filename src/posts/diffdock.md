@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Diffdock : 딥러닝 기반 단백질-리간드 도킹 모델"
+title: "Diffdock : 단백질과 리간드의 결합구조를 예측하는 모델"
 description: "딥러닝 diffusion 기술을 사용하여 단백질에 대한 리간드의 최적 결합 자세를 예측하는 모델"
 categories: [분석 모델]
 tags: [Diffdock, Docking, Protein-Ligand]

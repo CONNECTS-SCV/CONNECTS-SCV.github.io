@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "DeepViscosity : 항체 점도 예측"
+title: "DeepViscosity : 항체의 점도를 예측하는 이진분류 모델"
 description: "단일클론 항체의 고농도 제형에서 점도를 예측하는 AI 모델"
 categories: [analysis]
 tags: [DeepViscosity, 항체, 점도, mAb, 제형개발]
@@ -33,7 +33,7 @@ Asp, Glu와 같은 음전하 아미노산에 영향을 받는 수치로, 비특�
 
 **출력** : 평균 확률 (0.5 이상일 경우 고점도로 분류)
 
-**설정 옵션** : 따로 없음
+**설정 옵션** : 사용자 설정 옵션 없음
 
 ## 용도・차별 포인트
 

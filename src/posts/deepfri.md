@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "DeepFRI : 단백질 기능 및 핵심 잔기 예측"
+title: "DeepFRI : 단백질의 기능을 예측하고 그 기능에 관여하는 잔기를 찾아내는 모델"
 description: "단백질의 기능을 예측하고 기능에 필수적인 잔기를 찾아주는 딥러닝 모델"
 categories: [analysis]
 tags: [DeepFRI, 단백질기능, 잔기예측, GNN, GO annotation]
@@ -25,7 +25,7 @@ DeepFRI에서는 단백질의 서열과 구조를 함께 학습합니다. 단백
 
 **출력** : GO term, EC number, saliency map과 contact map을 확인할 수 있습니다.
 
-**설정 옵션** : 따로 없음
+**설정 옵션** : 사용자 설정 옵션 없음
 
 ## 용도・차별 포인트
 
