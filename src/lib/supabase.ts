@@ -13,13 +13,15 @@ export const supabase = supabaseUrl && supabaseAnonKey
 export interface Comment {
   id?: number;
   post_id: string;
+  parent_id?: number | null;  // 답글을 위한 부모 댓글 ID
   nickname: string;
   avatar: string;
   content: string;
   created_at?: string;
+  replies?: Comment[];  // 답글 배열 (클라이언트 사이드용)
 }
 
-// 댓글 가져오기
+// 댓글 가져오기 (계층 구조로 변환)
 export async function getComments(postId: string): Promise<Comment[]> {
   if (!supabase) return [];
 
@@ -34,7 +36,31 @@ export async function getComments(postId: string): Promise<Comment[]> {
     return [];
   }
 
-  return data || [];
+  // 계층 구조로 변환
+  const comments = data || [];
+  const commentMap = new Map<number, Comment>();
+  const rootComments: Comment[] = [];
+
+  // 모든 댓글을 Map에 저장
+  comments.forEach(comment => {
+    commentMap.set(comment.id, { ...comment, replies: [] });
+  });
+
+  // 부모-자식 관계 설정
+  comments.forEach(comment => {
+    const mappedComment = commentMap.get(comment.id)!;
+    if (comment.parent_id === null) {
+      rootComments.push(mappedComment);
+    } else {
+      const parent = commentMap.get(comment.parent_id);
+      if (parent) {
+        parent.replies = parent.replies || [];
+        parent.replies.push(mappedComment);
+      }
+    }
+  });
+
+  return rootComments;
 }
 
 // 댓글 작성

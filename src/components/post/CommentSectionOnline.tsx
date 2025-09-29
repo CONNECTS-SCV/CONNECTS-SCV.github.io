@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, RefreshCw, Send, AlertCircle } from 'lucide-react';
+import { MessageCircle, RefreshCw, Send, AlertCircle, Reply, X } from 'lucide-react';
 import { getComments, createComment, subscribeToComments, Comment } from '@/lib/supabase';
 
 interface CommentSectionProps {
@@ -48,6 +48,80 @@ const avatarColors = [
   "bg-gradient-to-br from-cyan-400 to-cyan-600"
 ];
 
+// 개별 댓글 컴포넌트
+function CommentItem({
+  comment,
+  level = 0,
+  onReply
+}: {
+  comment: Comment;
+  level?: number;
+  onReply: (parentId: number, parentNickname: string) => void;
+}) {
+  const formatTime = (timestamp: string | undefined) => {
+    if (!timestamp) return '방금 전';
+
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return "방금 전";
+    if (minutes < 60) return `${minutes}분 전`;
+    if (hours < 24) return `${hours}시간 전`;
+    if (days < 7) return `${days}일 전`;
+    return date.toLocaleDateString('ko-KR');
+  };
+
+  return (
+    <div className={level > 0 ? 'ml-12' : ''}>
+      <div className="bg-white rounded-xl p-4 border border-gray-100">
+        <div className="flex gap-3">
+          <div className={`w-10 h-10 ${comment.avatar} rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0 shadow-sm`}>
+            {comment.nickname.charAt(0)}
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="font-medium text-gray-900 text-sm">{comment.nickname}</span>
+              {level > 0 && <span className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded">답글</span>}
+              <span className="text-xs text-gray-400">· {formatTime(comment.created_at)}</span>
+            </div>
+            <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap break-words">{comment.content}</p>
+
+            {/* 답글 버튼 */}
+            {comment.id && (
+              <button
+                onClick={() => onReply(comment.id!, comment.nickname)}
+                className="mt-2 text-xs text-gray-500 hover:text-blue-600 flex items-center gap-1 transition-colors"
+              >
+                <Reply className="w-3 h-3" />
+                답글 달기
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* 답글 렌더링 */}
+      {comment.replies && comment.replies.length > 0 && (
+        <div className="mt-3 space-y-3">
+          {comment.replies.map((reply) => (
+            <CommentItem
+              key={reply.id}
+              comment={reply}
+              level={level + 1}
+              onReply={onReply}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Supabase 연동 버전
 export default function CommentSectionOnline({ postId }: CommentSectionProps) {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -58,6 +132,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSupabaseAvailable, setIsSupabaseAvailable] = useState(false);
+  const [replyingTo, setReplyingTo] = useState<{ id: number; nickname: string } | null>(null);
 
   useEffect(() => {
     generateRandomNickname();
@@ -67,7 +142,8 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
       const subscription = subscribeToComments(postId, (payload) => {
         if (payload.eventType === 'INSERT') {
-          setComments(prev => [...prev, payload.new as Comment]);
+          // 새 댓글 추가 시 전체 새로고침 (계층 구조 유지를 위해)
+          checkSupabaseAndLoadComments();
         }
       });
 
@@ -106,21 +182,44 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
     }
   };
 
-  // 로컬 스토리지 폴백
+  // 로컬 스토리지 폴백 (계층 구조 지원)
   const loadLocalComments = () => {
     const storedComments = localStorage.getItem(`comments_${postId}`);
     if (storedComments) {
       const localComments = JSON.parse(storedComments);
-      // 로컬 데이터를 Supabase 형식으로 변환
-      const formattedComments = localComments.map((c: any) => ({
-        id: c.id,
-        post_id: c.postId || postId,
-        nickname: c.nickname,
-        avatar: c.avatar,
-        content: c.content,
-        created_at: c.timestamp || c.created_at
-      }));
-      setComments(formattedComments);
+
+      // 계층 구조로 변환
+      const commentMap = new Map<number, Comment>();
+      const rootComments: Comment[] = [];
+
+      localComments.forEach((c: any) => {
+        const comment: Comment = {
+          id: c.id,
+          post_id: c.postId || postId,
+          parent_id: c.parent_id || null,
+          nickname: c.nickname,
+          avatar: c.avatar,
+          content: c.content,
+          created_at: c.timestamp || c.created_at,
+          replies: []
+        };
+        commentMap.set(comment.id!, comment);
+      });
+
+      localComments.forEach((c: any) => {
+        const comment = commentMap.get(c.id)!;
+        if (!c.parent_id) {
+          rootComments.push(comment);
+        } else {
+          const parent = commentMap.get(c.parent_id);
+          if (parent) {
+            parent.replies = parent.replies || [];
+            parent.replies.push(comment);
+          }
+        }
+      });
+
+      setComments(rootComments);
     }
     setIsLoading(false);
   };
@@ -135,6 +234,22 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
     setAvatarColor(randomColor);
   };
 
+  // 답글 시작
+  const handleReply = (parentId: number, parentNickname: string) => {
+    setReplyingTo({ id: parentId, nickname: parentNickname });
+    // 텍스트 입력창으로 포커스
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.focus();
+    }
+  };
+
+  // 답글 취소
+  const cancelReply = () => {
+    setReplyingTo(null);
+    setCommentText("");
+  };
+
   // 댓글 제출
   const handleSubmit = async () => {
     if (!commentText.trim()) return;
@@ -146,47 +261,43 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
         // Supabase에 저장
         const newComment = await createComment({
           post_id: postId,
+          parent_id: replyingTo?.id || null,
           nickname: nickname,
           avatar: avatarColor,
           content: commentText
         });
 
         if (newComment) {
-          // 실시간 구독이 있으면 자동 업데이트되지만, 없을 경우를 위해
-          if (!comments.find(c => c.id === newComment.id)) {
-            setComments(prev => [...prev, newComment]);
-          }
+          // 전체 새로고침 (계층 구조 유지를 위해)
+          await loadSupabaseComments();
         } else {
           throw new Error('Failed to post comment');
         }
       } else {
         // 로컬 스토리지에 저장
+        const storedComments = localStorage.getItem(`comments_${postId}`);
+        const existingComments = storedComments ? JSON.parse(storedComments) : [];
+
         const newComment = {
           id: Date.now(),
-          post_id: postId,
+          postId: postId,
+          parent_id: replyingTo?.id || null,
           nickname: nickname,
           avatar: avatarColor,
           content: commentText,
-          created_at: new Date().toISOString()
+          timestamp: new Date().toISOString()
         };
 
-        const updatedComments = [...comments, newComment];
-        setComments(updatedComments);
+        existingComments.push(newComment);
+        localStorage.setItem(`comments_${postId}`, JSON.stringify(existingComments));
 
-        // 로컬 스토리지 형식으로 저장
-        const localFormat = updatedComments.map(c => ({
-          id: c.id?.toString(),
-          postId: c.post_id,
-          nickname: c.nickname,
-          avatar: c.avatar,
-          content: c.content,
-          timestamp: c.created_at
-        }));
-        localStorage.setItem(`comments_${postId}`, JSON.stringify(localFormat));
+        // 로컬 댓글 다시 로드 (계층 구조 재구성)
+        loadLocalComments();
       }
 
       // 초기화
       setCommentText("");
+      setReplyingTo(null);
       generateRandomNickname();
     } catch (err) {
       console.error('Error posting comment:', err);
@@ -194,24 +305,6 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  // 시간 포맷팅
-  const formatTime = (timestamp: string | undefined) => {
-    if (!timestamp) return '방금 전';
-
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-
-    if (minutes < 1) return "방금 전";
-    if (minutes < 60) return `${minutes}분 전`;
-    if (hours < 24) return `${hours}시간 전`;
-    if (days < 7) return `${days}일 전`;
-    return date.toLocaleDateString('ko-KR');
   };
 
   // 새로고침
@@ -223,13 +316,26 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
     }
   };
 
+  // 전체 댓글 수 계산 (답글 포함)
+  const getTotalCommentCount = (comments: Comment[]): number => {
+    let count = 0;
+    const countReplies = (comment: Comment) => {
+      count++;
+      if (comment.replies) {
+        comment.replies.forEach(countReplies);
+      }
+    };
+    comments.forEach(countReplies);
+    return count;
+  };
+
   return (
     <div className="w-full mx-auto mt-20 mb-10">
       {/* 헤더 */}
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-gray-700 text-base font-semibold flex items-center gap-2">
           <MessageCircle className="w-5 h-5" />
-          댓글 {comments.length}
+          댓글 {getTotalCommentCount(comments)}
         </h3>
         <div className="flex items-center gap-3">
           <button
@@ -277,6 +383,24 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
         </div>
       </div>
 
+      {/* 답글 표시 */}
+      {replyingTo && (
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-center justify-between">
+          <div className="flex items-center gap-2 text-blue-700">
+            <Reply className="w-4 h-4" />
+            <span className="text-sm">
+              <strong>{replyingTo.nickname}</strong>님에게 답글 작성 중
+            </span>
+          </div>
+          <button
+            onClick={cancelReply}
+            className="text-blue-600 hover:text-blue-800 p-1"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
       {/* 댓글 입력 영역 */}
       <div className="bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-blue-400 transition-colors">
         <textarea
@@ -287,7 +411,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
               handleSubmit();
             }
           }}
-          placeholder="댓글을 작성해주세요... (Ctrl+Enter로 전송)"
+          placeholder={replyingTo ? "답글을 작성해주세요... (Ctrl+Enter로 전송)" : "댓글을 작성해주세요... (Ctrl+Enter로 전송)"}
           className="w-full px-4 py-3 resize-none focus:outline-none text-gray-700 placeholder-gray-400"
           rows={3}
         />
@@ -301,7 +425,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
             className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5"
           >
             <Send className="w-3.5 h-3.5" />
-            {isSubmitting ? '전송 중...' : '댓글 작성'}
+            {isSubmitting ? '전송 중...' : (replyingTo ? '답글 작성' : '댓글 작성')}
           </button>
         </div>
       </div>
@@ -318,21 +442,11 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
           </div>
         ) : (
           comments.map((comment) => (
-            <div key={comment.id} className="bg-white rounded-xl p-4 border border-gray-100">
-              <div className="flex gap-3">
-                <div className={`w-10 h-10 ${comment.avatar} rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0 shadow-sm`}>
-                  {comment.nickname.charAt(0)}
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="font-medium text-gray-900 text-sm">{comment.nickname}</span>
-                    <span className="text-xs text-gray-400">· {formatTime(comment.created_at)}</span>
-                  </div>
-                  <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap break-words">{comment.content}</p>
-                </div>
-              </div>
-            </div>
+            <CommentItem
+              key={comment.id}
+              comment={comment}
+              onReply={handleReply}
+            />
           ))
         )}
       </div>
