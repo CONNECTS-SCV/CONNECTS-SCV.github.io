@@ -9,9 +9,11 @@ date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 ## 개요
+---
 RFdiffusion은 diffusion 기반 단백질 구조 생성/설계 모델입니다. Binder, pocket, motif, oligomer 등 다양한 제약조건을 반영하여 단백질을 설계할 수 있습니다. 현존하는 단백질 생성 도구 중 가장 범용성과 확장성이 큰 SOTA로 평가됩니다.
 
 ## 작동 원리
+---
 Diffusion 구조를 바탕으로 무작위 노이즈에서 시작하여 denoising을 하면서 점진적으로 원하는 구조를 만들어갑니다.
 다양한 제약 조건에서 단백질을 설계할 수 있는 서브 모듈들로 구성되어 있습니다.
 
@@ -25,6 +27,7 @@ Diffusion 구조를 바탕으로 무작위 노이즈에서 시작하여 denoisin
 | Unconditional generation | de novo generation | 새로운 scaffold 디자인 | Chai-1, Boltz-2 |
 
 ## 입력・출력・설정 옵션
+---
 
 | 서브모듈 | 입력 | 설정 옵션 | 출력                        |
 | :--- | :--- | :--- |:--------------------------|
@@ -36,6 +39,7 @@ Diffusion 구조를 바탕으로 무작위 노이즈에서 시작하여 denoisin
 | **Unconditional generation** | - | - Contigs (설계하고자 하는 길이)<br>- Number of Designs |  생성된 구조                   |
 
 ## 용도・차별 포인트
+---
 
 **용도** :
 - 사용자가 원하는 제약조건을 만족하는 모든 종류의 단백질을 설계할 수 있습니다.
@@ -45,9 +49,11 @@ Diffusion 구조를 바탕으로 무작위 노이즈에서 시작하여 denoisin
 - 현존하는 단백질 생성 도구 중 가장 범용성과 확장성이 큰 SOTA 모델로 평가됩니다.
 
 ## 비교해 볼만한 모델
+---
 - PocketGen은 pocket에 특화하여 특정 ligand에 최적화된 pocket을 설계할 수 있습니다. RFdiffusion이 제공하는 기능 중에서도 유사한 기능이 존재합니다.
 
 ## 연계해 볼 만한 모델
+---
 
 - RFdiffusion은 기본적으로 단백질의 구조를 만들어주는 모델이고, 정확한 서열은 아직 부여되지 않은 상태입니다. ProteinMPNN과 같은 도구들은 RFdiffusion을 통해서 만들어낸 구조에 대하여 최적화된 아미- 노산 서열을 부여해줄 수 있습니다.
 - De novo로 생성된 구조들의 동적 안정성을 확인하기 위해서는 Bioemu와 같은 도구들을 사용해볼 수 있습니다.

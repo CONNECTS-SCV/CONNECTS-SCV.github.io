@@ -9,9 +9,11 @@ date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 ## 개요
+---
 RFantibody는 De novo 항체 설계 파이프라인으로, 기존에는 phage display나 물리적 라이브러리를 이용해 항체를 선별·설계하던 과정을 in silico에서 빠르고 체계적으로 수행할 수 있게 해주는 모델입니다. 단백질 설계용 SOTA 인공지능 모델 세 가지 (RFdiffusion, PRoteinMPNN, RoseTTAFold2)를 통합하여 편의성을 극대화하였습니다.
 
 ## 작동 원리
+---
 항체 구조 생성 - CDR 서열 할당 - 구조 예측 및 검증의 세 단계로 이루어져 있습니다.
 
 ::callout
@@ -29,6 +31,7 @@ RFantibody는 De novo 항체 설계 파이프라인으로, 기존에는 phage di
 ::/callout
  
 ## 입력・출력・설정 옵션
+---
 
 **입력** :
 - 표적 항원의 단백질 구조 (PDB 포맷)
@@ -49,6 +52,7 @@ RFantibody는 De novo 항체 설계 파이프라인으로, 기존에는 phage di
 - Sequences for design 한 종류의 구조에 대하여 생성하는 서열의 갯수 (proteinMPNN step)
 
 ## 용도・차별 포인트
+---
 
 **용도** :
 - 항원의 에피포트를 기반으로 새로운 항체를 설계할 수 있습니다.
@@ -59,11 +63,13 @@ RFantibody는 De novo 항체 설계 파이프라인으로, 기존에는 phage di
 - 특히 CDR-H3에 대한 높은 예측 신뢰성을 가지고 있는 것으로 보고되었습니다.
 
 ## 비교해 볼만한 모델
+---
 - 항체의 구조 예측과 devlopability 평가 등을 통합하여 할 수 있는 **SabPred**라는 플랫폼도 있습니다.
 - CDR 특이적으로 디자인 하기 위해서는 **ABlooper**같은 디자인 도구를 활용할 수 있습니다.
 - OPIG에서 개발한 **Abodybuilder3**도 좋은 성능을 가진 항체 설계 도구입니다. 서열 기반으로 구조를 예측해줍니다.
 
 ## 연계해 볼 만한 모델
+---
 
 - 만들어진 항체에 대하여 **DeepSP**를 이용하여 개발 가능성에 대한 지표를 추출해볼 수 있습니다.
 - 항원과 항체의 결합 양상을 확인하기 위하여 **Prodigy**나 **HADDOCK**과 같은 모델이 사용될 수 있습니다.

@@ -68,7 +68,7 @@ const markdownComponents: any = {
     </h1>
   ),
   h2: ({ children, ...props }: any) => (
-    <h2 className="text-3xl font-bold mt-10 mb-5 text-gray-900" {...props}>
+    <h2 className="text-3xl font-bold mt-12 mb-5 text-gray-900" {...props}>
       {children}
     </h2>
   ),
