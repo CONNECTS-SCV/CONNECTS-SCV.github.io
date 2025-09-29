@@ -32,10 +32,8 @@ const fantasyNames = [
   "룬의각인사", "별의점성술사", "시간의여행자", "꿈의방랑자", "운명의예언가"
 ];
 
-// 랜덤으로 테마 선택
+// 테마 배열
 const themes = [scientistNames, spaceNames, fantasyNames];
-const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-const nicknamePool = randomTheme;
 
 const avatarColors = [
   "bg-gradient-to-br from-purple-400 to-purple-600",
@@ -77,6 +75,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
         subscription.unsubscribe();
       };
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   // Supabase 연결 확인 및 댓글 로드

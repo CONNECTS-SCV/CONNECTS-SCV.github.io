@@ -1,10 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Supabase 클라이언트 생성
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+// Supabase 클라이언트 생성 (조건부)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Supabase가 설정되지 않은 경우 null 반환
+export const supabase = supabaseUrl && supabaseAnonKey
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 // 타입 정의
 export interface Comment {
@@ -18,6 +21,8 @@ export interface Comment {
 
 // 댓글 가져오기
 export async function getComments(postId: string): Promise<Comment[]> {
+  if (!supabase) return [];
+
   const { data, error } = await supabase
     .from('comments')
     .select('*')
@@ -34,6 +39,8 @@ export async function getComments(postId: string): Promise<Comment[]> {
 
 // 댓글 작성
 export async function createComment(comment: Omit<Comment, 'id' | 'created_at'>): Promise<Comment | null> {
+  if (!supabase) return null;
+
   const { data, error } = await supabase
     .from('comments')
     .insert([comment])
@@ -50,6 +57,8 @@ export async function createComment(comment: Omit<Comment, 'id' | 'created_at'>)
 
 // 댓글 삭제 (관리자용 - 선택사항)
 export async function deleteComment(id: number): Promise<boolean> {
+  if (!supabase) return false;
+
   const { error } = await supabase
     .from('comments')
     .delete()
@@ -68,6 +77,12 @@ export function subscribeToComments(
   postId: string,
   callback: (payload: any) => void
 ) {
+  if (!supabase) {
+    return {
+      unsubscribe: () => {}
+    };
+  }
+
   const subscription = supabase
     .channel(`comments:${postId}`)
     .on(
