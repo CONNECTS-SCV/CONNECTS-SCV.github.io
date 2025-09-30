@@ -14,6 +14,7 @@ const categories: Category[] = [
   { id: "analysis", label: "분석 모델", value: "analysis" },
   { id: "release", label: "릴리즈 노트", value: "release" },
   { id: "feature", label: "기능 개선", value: "feature" },
+  { id: "academic", label: "학술", value: "academic" },
 ];
 
 interface CategoryFilterProps {
