@@ -60,4 +60,4 @@ DILI (Drug-Induced Liver Injury) Pred는 약물에 의해 유도되는 간 손�
 
 ---
 
-[tool-button:DILIPred]
+[tool-button:DiliPred]
