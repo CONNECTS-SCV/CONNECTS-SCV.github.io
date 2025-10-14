@@ -29,6 +29,11 @@ export async function getAllPosts(): Promise<BlogPost[]> {
         metadata.slug = fileName.replace(/\.md$/, '');
       }
 
+      // Set default language to 'ko' if not specified
+      if (!metadata.language) {
+        metadata.language = 'ko';
+      }
+
       // Extract excerpt from content
       const excerpt = metadata.description || extractExcerpt(content);
 
@@ -66,6 +71,11 @@ export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
 export async function getPostsByAuthor(authorId: string): Promise<BlogPost[]> {
   const posts = await getAllPosts();
   return posts.filter(post => post.metadata.author === authorId);
+}
+
+export async function getPostsByLanguage(language: 'ko' | 'en'): Promise<BlogPost[]> {
+  const posts = await getAllPosts();
+  return posts.filter(post => post.metadata.language === language);
 }
 
 // Utility function to get post with author details

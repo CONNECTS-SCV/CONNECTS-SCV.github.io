@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle, RefreshCw, Send, AlertCircle, Reply, X } from 'lucide-react';
 import { getComments, createComment, subscribeToComments, Comment } from '@/lib/supabase';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface CommentSectionProps {
   postId: string;
@@ -68,8 +69,64 @@ const personalityNames = [
   "밝은에너자이저", "깊은사고뭉치", "빠른순발력왕", "끈질긴노력파", "창의적인아이디어뱅크"
 ];
 
+// 영어 닉네임 배열들
+const scientistNamesEn = [
+  "CuriousNewton", "CreativeEdison", "PassionateCurie", "BoldEinstein", "InnovativeTesla",
+  "ExploringDarwin", "DiscoveringGalileo", "ExperimentingPasteur", "CalculatingTuring", "ObservingHubble",
+  "AnalyzingMendeleev", "ResearchingFeynman", "DesigningWright", "InventingBell", "DeducingHolmes",
+  "QuestioningSocrates", "ProvingEuclid", "InsightfulFreud", "CodingAda", "ExploringColumbus",
+  "ChallengingMagellan", "RecordingDaVinci", "MeasuringCopernicus", "ObservingKepler", "MathematicalGauss",
+  "LogicalRussell", "AtomicRutherford", "VaccineJenner", "DecodingRosalind", "ProgrammingGrace"
+];
+
+const spaceNamesEn = [
+  "BrightSirius", "MysteriousAndromeda", "EternalPolaris", "BeautifulOrion", "IntenseBetelgeuse",
+  "ElegantCassiopeia", "MightyJupiter", "RingedSaturn", "RedMars", "SwiftMercury",
+  "TwinklingVenus", "BlueNeptune", "ColdPluto", "SpinningPulsar", "DeepBlackHole",
+  "SpectacularSupernova", "SpiralMilkyWay", "BrightQuasar", "MysticalNebula", "EternalComet",
+  "BlazingSun", "SereneMoon", "WanderingAsteroid", "LongTailedMeteor", "RadiantBigDipper",
+  "InfiniteUniverse", "ShootingStar", "BeautifulGalaxy", "MysteriousDarkMatter", "AmazingAurora"
+];
+
+const fantasyNamesEn = [
+  "BraveKnight", "WiseMage", "AgilRanger", "MightyWarrior", "MysticalElf",
+  "SturdyDwarf", "CunningRogue", "HealingPriest", "ProphetSage", "FlameSummoner",
+  "FrostMage", "WindArcher", "EarthGuardian", "LightPaladin", "ShadowAssassin",
+  "RuneEngraver", "StarAstrologer", "TimeTraveler", "DreamWanderer", "FateSeer",
+  "ThunderSwordsman", "NatureDruid", "SoulNecromancer", "IronPaladin", "StormShaman",
+  "ArcaneArchmage", "BladeDancer", "HolyTemplar", "DarkWarlock", "DimensionalMage"
+];
+
+const foodNamesEn = [
+  "SweetMacaron", "SmoothTiramisu", "CrispyCroffle", "ChewyTteokbokki", "CoolBingsu",
+  "NuttyBungeoppang", "SweetHotteok", "SpicyKimchi", "AromaticCoffee", "FreshLemon",
+  "RichChocolate", "SmoothPudding", "CrispyCookie", "FluffyCake", "CoolIceCream",
+  "WarmLatte", "TangyYogurt", "SavoryCheese", "SweetHoney", "FreshMint",
+  "SpicyTteokbokki", "CoolCola", "HotPizza", "ChewyJelly", "CrispyChips",
+  "SoftSouffle", "StrongEspresso", "SweetCaramel", "AromaticVanilla", "FizzySoda"
+];
+
+const natureNamesEn = [
+  "CalmLake", "HighPeak", "DeepValley", "WideGrassland", "DenseForest",
+  "ClearStream", "RoughSea", "WhiteCloud", "WarmSunshine", "CoolBreeze",
+  "FreshDew", "CozySpringDay", "HotSummer", "CrispAutumn", "ColdWinter",
+  "GentleWind", "StrongTyphoon", "WhiteSnowflake", "RedMapleLeaf", "BlueSky",
+  "GoldenField", "BlackStorm", "SilverMoonlight", "OrangeSunset", "PurpleDawn",
+  "ClearWaterdrop", "RainbowBridge", "SparklingFrost", "WarmBonfire", "CoolShade"
+];
+
+const personalityNamesEn = [
+  "CheerfulOptimist", "CalmThinker", "PassionateDreamer", "DetailedArtist", "BoldAdventurer",
+  "CarefulStrategist", "JoyfulJoker", "WarmComforter", "CoolAnalyst", "FreeSoul",
+  "HonestSpeaker", "GentleMediator", "LivelyEnergizer", "SeriousPhilosopher", "PlayfulTrickster",
+  "KindFriend", "BraveChallenger", "WiseAdvisor", "PureRomantic", "ReliableSupporter",
+  "WittySpeaker", "MeticulousPerfectionist", "RelaxedChill", "ActiveGoGetter", "QuietObserver",
+  "BrightEnergizer", "DeepThinker", "QuickWit", "PersistentWorker", "CreativeIdeaMaker"
+];
+
 // 테마 배열 (6개 테마, 총 180개 닉네임)
-const themes = [scientistNames, spaceNames, fantasyNames, foodNames, natureNames, personalityNames];
+const themesKo = [scientistNames, spaceNames, fantasyNames, foodNames, natureNames, personalityNames];
+const themesEn = [scientistNamesEn, spaceNamesEn, fantasyNamesEn, foodNamesEn, natureNamesEn, personalityNamesEn];
 
 const avatarColors = [
   "bg-gradient-to-br from-purple-400 to-purple-600",
@@ -94,8 +151,10 @@ function CommentItem({
   level?: number;
   onReply: (parentId: number, parentNickname: string) => void;
 }) {
+  const { t, language } = useLanguage();
+
   const formatTime = (timestamp: string | undefined) => {
-    if (!timestamp) return '방금 전';
+    if (!timestamp) return t('comments.justNow');
 
     const date = new Date(timestamp);
     const now = new Date();
@@ -104,11 +163,11 @@ function CommentItem({
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return "방금 전";
-    if (minutes < 60) return `${minutes}분 전`;
-    if (hours < 24) return `${hours}시간 전`;
-    if (days < 7) return `${days}일 전`;
-    return date.toLocaleDateString('ko-KR');
+    if (minutes < 1) return t('comments.justNow');
+    if (minutes < 60) return `${minutes}${t('comments.minutesAgo')}`;
+    if (hours < 24) return `${hours}${t('comments.hoursAgo')}`;
+    if (days < 7) return `${days}${t('comments.daysAgo')}`;
+    return date.toLocaleDateString(language === 'ko' ? 'ko-KR' : 'en-US');
   };
 
   return (
@@ -122,7 +181,7 @@ function CommentItem({
           <div className="flex-1 min-w-0">
             <div className="flex items-baseline gap-2 mb-2">
               <span className="font-medium text-gray-900 text-sm">{comment.nickname}</span>
-              {level > 0 && <span className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded">답글</span>}
+              {level > 0 && <span className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{t('comments.replyBadge')}</span>}
               <span className="text-xs text-gray-400">· {formatTime(comment.created_at)}</span>
             </div>
             <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap break-words">{comment.content}</p>
@@ -134,7 +193,7 @@ function CommentItem({
                 className="mt-2 text-xs text-gray-500 hover:text-blue-600 flex items-center gap-1 transition-colors"
               >
                 <Reply className="w-3 h-3" />
-                답글 달기
+                {t('comments.replyTo')}
               </button>
             )}
           </div>
@@ -160,6 +219,7 @@ function CommentItem({
 
 // Supabase 연동 버전
 export default function CommentSectionOnline({ postId }: CommentSectionProps) {
+  const { t, language } = useLanguage();
   const [comments, setComments] = useState<Comment[]>([]);
   const [nickname, setNickname] = useState("");
   const [avatarColor, setAvatarColor] = useState("");
@@ -190,6 +250,12 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
+  // 언어 변경 시 닉네임 다시 생성
+  useEffect(() => {
+    generateRandomNickname();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
+
   // Supabase 연결 확인 및 댓글 로드
   const checkSupabaseAndLoadComments = async () => {
     const hasSupabase = !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -211,7 +277,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
       setError(null);
     } catch (err) {
       console.error('Error loading comments:', err);
-      setError('댓글을 불러오는데 실패했습니다. 로컬 모드로 전환합니다.');
+      setError(t('comments.errorLoading'));
       loadLocalComments();
     } finally {
       setIsLoading(false);
@@ -262,7 +328,8 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
 
   // 랜덤 닉네임 생성
   const generateRandomNickname = () => {
-    // 매번 새로운 테마 선택
+    // 현재 언어에 따라 테마 선택
+    const themes = language === 'ko' ? themesKo : themesEn;
     const currentTheme = themes[Math.floor(Math.random() * themes.length)];
     const randomName = currentTheme[Math.floor(Math.random() * currentTheme.length)];
     const randomColor = avatarColors[Math.floor(Math.random() * avatarColors.length)];
@@ -337,7 +404,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
       generateRandomNickname();
     } catch (err) {
       console.error('Error posting comment:', err);
-      setError('댓글 작성에 실패했습니다. 다시 시도해주세요.');
+      setError(t('comments.errorPosting'));
     } finally {
       setIsSubmitting(false);
     }
@@ -371,7 +438,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-gray-700 text-base font-semibold flex items-center gap-2">
           <MessageCircle className="w-5 h-5" />
-          댓글 {getTotalCommentCount(comments)}
+          {t('comments.title')} {getTotalCommentCount(comments)}
         </h3>
       </div>
 
@@ -391,7 +458,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
               {nickname.charAt(0)}
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-1">작성자 닉네임</p>
+              <p className="text-xs text-gray-500 mb-1">{t('comments.authorNickname')}</p>
               <p className="text-gray-800 font-medium">{nickname}</p>
             </div>
           </div>
@@ -399,10 +466,10 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
           <button
             onClick={generateRandomNickname}
             className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1 hover:bg-blue-50 px-3 py-2 rounded-lg transition-all"
-            title="다른 닉네임으로 변경"
+            title={t('comments.changeName')}
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            다시 뽑기
+            {t('comments.changeName')}
           </button>
         </div>
       </div>
@@ -413,7 +480,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
           <div className="flex items-center gap-2 text-blue-700">
             <Reply className="w-4 h-4" />
             <span className="text-sm">
-              <strong>{replyingTo.nickname}</strong>님에게 답글 작성 중
+              {t('comments.replyingTo')} <strong>{replyingTo.nickname}</strong>
             </span>
           </div>
           <button
@@ -435,13 +502,13 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
               handleSubmit();
             }
           }}
-          placeholder={replyingTo ? "답글을 작성해주세요... (Ctrl+Enter로 전송)" : "댓글을 작성해주세요... (Ctrl+Enter로 전송)"}
+          placeholder={replyingTo ? t('comments.placeholderReply') : t('comments.placeholder')}
           className="w-full px-4 py-3 resize-none focus:outline-none text-gray-700 placeholder-gray-400"
           rows={3}
         />
         <div className="flex items-center justify-between px-4 py-2 bg-gray-50 border-t border-gray-100">
           <p className="text-xs text-gray-500">
-            ⚠️ 작성된 댓글은 수정/삭제가 불가능합니다
+            {t('comments.warning')}
           </p>
           <button
             onClick={handleSubmit}
@@ -449,7 +516,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
             className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5"
           >
             <Send className="w-3.5 h-3.5" />
-            {isSubmitting ? '전송 중...' : (replyingTo ? '답글 작성' : '댓글 작성')}
+            {isSubmitting ? t('comments.submitting') : (replyingTo ? t('comments.submitReply') : t('comments.submit'))}
           </button>
         </div>
       </div>
@@ -458,11 +525,11 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
       <div className="mt-8 space-y-4">
         {isLoading ? (
           <div className="text-center py-10 text-gray-400">
-            댓글을 불러오는 중...
+            {t('comments.loading')}
           </div>
         ) : comments.length === 0 ? (
           <div className="text-center py-10 text-gray-400">
-            첫 번째 댓글을 남겨보세요!
+            {t('comments.noComments')}
           </div>
         ) : (
           comments.map((comment) => (
@@ -478,7 +545,7 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
       {/* 모드 표시 */}
       {!isSupabaseAvailable && (
         <div className="mt-8 text-center text-xs text-gray-400">
-          로컬 모드로 작동 중 (다른 사용자와 공유되지 않음)
+          {t('comments.localMode')}
         </div>
       )}
     </div>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { SearchModal } from "./SearchModal";
 import Header from "./layout/Header";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { BlogPost } from "@/lib/markdown";
 
 interface SearchProviderProps {
@@ -10,7 +11,16 @@ interface SearchProviderProps {
 }
 
 export function SearchProvider({ posts }: SearchProviderProps) {
+  const { language } = useLanguage();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Filter posts by current language
+  const filteredPosts = useMemo(() => {
+    return posts.filter(post => {
+      const postLanguage = post.metadata.language || 'ko';
+      return postLanguage === language;
+    });
+  }, [posts, language]);
 
   useEffect(() => {
     let lastShiftTime = 0;
@@ -45,7 +55,7 @@ export function SearchProvider({ posts }: SearchProviderProps) {
       <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
-        posts={posts}
+        posts={filteredPosts}
       />
     </>
   );

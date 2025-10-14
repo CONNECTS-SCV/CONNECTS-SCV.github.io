@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import '@/style/animations.css';
 
 export function AnimatedBanner() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -70,7 +72,12 @@ export function AnimatedBanner() {
           {/* Main Title */}
           <div className="overflow-hidden px-4">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center">
-              {['기술로', '만드는', '더 나은', '미래'].map((word, i) => (
+              {[
+                t('banner.title.word1'),
+                t('banner.title.word2'),
+                t('banner.title.word3'),
+                t('banner.title.word4')
+              ].map((word, i) => (
                 <span
                   key={i}
                   className="inline-block mx-1"
@@ -89,7 +96,7 @@ export function AnimatedBanner() {
             </h1>
           </div>
 
-          {/* English Subtitle */}
+          {/* Subtitle */}
           <p
             className="mt-2 sm:mt-3 text-white/90 text-sm sm:text-base lg:text-lg font-light text-center px-4"
             style={{
@@ -101,12 +108,12 @@ export function AnimatedBanner() {
               opacity: 0,
             }}
           >
-            Discover what's new and what's next
+            {t('banner.subtitle')}
           </p>
 
           {/* CTA Tags */}
           <div className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 px-4">
-            {['AI 연구', '바이오테크', '혁신'].map((tag, i) => (
+            {[t('banner.tag1'), t('banner.tag2'), t('banner.tag3')].map((tag, i) => (
               <span
                 key={tag}
                 className="bg-white/20 backdrop-blur-sm text-white text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 rounded-full font-medium"

@@ -2,20 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Category {
   id: string;
-  label: string;
   value: string;
 }
-
-const categories: Category[] = [
-  { id: "all", label: "전체", value: "all" },
-  { id: "analysis", label: "분석 모델", value: "analysis" },
-  { id: "release", label: "릴리즈 노트", value: "release" },
-  { id: "feature", label: "기능 개선", value: "feature" },
-  { id: "academic", label: "학술", value: "academic" },
-];
 
 interface CategoryFilterProps {
   onCategoryChange: (category: string) => void;
@@ -23,9 +15,18 @@ interface CategoryFilterProps {
 }
 
 export function CategoryFilter({ onCategoryChange, className }: CategoryFilterProps) {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
   const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const categories: (Category & { label: string })[] = [
+    { id: "all", label: t('category.all'), value: "all" },
+    { id: "analysis", label: t('category.analysis'), value: "analysis" },
+    { id: "release", label: t('category.release'), value: "release" },
+    { id: "feature", label: t('category.feature'), value: "feature" },
+    { id: "academic", label: t('category.academic'), value: "academic" },
+  ];
 
   useEffect(() => {
     updateIndicator(selectedCategory);
@@ -88,16 +89,25 @@ export function CategoryFilter({ onCategoryChange, className }: CategoryFilterPr
 
 // Responsive wrapper for mobile
 export function CategoryFilterMobile({ onCategoryChange, className }: CategoryFilterProps) {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleCategoryClick = (category: Category) => {
+  const categories: (Category & { label: string })[] = [
+    { id: "all", label: t('category.all'), value: "all" },
+    { id: "analysis", label: t('category.analysis'), value: "analysis" },
+    { id: "release", label: t('category.release'), value: "release" },
+    { id: "feature", label: t('category.feature'), value: "feature" },
+    { id: "academic", label: t('category.academic'), value: "academic" },
+  ];
+
+  const handleCategoryClick = (category: Category & { label: string }) => {
     setSelectedCategory(category.id);
     onCategoryChange(category.value);
     setIsOpen(false);
   };
 
-  const selectedLabel = categories.find(c => c.id === selectedCategory)?.label || "전체";
+  const selectedLabel = categories.find(c => c.id === selectedCategory)?.label || t('category.all');
 
   return (
     <div className={cn("relative bg-white lg:hidden", className)}>

@@ -283,6 +283,19 @@ const markdownComponents: any = {
         </div>
       );
     }
+    // Note box 스타일 처리
+    if (className && className.includes('note-box')) {
+      return (
+        <div className="note-box border-l-4 border-blue-500 bg-blue-50 rounded-r-lg px-6 py-4 my-6 flex items-start gap-3" {...props}>
+          <svg className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+          </svg>
+          <div className="flex-1">
+            {children}
+          </div>
+        </div>
+      );
+    }
     return <div className={className} {...props}>{children}</div>;
   },
   strong: ({ children, ...props }: any) => (
@@ -317,7 +330,11 @@ interface MarkdownContentProps {
   content: string;
 }
 
+// Import useLanguage hook (we'll wrap this in a client component wrapper)
+import { useLanguage } from '@/contexts/LanguageContext';
+
 export default function MarkdownContent({ content }: MarkdownContentProps) {
+  const { t } = useLanguage();
   // Process custom image syntax first
   let processedContent = processImageSyntax(content);
 
@@ -354,6 +371,14 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
     }
   );
 
+  // Process custom syntax for note boxes
+  processedContent = processedContent.replace(
+    /::note\s*([\s\S]*?)\s*::\/note/g,
+    (match, noteContent) => {
+      return `<div class="note-box">\n\n${noteContent.trim()}\n\n</div>`;
+    }
+  );
+
   // Process custom syntax for tool buttons
   processedContent = processedContent.replace(
     /\[tool-button:([^\]]+)\]/g,
@@ -380,14 +405,16 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
       };
 
       const url = toolUrls[toolName] || '#';
+      const tryItText = t('post.tryItOut');
+      const goToToolText = t('post.goToTool');
 
       return `
 <div class="text-center mt-12 mb-8">
-  <p class="text-base font-bold text-gray-800 mb-8">아래 버튼을 통해 직접 사용해보세요.</p>
+  <p class="text-base font-bold text-gray-800 mb-8">${tryItText}</p>
 
   <a href="#" onclick="window.open('${url}', '_blank'); return false;" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full mb-6 no-underline hover:opacity-80 transition-opacity" style="background-color: rgba(0, 0, 0, 0.15);">
     <div class="w-5 h-5" style="display: inline-block;"><svg enable-background="new 0 0 16 16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="#000000"><path d="m12.432 8.948c-.368 0-.668.3-.668.668v1.575c0 .317-.258.575-.575.575h-6.379c-.317 0-.574-.258-.574-.575v-6.38c0-.317.257-.574.574-.574h1.574c.369 0 .669-.3.669-.668s-.301-.668-.669-.668h-1.574c-1.053 0-1.91.857-1.91 1.91v6.379c0 1.053.857 1.91 1.91 1.91h6.379c1.053 0 1.91-.856 1.91-1.91v-1.574c0-.368-.299-.668-.667-.668z"></path><path d="m12.903 3.085c-.136-.133-.316-.192-.494-.184h-3.807c-.369 0-.668.3-.668.669s.299.668.668.668h2.217l-3.192 3.191c-.125.124-.196.297-.196.472 0 .369.3.668.668.668v-.099.099c.179 0 .346-.069.472-.195l3.193-3.194v2.218c0 .369.3.668.668.668s.668-.3.668-.668v-3.815c.005-.18-.057-.362-.197-.498z"></path></g></svg></div>
-    <span class="text-sm font-bold" style="color: black;">${toolName} 사용하러 가기</span>
+    <span class="text-sm font-bold" style="color: black;">${toolName} ${goToToolText}</span>
   </a>
 </div>`;
     }

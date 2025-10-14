@@ -8,6 +8,7 @@ export interface PostMetadata {
   date?: string;
   slug: string;
   thumbnail?: string;
+  language?: 'ko' | 'en';
 }
 
 export interface BlogPost {

@@ -1,5 +1,7 @@
 "use client";
 
+import { useLanguage } from '@/contexts/LanguageContext';
+
 interface Post {
     metadata: {
         title: string;
@@ -9,6 +11,7 @@ interface Post {
         slug: string;
         tags: string[];
         categories: string[];
+        language?: 'ko' | 'en';
     };
     excerpt: string;
     author: {
@@ -23,8 +26,16 @@ interface SidebarProps {
 }
 
 export function Sidebar({ posts }: SidebarProps) {
+    const { t, language } = useLanguage();
+
+    // 현재 언어에 맞는 포스트만 필터링
+    const filteredPosts = posts.filter(post => {
+        const postLanguage = post.metadata.language || 'ko';
+        return postLanguage === language;
+    });
+
     // 최근 포스트 5개를 인기 포스트로 표시
-    // const popularPosts = [...posts]
+    // const popularPosts = [...filteredPosts]
     //     .sort((a, b) => {
     //         const dateA = new Date(a.metadata.date || '');
     //         const dateB = new Date(b.metadata.date || '');
@@ -34,7 +45,7 @@ export function Sidebar({ posts }: SidebarProps) {
 
     // 모든 태그 추출 및 빈도 계산
     const tagCount = new Map<string, number>();
-    posts.forEach(post => {
+    filteredPosts.forEach(post => {
         if (Array.isArray(post.metadata.tags)) {
             post.metadata.tags.forEach(tag => {
                 tagCount.set(tag, (tagCount.get(tag) || 0) + 1);
@@ -50,7 +61,7 @@ export function Sidebar({ posts }: SidebarProps) {
 
     // 카테고리별 포스트 그룹화 (아티클 시리즈)
     const categorizedPosts = new Map<string, Post[]>();
-    posts.forEach(post => {
+    filteredPosts.forEach(post => {
         if (Array.isArray(post.metadata.categories)) {
             post.metadata.categories.forEach(category => {
                 if (!categorizedPosts.has(category)) {
@@ -123,7 +134,7 @@ export function Sidebar({ posts }: SidebarProps) {
             {/* 태그 클라우드 */}
             {sortedTags.length > 0 && (
                 <div className="px-2 pb-10 pt-12">
-                    <h3 className="text-xs font-bold text-gray-500 mb-6">태그</h3>
+                    <h3 className="text-xs font-bold text-gray-500 mb-6">{t('sidebar.tags')}</h3>
                     <div className="flex flex-wrap gap-2">
                         {sortedTags.map((tag) => (
                             <button

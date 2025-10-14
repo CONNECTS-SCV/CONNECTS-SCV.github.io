@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { CategoryFilter, CategoryFilterMobile } from "./CategoryFilter";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Post {
     metadata: {
@@ -15,6 +16,7 @@ interface Post {
         tags: string[];
         categories: string[];
         thumbnail?: string;
+        language?: 'ko' | 'en';
     };
     excerpt: string;
     author: {
@@ -32,22 +34,40 @@ const POSTS_PER_PAGE = 10;
 
 type SortOption = "latest" | "oldest" | "titleAsc" | "titleDesc" | "authorAsc" | "authorDesc";
 
-const sortOptions: { value: SortOption; label: string }[] = [
-    { value: "latest", label: "최신순" },
-    { value: "oldest", label: "오래된순" },
-    { value: "titleAsc", label: "제목순 (ㄱ-ㅎ)" },
-    { value: "titleDesc", label: "제목순 (ㅎ-ㄱ)" },
-    { value: "authorAsc", label: "작성자순 (ㄱ-ㅎ)" },
-    { value: "authorDesc", label: "작성자순 (ㅎ-ㄱ)" },
-];
-
 export function PostListClient({ initialPosts }: PostListClientProps) {
-    const [filteredPosts, setFilteredPosts] = useState<Post[]>(initialPosts);
+    const { language, t } = useLanguage();
+
+    // Sort options with translations
+    const sortOptions: { value: SortOption; label: string }[] = [
+        { value: "latest", label: t('sort.latest') },
+        { value: "oldest", label: t('sort.oldest') },
+        { value: "titleAsc", label: t('sort.titleAsc') },
+        { value: "titleDesc", label: t('sort.titleDesc') },
+        { value: "authorAsc", label: t('sort.authorAsc') },
+        { value: "authorDesc", label: t('sort.authorDesc') },
+    ];
+
+    // Filter posts by language (memoized to prevent unnecessary recalculations)
+    const languageFilteredPosts = useMemo(() => {
+        return initialPosts.filter(post => {
+            const postLanguage = post.metadata.language || 'ko';
+            return postLanguage === language;
+        });
+    }, [initialPosts, language]);
+
+    const [filteredPosts, setFilteredPosts] = useState<Post[]>(languageFilteredPosts);
     const [, setSelectedCategory] = useState("all");
     const [currentPage, setCurrentPage] = useState(1);
     const [sortOrder, setSortOrder] = useState<SortOption>("latest");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // Update filtered posts when language changes
+    useEffect(() => {
+        setFilteredPosts(languageFilteredPosts);
+        setCurrentPage(1);
+        setSelectedCategory("all");
+    }, [language, languageFilteredPosts]);
 
     // 드롭다운 외부 클릭 감지
     useEffect(() => {
@@ -112,9 +132,9 @@ export function PostListClient({ initialPosts }: PostListClientProps) {
         setCurrentPage(1); // 카테고리 변경시 첫 페이지로 이동
 
         if (category === "all") {
-            setFilteredPosts(initialPosts);
+            setFilteredPosts(languageFilteredPosts);
         } else {
-            const filtered = initialPosts.filter(post => {
+            const filtered = languageFilteredPosts.filter(post => {
                 // categories 배열에 선택된 카테고리가 포함되어 있는지 확인
                 return post.metadata.categories?.includes(category);
             });
@@ -177,7 +197,7 @@ export function PostListClient({ initialPosts }: PostListClientProps) {
                     )}
                 </div>
                 <div className="text-sm text-gray-500">
-                    총 {filteredPosts.length}개의 포스트
+                    {t('post.totalPosts', { count: filteredPosts.length })}
                 </div>
             </div>
 
@@ -185,7 +205,7 @@ export function PostListClient({ initialPosts }: PostListClientProps) {
             <div className="min-h-[600px]">
                 {filteredPosts.length === 0 ? (
                     <div className="text-center py-10 text-gray-500">
-                        해당 카테고리에 포스트가 없습니다.
+                        {t('post.noPosts')}
                     </div>
                 ) : (
                     <>

@@ -2,9 +2,10 @@ import {notFound} from 'next/navigation';
 import {Metadata} from 'next';
 import {getPostBySlug, getAllPosts} from '@/lib/posts';
 import {getAuthor} from '@/data/authors';
-import {getCategoryLabel} from '@/lib/categoryMapping';
 import MarkdownContent from '@/components/post/MarkdownContent';
 import CommentSectionOnline from '@/components/post/CommentSectionOnline';
+import BackToListButton from '@/components/post/BackToListButton';
+import PostMetadata from '@/components/post/PostMetadata';
 
 // Generate static params for all posts
 export async function generateStaticParams() {
@@ -89,42 +90,18 @@ export default async function PostPage({params}: { params: Promise<{ id: string 
             <div className="w-[80%] mx-auto px-4 pt-10 pb-20">
                 {/* Header */}
                 <header className="mb-8">
-                    <h1 className="font-bold text-3xl mb-1 text-gray-900" itemProp="headline">
+                    <h1 className="font-bold text-3xl mb-4 text-gray-900" itemProp="headline">
                         {String(post.metadata.title || '')}
                     </h1>
                     <meta itemProp="datePublished" content={post.metadata.date}/>
                     <meta itemProp="author" content={author?.name || 'Unknown'}/>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {Array.isArray(post.metadata.categories) && post.metadata.categories.map((category: string) => (
-                            <span
-                                key={String(category)}
-                                className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm"
-                            >
-              #{getCategoryLabel(String(category))}
-            </span>
-                        ))}
-                        {Array.isArray(post.metadata.tags) && post.metadata.tags.length > 0 &&
-                            post.metadata.tags.map((tag: string) => (
-                                <span
-                                    key={String(tag)}
-                                    className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm"
-                                >
-                #{String(tag)}
-              </span>
-                            ))
-                        }
-                    </div>
-
-                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <span>{String(post.metadata.date || '')}</span>
-                        <span>·</span>
-                        <span>{String(author?.name || 'Unknown')}</span>
-                    </div>
-
-                    {/*<p className="text-gray-600">*/}
-                    {/*  {String(post.metadata.description || '')}*/}
-                    {/*</p>*/}
+                    <PostMetadata
+                        categories={post.metadata.categories}
+                        tags={post.metadata.tags}
+                        date={String(post.metadata.date || '')}
+                        authorName={String(author?.name || 'Unknown')}
+                    />
                 </header>
 
                 <hr className="border-t border-gray-200 mb-10"/>
@@ -139,17 +116,7 @@ export default async function PostPage({params}: { params: Promise<{ id: string 
 
                 {/* Navigation */}
                 <div className="mt-10 pt-6 border-t border-gray-200">
-                    <a
-                        href="/"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 hover:text-gray-900 font-medium"
-                    >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                  d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                        </svg>
-                        목록으로 돌아가기
-                    </a>
+                    <BackToListButton />
                 </div>
             </div>
         </>

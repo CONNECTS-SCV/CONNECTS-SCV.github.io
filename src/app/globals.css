@@ -284,4 +284,46 @@ a {
   .hljs-function {
     @apply text-blue-400;
   }
+
+  /* Note box styling */
+  .note-box {
+    @apply border-l-4 border-blue-500 bg-blue-50 rounded-r-lg px-6 py-4 my-6 flex items-start gap-3;
+  }
+
+  .note-box p {
+    @apply mb-2 last:mb-0 text-gray-700;
+  }
+
+  .note-box ul, .note-box ol {
+    @apply mb-2 last:mb-0;
+  }
+
+  .note-box strong {
+    @apply text-gray-900 font-semibold;
+  }
+
+  .note-box a {
+    @apply text-blue-600 hover:text-blue-800 underline;
+  }
+
+  .note-box code {
+    @apply bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+
+  /* Dark mode support for note box */
+  .dark .note-box {
+    @apply border-blue-400 bg-blue-900/20;
+  }
+
+  .dark .note-box p {
+    @apply text-gray-300;
+  }
+
+  .dark .note-box strong {
+    @apply text-gray-100;
+  }
+
+  .dark .note-box code {
+    @apply bg-blue-800/50 text-blue-300;
+  }
 }

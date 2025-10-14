@@ -6,6 +6,7 @@ import Image from "next/image";
 import linkSVG from "@/assets/link.svg";
 import magnifyingGlassSVG from "@/assets/magnifyingGlass.svg";
 import {Button} from "../ui/button/button";
+import LanguageToggle from "./LanguageToggle";
 
 interface HeaderProps {
     onSearchClick?: () => void;
@@ -57,6 +58,9 @@ export default function Header({onSearchClick}: HeaderProps) {
                 {/*<div className="ml-2">*/}
                 {/*  <Button variant="gray">채용 바로가기</Button>*/}
                 {/*</div>*/}
+                <div className="mx-2">
+                    <LanguageToggle />
+                </div>
                 <div className="mx-2">
                     <Button variant="destructive" onClick={onSearchClick}>
                         <Image src={magnifyingGlassSVG} alt="search" width={20} height={20}/>
