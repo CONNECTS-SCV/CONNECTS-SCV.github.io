@@ -58,4 +58,4 @@ OPIG에서 제공하는 TAP(Therapeutic Antibody Profiler)의 지표와 abdev의
 
 ---
 
-[tool-button:AbDev]
+[tool-button:Abdev]

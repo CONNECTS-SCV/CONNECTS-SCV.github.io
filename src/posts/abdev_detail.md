@@ -337,4 +337,4 @@ Abituzumab은 평균적인 후보로 볼 수 있고, Abrilumab은 가장 개발 
 
 ---
 
-[tool-button:AbDev]
+[tool-button:Abdev]

@@ -61,4 +61,4 @@ AbDev integrates these descriptors to generate a comprehensive developability pr
 
 ---
 
-[tool-button:AbDev]
+[tool-button:Abdev]
