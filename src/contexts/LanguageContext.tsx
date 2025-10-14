@@ -17,20 +17,35 @@ interface LanguageProviderProps {
 }
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
-  const [language, setLanguageState] = useState<Language>('ko');
+  const [language, setLanguageState] = useState<Language>('en'); // Default to English
   const [mounted, setMounted] = useState(false);
 
   // Load language from localStorage on mount, or detect from browser
   useEffect(() => {
-    let finalLanguage: Language = 'ko';
+    let finalLanguage: Language = 'en'; // Default to English
 
     const savedLanguage = localStorage.getItem('language') as Language;
     if (savedLanguage === 'ko' || savedLanguage === 'en') {
+      // Use saved language if exists
       finalLanguage = savedLanguage;
     } else {
       // Detect language from browser
       const browserLang = navigator.language.toLowerCase();
-      finalLanguage = browserLang.startsWith('ko') ? 'ko' : 'en';
+      
+      // Only set to Korean if browser language is Korean
+      // or if timezone suggests Korea location
+      if (browserLang.startsWith('ko')) {
+        finalLanguage = 'ko';
+      } else {
+        // Check timezone for Korea
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (timezone === 'Asia/Seoul') {
+          finalLanguage = 'ko';
+        } else {
+          finalLanguage = 'en'; // Default to English for all other cases
+        }
+      }
+      
       localStorage.setItem('language', finalLanguage);
     }
 
