@@ -410,15 +410,6 @@ export default function CommentSectionOnline({ postId }: CommentSectionProps) {
     }
   };
 
-  // 새로고침
-  const handleRefresh = async () => {
-    if (isSupabaseAvailable) {
-      await loadSupabaseComments();
-    } else {
-      loadLocalComments();
-    }
-  };
-
   // 전체 댓글 수 계산 (답글 포함)
   const getTotalCommentCount = (comments: Comment[]): number => {
     let count = 0;
