@@ -51,7 +51,7 @@ export default function PostMetadata({ categories, tags, date, authorName }: Pos
                 key={tag}
                 className="bg-gray-50 text-gray-600 px-3 py-1 rounded-md text-sm border border-gray-200"
               >
-                #{tag}
+                {tag}
               </span>
             ))}
           </div>
