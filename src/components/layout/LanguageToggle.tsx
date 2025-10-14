@@ -1,7 +1,6 @@
 "use client";
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '../ui/button/button';
 
 export default function LanguageToggle() {
   const { language, setLanguage } = useLanguage();
@@ -11,13 +10,12 @@ export default function LanguageToggle() {
   };
 
   return (
-    <Button
-      variant="ghost"
+    <button
       onClick={toggleLanguage}
-      className="font-bold text-sm px-3 py-2 hover:bg-gray-100 transition-colors"
+      className="font-bold text-sm px-3 py-2 hover:bg-gray-100 transition-colors rounded-md"
       aria-label="Toggle language"
     >
       {language === 'ko' ? 'EN' : 'KO'}
-    </Button>
+    </button>
   );
 }
