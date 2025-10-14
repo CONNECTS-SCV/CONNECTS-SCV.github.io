@@ -11,9 +11,11 @@ language: en
 ---
 
 ## Overview
+---
 DILI (Drug-Induced Liver Injury) Pred is a predictive model designed to identify potential hepatotoxicity caused by drug candidates. It is mainly used in the early stages of drug discovery to assess liver toxicity risk and filter out high-risk compounds before preclinical testing.
 
 ## Mechanism
+---
 This model transforms each compound (SMILES) into a **graph representation** and integrates various molecular and biological descriptors into a unified feature vector.
 These features are trained via **supervised binary classification** to distinguish between **toxic and non-toxic compounds**.
 
@@ -26,6 +28,7 @@ These features are trained via **supervised binary classification** to distingui
 When a new compound is input, the trained model outputs **toxicity predictions** across multiple mechanisms and aggregates them into a final toxicity classification.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Compound structure (SMILES format)
@@ -45,17 +48,20 @@ When a new compound is input, the trained model outputs **toxicity predictions**
 - No user-defined parameters required
 
 ## Applications & Key Features
+---
 - Early-stage **hepatotoxicity screening** for drug discovery pipelines
 - Interpretable analysis to understand **structural causes of toxicity**
 - Provides **explainable toxicity assessment**, not just a binary result
 - Offers **assay-specific insights** that help interpret the biological mechanism behind toxicity
 
 ## Comparable Models
+---
 - **hERGAI**: Predicts **cardiotoxicity** related to hERG channel blocking
 - **HemoPI2**: Predicts **hemolytic toxicity** (blood-related toxicity)
 - **ADMET-AI**: Performs comprehensive **ADMET profiling** for small molecules
 
 ## Related Models
+---
 Combine **REINVENT4** with DILI to **optimize compounds** by reducing hepatotoxicity risk.
 After molecular optimization, validate improvements using **DILI-Pred** to confirm decreased liver toxicity.
 

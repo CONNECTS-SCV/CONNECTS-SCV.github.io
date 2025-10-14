@@ -11,11 +11,13 @@ language: en
 ---
 
 ## Overview
+---
 ProteinMPNN is an MPNN-based deep learning model that designs amino acid sequences optimized for a given 3D protein structure.
 
 As an inverse folding model, it focuses on mapping from structure → sequence, generating realistic sequences that fit structural constraints.
 
 ## Mechanism
+---
 ProteinMPNN follows the **Message Passing Neural Network (MPNN)** architecture.
 
 From the input protein structure, it constructs a graph where **nodes** represent residues and **edges** encode geometric relationships (distance and orientation). Through iterative message passing, each residue embedding is updated based on its neighbors, and the model outputs a **probability distribution of amino acids** that best fit the given structure.
@@ -25,6 +27,7 @@ However, the model’s performance depends heavily on the **quality of the input
 Additionally, while the model optimizes sequence–structure compatibility, it does **not guarantee functional properties**, so experimental or cross-model validation is recommended.
 
 ## Input, Output, Options
+---
 
 **Input** :
 - Protein 3D structure (PDB format)
@@ -44,16 +47,19 @@ Additionally, while the model optimizes sequence–structure compatibility, it d
 - **PSSM multiplier:** Controls how strongly MSA-based amino acid preferences are reflected
 
 ## Applications & Key Features
+---
 - Generate novel sequences compatible with de novo protein structures
 - Design **CDR loop sequences** that fit antibody–antigen interfaces
 - Significantly faster inference than legacy inverse folding models
 - Trained directly on **PDB structures**, producing more realistic and experimentally viable sequences
 
 ## Comparable Models
+---
 - **ProteinMPNN** remains the **state-of-the-art** in inverse folding for both speed and accuracy.
 - For antibody-specific sequence generation, cross-validation can be performed with **Antifold**.
 
 ## Related Models
+---
 - Combine with **RFdiffusion** to generate a structure first, then assign sequences using ProteinMPNN.
   - The **RFantibody** workflow integrates these steps into one pipeline.
 - The designed sequences can be validated by predicting structures with **Boltz-2** or **AlphaFold**, followed by binding affinity estimation using **Prodigy**.

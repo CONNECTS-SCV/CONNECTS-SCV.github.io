@@ -11,9 +11,11 @@ language: en
 ---
 
 ## Overview
+---
 BioPhi is a deep learning–based platform designed to evaluate and optimize antibody humanization using large-scale antibody repertoire data from OAS (Observed Antibody Space). It estimates the degree of humanness for antibody sequences and automates sequence-level humanization through data-driven learning.
 
 ## Mechanism
+---
 BioPhi integrates two complementary modules for antibody humanization and humanness scoring:
 
 1.  **Sapiens**
@@ -27,6 +29,7 @@ BioPhi integrates two complementary modules for antibody humanization and humann
     - Higher scores correlate with **lower immunogenicity risk** in clinical settings.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Antibody amino acid sequence (FASTA format)
@@ -39,6 +42,7 @@ BioPhi integrates two complementary modules for antibody humanization and humann
 - (To be updated in future versions)
 
 ## Applications & Key Features
+---
 
 **Applications**:
 - Used during antibody discovery or post-immunization stages to humanize candidate antibodies.
@@ -59,9 +63,11 @@ BioPhi integrates two complementary modules for antibody humanization and humann
 BioPhi effectively automates **CDR grafting** and **back-mutation** through a **deep learning–based**, **data-driven approach**.
 
 ## Comparable Models
+---
 **Humatch**: An alignment-based humanization tool suitable for cross-validation against BioPhi’s deep learning predictions.
 
 ## Related Models
+---
 - **MHCflurry**: Can be used post-humanization to predict **MHC-I binding** and **immunogenicity** risk.
 - **HADDOCK** / **GROMACS**: Useful for confirming whether humanized antibodies **retain binding affinity** to their target antigens, using docking or PMF (Potential of Mean Force) calculations.
 

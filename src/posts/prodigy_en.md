@@ -11,11 +11,13 @@ language: en
 ---
 
 ## Overview
+---
 PRODIGY is a structure-based tool that predicts the binding affinity (ΔG, kcal/mol) and dissociation constant (Kd) of protein–protein complexes from their 3D structures (PDB/mmCIF).
 
 Unlike deep learning models, PRODIGY uses a linear regression approach based on interfacial contacts (ICs) and non-interacting surface (NIS) properties.
 
 ## Mechanism
+---
 When a protein complex structure is provided, PRODIGY first identifies the **interaction interface**.
 
 Residues within a predefined distance (typically 5.5 Å) are considered contacts, which are categorized as **polar**, **non-polar**, or **charged** interactions.
@@ -32,6 +34,7 @@ The following features are used to predict ΔG:
 - Solvent-accessible surface area (ASA)
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Protein complex structure (PDB/mmCIF format)
@@ -48,15 +51,18 @@ The following features are used to predict ΔG:
 - **Selection Chains:** Select specific chains to analyze (e.g., focus only on heavy chain–antigen interaction, excluding intra-antibody chains)
 
 ## Applications & Key Features
+---
 - Rapidly estimate **PPI binding affinity** between protein pairs
 - Evaluate **mutational effects** on interfacial stability and free energy changes
 - Significantly faster than molecular dynamics (MD) or physics-based energy models
 - Provides interpretable contact-level features for structural analysis
 
 ## Comparable Models
+---
 - **DeepRank2:** A CNN/GNN-based deep learning model offering more detailed, high-resolution affinity prediction.
 
 ## Related Models
+---
 - **HADDOCK** can be used to generate protein–protein complex structures as input for PRODIGY.
 - Multiple complex ensembles produced by HADDOCK can be evaluated in batch mode with PRODIGY to **rank binding affinities** based on ΔG or Kd.
 

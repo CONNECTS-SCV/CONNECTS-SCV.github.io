@@ -11,11 +11,13 @@ language: en
 ---
 
 ## Overview
+---
 MHCflurry is a deep learning model that predicts binding affinity and immunogenicity between MHC class I molecules and peptides.
 
 It is primarily used for neoantigen prediction in cancer immunotherapy and vaccine candidate evaluation based on peptide–MHC interactions.
 
 ## Mechanism
+---
 **Training Data:**
   - MHCflurry is trained on large-scale experimental datasets such as the **Immune Epitope Database (IEDB)**, which contain MHC–peptide binding measurements.
 
@@ -27,6 +29,7 @@ It is primarily used for neoantigen prediction in cancer immunotherapy and vacci
   - Using the trained weights, MHCflurry estimates the **binding affinity (IC50)** and presentation probability of newly input peptide sequences.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Peptide sequence (FASTA format)
@@ -43,6 +46,7 @@ It is primarily used for neoantigen prediction in cancer immunotherapy and vacci
 - Specify MHC allele types of interest for focused prediction.
 
 ## Applications & Key Features
+---
 - Screening **vaccine candidate peptides** from pathogens or tumor-derived neoantigens.
 - Predicting potential **immunogenicity** risks of therapeutic proteins.
 - Supporting **personalized cancer immunotherapy** and **vaccine development**.
@@ -50,10 +54,12 @@ It is primarily used for neoantigen prediction in cancer immunotherapy and vacci
 - Supports **allele-specific analysis** for precise peptide–MHC matching.
 
 ## Comparable Models
+---
 - **NetMHCIIpan:** Specializes in **MHC class II–peptide binding prediction**.
 - Free for academic use but requires a license for commercial applications.
 
 ## Related Models
+---
 - **TCRmodel2:** Predicts **pMHC–TCR complex structures** for deeper structural analysis.
 - **RFdiffusion:** Enables structural design of TCR-binding interfaces constrained by predicted pMHC complexes.
 - **ProteinMPNN:** Optimizes **TCR sequences** to match designed structures.

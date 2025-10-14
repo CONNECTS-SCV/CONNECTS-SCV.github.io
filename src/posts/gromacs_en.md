@@ -11,10 +11,12 @@ language: en
 ---
 
 ## Overview
+---
 GROMACS (GROningen MAchine for Chemical Simulations) is an open-source software package designed for performing molecular dynamics (MD) simulations. It enables atomistic simulations of biomolecules such as proteins, lipids, and nucleic acids, and is widely used for energy minimization, equilibration, and free-energy calculations in biophysical research.
 
 
 ## Mechanism
+---
 GROMACS operates based on the fundamental principles of **Newton’s equations of motion**, calculating the forces acting on every atom in the system and integrating their trajectories over time.
 
 **Force Fields**
@@ -35,6 +37,7 @@ A typical GROMACS simulation workflow includes energy minimization ⟶ equilibra
 ::/note
 
 ## Input, Output, Options
+---
 
 **Input** :
 - Molecular structure file (PDB or GRO format)
@@ -58,6 +61,7 @@ A typical GROMACS simulation workflow includes energy minimization ⟶ equilibra
   ```
 
 ## Applications & Key Features
+---
 
 - Protein stability analysis (RMSD, RMSF, radius of gyration, hydrogen bonds, etc.)
 - Free energy calculations (e.g., umbrella sampling, steered MD)
@@ -69,6 +73,7 @@ A typical GROMACS simulation workflow includes energy minimization ⟶ equilibra
 
 
 ## Comparable Models
+---
 
 - **NAMD**: Excellent scalability on large clusters; built on the Charm++ parallel framework.
 - **AMBER**: High-accuracy force fields and specialized tools for biomolecular simulations.
@@ -77,6 +82,7 @@ A typical GROMACS simulation workflow includes energy minimization ⟶ equilibra
 
 
 ## Related Models
+---
 
 - **PLUMED**: Extension module for metadynamics and free-energy calculations; seamlessly integrates with GROMACS.
 - **MDAnalysis / MDTraj**: Python libraries for trajectory analysis (XTC, TRR).

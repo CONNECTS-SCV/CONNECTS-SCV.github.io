@@ -11,10 +11,12 @@ language: en
 ---
 
 ## Overview
+---
 Antifold is an antibody-specific inverse folding model fine-tuned from Meta’s ESM-IF1 framework.
 It leverages approximately 150,000 antibody structures from SabDab and OAS to enable high-precision sequence design and refinement for antibodies and nanobodies.
 
 ## Mechanism
+---
 Antifold predicts amino acid sequences from 3D structures through **inverse folding**.
 
 1. **Structural Encoding**
@@ -25,6 +27,7 @@ Antifold predicts amino acid sequences from 3D structures through **inverse fold
    - The model then samples amino acids from **N-terminus to C-terminus**, generating sequences consistent with the input structure.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Antibody structure (PDB format)
@@ -47,6 +50,7 @@ Including the antigen structure is recommended — this allows refinement of the
 - **ESM-IF1 evaluation mode**: Compare Antifold’s output against the baseline ESM-IF1 performance.
 
 ## Applications & Key Features
+---
 
 **Applications**:
 - Rapid screening of antibody **variants** that preserve binding affinity while introducing diversity.
@@ -57,9 +61,11 @@ Including the antigen structure is recommended — this allows refinement of the
 - Transformer-based design achieves **higher precision and stability** than GNN/MPNN-based alternatives.
 
 ## Comparable Models
+---
 **AntiBMPNN**: A GNN (MPNN)-based model for antibody inverse folding; useful for performance benchmarking against Antifold.
 
 ## Related Models
+---
 - **Immunebuilder3**: Use to predict the 3D antibody structure prior to optimization.
 - **HADDOCK**: Generate antigen–antibody complex structures to guide Antifold refinement.
 - **GROMACS**: Evaluate binding strength via PMF (Potential of Mean Force) calculations.

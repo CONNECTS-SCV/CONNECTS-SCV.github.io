@@ -11,11 +11,13 @@ language: en
 ---
 
 ## Overview
+---
 DLKcat is a BERT/CNN-based AI model that predicts the catalytic rate constant (Kcat, s⁻¹) of an enzyme for a given ligand (substrate). Kcat quantifies an enzyme’s catalytic efficiency and plays a crucial role in understanding protein function and cellular metabolism.
 However, experimental measurement of Kcat is often challenging and prone to inaccuracy.
 DLKcat enables rapid in silico screening of enzyme–substrate pairs, providing valuable insights for enzyme engineering and metabolic pathway optimization.
 
 ## Mechanism
+---
 - **Protein Sequence Encoding:**
     - The input amino acid sequence is embedded using a **BERT-based protein language model**, followed by **CNN layers** to extract local sequence features.
 - **Ligand Representation:**
@@ -25,6 +27,7 @@ DLKcat enables rapid in silico screening of enzyme–substrate pairs, providing 
     - The model is trained on experimentally curated data from the **BRENDA database**.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Protein sequence (FASTA format)
@@ -40,16 +43,19 @@ higher Kcat indicates stronger catalytic activity
 - No user-defined parameters required
 
 ## Applications & Key Features
+---
 - Predict changes in **enzyme catalytic efficiency** due to mutations.
 - Support **biofoundry workflows** by screening for enzymes that enhance **biosynthetic efficiency** or **novel metabolic pathways**.
 - Enables **high-throughput in silico screening** without requiring structural data or docking.
 - Balances speed and accuracy, making it suitable for large-scale enzyme discovery.
 
 ## Comparable Models
+---
 - **DeepEnzyme**: Incorporates 3D structural features for higher accuracy and generalization but requires more computational time.
 - **KcatNet**: Specializes in genome-scale Kcat prediction, especially for **yeast metabolic networks**, and supports cross-species enzyme prediction.
 
 ## Related Models
+---
 Use **PIGNET2** or **DiffDock** to further validate **binding modes** and **affinity** for enzyme–substrate pairs with altered catalytic activity predicted by DLKcat.
 
 ---

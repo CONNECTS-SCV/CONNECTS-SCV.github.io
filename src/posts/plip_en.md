@@ -11,11 +11,13 @@ language: en
 ---
 
 ## Overview
+---
 PLIP (Protein–Ligand Interaction Profiler) automatically detects and visualizes non-covalent interactions between proteins and ligands from complex structures.
 
 It identifies and classifies interaction types such as hydrogen bonds, hydrophobic contacts, π–π stacking, salt bridges, and metal coordination, providing both quantitative and visual representations of molecular interactions.
 
 ## Mechanism
+---
 PLIP analyzes a given **protein–ligand complex (PDB format)** to detect all relevant non-covalent interactions based on geometric criteria.
 Detected interactions are automatically classified by type: hydrogen bond, hydrophobic interaction, π–π stacking, π–cation, salt bridge, halogen bond, and metal coordination.
 
@@ -30,6 +32,7 @@ Typical geometric cutoffs include:
 - **Metal bond:** 2.5–3.0 Å (may vary depending on metal type)
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Protein–ligand complex structure (PDB format)
@@ -43,6 +46,7 @@ Typical geometric cutoffs include:
 - No user-defined parameters required
 
 ## Applications & Key Features
+---
 - Analyze and visualize binding mechanisms between proteins and ligands
 - Support structure-based drug design by identifying key binding residues
 - Evaluate docking or mutation results through post-analysis of interactions
@@ -50,9 +54,11 @@ Typical geometric cutoffs include:
 - Provides automated **visualization and tabulated interaction summaries** for rapid interpretation
 
 ## Comparable Models
+---
 - **Arpeggio:** Extends interaction profiling to **protein–protein** and **protein–nucleic acid** interactions in addition to protein–ligand complexes.
 
 ## Related Models
+---
 - **Chai** can be used to perform **docking** before analyzing detailed interactions with PLIP.
 - **PocketGen** integrates PLIP visualization internally to evaluate pocket–ligand interactions.
 - In **GROMACS** or other MD simulations, PLIP can visualize **time-resolved interaction dynamics** during molecular trajectories.

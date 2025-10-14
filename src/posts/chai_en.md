@@ -11,9 +11,11 @@ language: en
 ---
 
 ## Overview
+---
 Chai-1 is a Transformer-based generative AI model that performs both protein structure prediction and ligand docking within a single framework. It serves a similar functional purpose to Boltz-2 (a diffusion-based model) but differs in its architecture, using a Transformer backbone instead of diffusion.
 
 ## Mechanism
+---
 Chai-1 jointly learns protein–ligand–glycan interactions by encoding each component with specialized modules:
 
 - **Protein sequence** → Transformer encoder
@@ -23,6 +25,7 @@ Chai-1 jointly learns protein–ligand–glycan interactions by encoding each co
 The embeddings are fused via **cross-attention maps**, which allow the model to simultaneously infer **3D structure** and **binding-site location**.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Protein sequence (FASTA format)
@@ -44,16 +47,19 @@ GlycanBuilder can be used to construct custom glycan structures for input.
 - No user-defined parameters required
 
 ## Applications & Key Features
+---
 - Predict **protein–ligand or protein–glycan complex structures** with high accuracy.
 - Accelerates **ligand optimization and virtual screening** in drug discovery pipelines.
 - Enables **in-silico analysis** of how specific protein mutations affect binding affinity.
 - Provides faster and more accurate results than conventional **MSA-** or **score-based** models.
 
 ## Comparable Models
+---
 - **Boltz-2**: A diffusion-based counterpart; structural and docking results from both models can be cross-validated.
 - **DiffDock**: Specializes in ligand docking; useful for direct comparison of docking performance.
 
 ## Related Models
+---
 - **PLIP** / **PRODIGY**: Analyze the generated binding interface and quantify interaction types or binding affinity.
 - **DLKcat**: For enzymes, predicted binding-mode changes can be correlated with catalytic efficiency variations (Kcat).
 

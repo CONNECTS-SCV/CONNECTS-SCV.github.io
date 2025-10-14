@@ -11,9 +11,11 @@ language: en
 ---
 
 ## Overview
+---
 DeepFRI (Deep Functional Residue Identification) is a deep learning model that predicts the function of a protein from its sequence while simultaneously identifying key residues responsible for that function. It combines both sequence and structural information, enabling fine-grained insight into residue-level functional relevance.
 
 ## Mechanism
+---
 **Sequence Embedding (LSTM):**
 - The primary amino acid sequence is embedded into vectors and processed through a **Long Short-Term Memory (LSTM)** network to capture sequential dependencies.
 
@@ -30,6 +32,7 @@ DeepFRI (Deep Functional Residue Identification) is a deep learning model that p
     - A **contact map** highlighting functionally relevant interactions
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Protein structure (PDB format; sequence is contained within the file)
@@ -42,6 +45,7 @@ DeepFRI (Deep Functional Residue Identification) is a deep learning model that p
 - No user-defined parameters required
 
 ## Applications & Key Features
+---
 
 **Applications**:
 - Identify whether specific **mutations** affect functionally critical residues.
@@ -51,9 +55,11 @@ DeepFRI (Deep Functional Residue Identification) is a deep learning model that p
 - Predicts both **protein-level function** and **residue-level importance**, unlike models limited to global function annotation.
 
 ## Comparable Models
+---
 (No direct equivalent) — DeepFRI uniquely integrates **sequence and structure-based learning** for **residue-level interpretability**.
 
 ## Related Models
+---
 - **DLKcat**: Can be used in combination when mutations identified by DeepFRI are likely to affect **enzymatic activity (Kcat)**.
 - **RFdiffusion**: When designing new proteins, DeepFRI can verify whether **functional hotspots** are preserved in generated structures.
 

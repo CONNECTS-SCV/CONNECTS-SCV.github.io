@@ -5,7 +5,7 @@ description: "단백질, 지질, 핵산 등의 생체분자를 원자 단위로 
 categories: [분석 모델]
 tags: [MD, Molecular Dynamics, GROMACS, Simulation]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 ---
 

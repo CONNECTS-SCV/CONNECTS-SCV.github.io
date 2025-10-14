@@ -11,6 +11,7 @@ language: en
 ---
 
 ## Overview
+---
 **RFantibody** is a de novo antibody design pipeline that enables rapid and systematic in-silico antibody library generation.
 
 Traditionally, antibody discovery relied on **phage display** or **physical screening libraries**, but RFantibody replaces these labor-intensive processes with an integrated AI workflow.
@@ -18,6 +19,7 @@ Traditionally, antibody discovery relied on **phage display** or **physical scre
 It combines three state-of-the-art protein design models — **RFdiffusion**, **ProteinMPNN**, and **RoseTTAFold2** — to achieve a fully automated, end-to-end antibody design process.
 
 ## Mechanism
+---
 The pipeline consists of three stages:
 
 1.  **Structure Generation (RFdiffusion)**
@@ -31,6 +33,7 @@ The pipeline consists of three stages:
     - Compares it with the initial RFdiffusion-generated structure to verify design plausibility and consistency.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Target antigen structure (PDB format)
@@ -51,17 +54,20 @@ The pipeline consists of three stages:
 - Number of sequences per structure (ProteinMPNN stage)
 
 ## Applications & Key Features
+---
 - Enables de novo antibody design based on **epitope information** of the target antigen.
 - Generates new **CDR loop conformations** and predicts binding patterns.
 - Integrates **RFdiffusion**, **ProteinMPNN**, and **RoseTTAFold2** into a unified end-to-end workflow.
 - Demonstrates high reliability, particularly in **CDR-H3** loop modeling and prediction accuracy.
 
 ## Comparable Models
+---
 - **SabPred:** An integrated platform for antibody structure prediction and developability assessment.
 - **ABlooper:** Specializes in **CDR-specific loop design**.
 - **AbodyBuilder3 (OPIG):** Predicts antibody structures from sequence-based inputs with high accuracy.
 
 ## Related Models
+---
 - **DeepSP** can be used to evaluate the **developability** of the designed antibodies.
 - **Prodigy** or **HADDOCK** can analyze **antigen–antibody binding interactions** for validation and docking refinement.
 

@@ -11,9 +11,11 @@ language: en
 ---
 
 ## Overview
+---
 ToxinPred3.0 is a supervised AI model that predicts the potential toxicity of proteins and peptides based on their sequences. It enables quick identification of toxic and non-toxic peptides.
 
 ## Mechanism
+---
 The model is trained on datasets of toxic and non-toxic peptides. It extracts global features (amino acid composition, physicochemical properties) and local features (toxic motifs) from each sequence.
 
 Three prediction modes are available:
@@ -24,6 +26,7 @@ Three prediction modes are available:
 Each sequence receives a **toxicity probability score** and a **final classification**.
 
 ## Input, Output, Options
+---
 
 **Input** :
 - Peptide sequence (FASTA format)
@@ -44,14 +47,17 @@ Comprehensive toxicity-related metrics
 - **Region Importance:** Highlights toxic regions in the sequence
 
 ## Applications & Key Features
+---
 - Toxicity assessment of peptide vaccines and therapeutic peptides.
 - Also applicable to protein-based foods and nano-biomaterial safety evaluation.
 
 ## Comparable Models
+---
 - **StrucToxNet:** Uses 3D structural data for higher accuracy
 - **tAMPER, HEMOPI2:** Provide quantitative toxicity scores rather than simple classification. HEMOPI2 focuses on hemotoxicity prediction
 
 ## Related Models
+---
 ToxinPred3.0 can be combined with:
 - **ThermoMPNN** for designing stable, low-toxicity peptide variants
 - **Other toxicity modules:**

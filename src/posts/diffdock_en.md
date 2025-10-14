@@ -11,9 +11,11 @@ language: en
 ---
 
 ## Overview
+---
 DiffDock is a deep learning–based diffusion model for protein–ligand docking. The model keeps the protein structure fixed and optimizes the ligand’s position, rotation, and torsion angles to generate the most probable binding poses. It is one of the first models to apply diffusion processes to molecular docking, offering both high accuracy and speed.
 
 ## Mechanism
+---
 **Training Phase:**
 - DiffDock is trained on large-scale protein–ligand complex datasets such as **PDBbind**, learning the spatial relationships between ligands and their corresponding protein binding pockets.
 
@@ -22,6 +24,7 @@ DiffDock is a deep learning–based diffusion model for protein–ligand docking
 - Unlike traditional docking that explicitly minimizes binding energy, DiffDock searches for poses consistent with **learned structural distributions**, allowing faster convergence.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Protein structure (PDB format)
@@ -36,15 +39,18 @@ DiffDock is a deep learning–based diffusion model for protein–ligand docking
 - Number of inference steps (more steps = higher accuracy, longer runtime)
 
 ## Applications & Key Features
+---
 - Rapid **virtual screening** in early drug discovery stages
 - Identification of potential binding poses for **drug repurposing** or **hit optimization**
 - **Significantly faster** than physics-based docking (e.g., AutoDock)
 - Performs well even for **novel binding modes** not represented in traditional force fields
 
 ## Comparable Models
+---
 - **AutoDock Vina**: The most widely used **physics-based baseline model** for molecular docking. DiffDock can be cross-validated with Vina results for benchmark comparison.
 
 ## Related Models
+---
 - **LigandMPNN**: Can be used after DiffDock to **redesign protein sequences** for improved ligand binding at specific sites.
 - **PIGNET2**: Provides **binding affinity estimation** for DiffDock-generated complexes, complementing its structural predictions.
 

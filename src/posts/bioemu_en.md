@@ -11,9 +11,11 @@ language: en
 ---
 
 ## Overview
+---
 Bioemu (Biomolecular Emulator) is a diffusion-based generative model that predicts the dynamically equilibrated 3D structure of a protein directly from its amino acid sequence. It is designed to reproduce the structural diversity and energetic stability typically obtained from Molecular Dynamics (MD) simulations — but with drastically reduced computation time.
 
 ## Mechanism
+---
 - **Pretraining**
     - Utilizes **AlphaFold2 embeddings** as input features.
     - Trained on both **AlphaFold DB** and a proprietary **MD-derived structural dataset** to learn the **distribution of conformational diversity** observed during folding.
@@ -25,6 +27,7 @@ Bioemu (Biomolecular Emulator) is a diffusion-based generative model that predic
     - Generates snapshots of **thermodynamically stable states**, analogous to low-energy configurations from MD simulations.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Amino acid sequence (FASTA format)
@@ -40,6 +43,7 @@ Efficient for sequences up to ~500 residues
 - **Number of structural samples**: Defines how many energetically stable conformations are probabilistically sampled.
 
 ## Applications & Key Features
+---
 
 **Applications**:
 - Predicts **conformational flexibility and functional domain dynamics** relevant to drug binding and allosteric regulation.
@@ -50,10 +54,12 @@ Efficient for sequences up to ~500 residues
 - Enables rapid ensemble generation of equilibrium structures across multiple energy basins.
 
 ## Comparable Models
+---
 **GROMACS**: Classical MD simulation software capable of atom-level temporal tracking. While GROMACS captures detailed motion over time, it is computationally intensive.
 **Bioemu** complements it by offering **instant equilibrium structure sampling** without time-step simulations
 
 ## Related Models
+---
 **HPacker**: Can be used after Bioemu to **refine side-chain rotamers** and complete full-atom protein models. Bioemu provides the **backbone framework**, while HPacker handles side-chain optimization.
 
 ---

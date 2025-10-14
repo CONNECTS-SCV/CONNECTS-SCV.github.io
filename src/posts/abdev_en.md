@@ -11,9 +11,11 @@ language: en
 ---
 
 ## Overview
+---
 AbDev (Antibody Developability) is an AI-based module designed to predict an antibody’s developability — its suitability for development and manufacturability — based on key biophysical properties derived from sequence or structure information. Abdev provides quantitative indicators related to aggregation, viscosity, specificity, and stability that are critical in antibody optimization and formulation.
 
 ## Mechanism
+---
 AbDev utilizes the **DeepSP** algorithm to extract three key molecular descriptors from antibody sequences, which are then processed through a **Conv1D regression model** to predict overall developability.
 
 **Extracted Features via DeepSP**:
@@ -30,6 +32,7 @@ AbDev utilizes the **DeepSP** algorithm to extract three key molecular descripto
 AbDev integrates these descriptors to generate a comprehensive developability prediction score.
 
 ## Input, Output, Options
+---
 
 **Input** :
 - Antibody structure (PDB format) or amino acid sequence (FASTA format)
@@ -42,12 +45,14 @@ AbDev integrates these descriptors to generate a comprehensive developability pr
 - No direct user options; however, feature extraction through **ANARCI** and **DeepSP** must be performed prior to model execution.
 
 ## Applications & Key Features
+---
 - Predict the **biophysical behavior** of antibody candidates directly from sequence information.
 - Perform **rapid in silico screening** for developability risks before experimental validation.
 - Enables estimation of difficult-to-measure physical traits (e.g., viscosity, stability) from sequence alone.
 - Offers an **integrated developability profile** in a single pipeline, unlike traditional tools that focus on individual properties.
 
 ## Comparable Models
+---
 **TAP (Therapeutic Antibody Profiler)** by OPIG provides similar biophysical property indices for therapeutic antibodies.
 
 ::note
@@ -55,6 +60,7 @@ AbDev integrates these descriptors to generate a comprehensive developability pr
 ::/note
 
 ## Related Models
+---
 - **Antifold** / **RFantibody**: Use AbDev after affinity maturation to ensure that **binding optimization does not compromise developability**.
 - Can also compare pre- and post-optimization developability metrics.
 - Wet-lab validation can be done by correlating AbDev predictions with **Tm (melting temperature)** and **PSR (poly-specificity reagent)** assay results.

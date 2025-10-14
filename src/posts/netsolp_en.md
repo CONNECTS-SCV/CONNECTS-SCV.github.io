@@ -11,11 +11,13 @@ language: en
 ---
 
 ## Overview
+---
 NetsolP is a transformer-based model that predicts protein solubility and usability (expression and purification success) in E. coli using only amino acid sequences as input.
 
 It enables large-scale, fast, and cost-effective screening of protein candidates prior to expression experiments.
 
 ## Mechanism
+---
 **ESM Embedding:**
   - Protein sequences are processed using **ESM**, a protein language model that treats amino acid sequences as contextual sentences to extract semantic features.
 
@@ -29,6 +31,7 @@ It enables large-scale, fast, and cost-effective screening of protein candidates
 To reduce bias, highly similar or identical sequences are partitioned to avoid redundancy during training.
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Amino acid sequence (FASTA format)
@@ -50,6 +53,7 @@ Thresholds should be chosen contextually by the researcher.
 - **ESM1b-distilled:** Balanced between accuracy and speed.
 
 ## Applications & Key Features
+---
 - Primary filtering of protein libraries for candidates with high expression potential.
 - High-throughput solubility screening for large sequence datasets.
 - Predicts solubility directly from sequence embeddings without requiring MSA (Multiple Sequence Alignment).
@@ -57,10 +61,12 @@ Thresholds should be chosen contextually by the researcher.
 - Does not provide residue-level hotspot mapping, which limits fine-grained solubility analysis.
 
 ## Comparable Models
+---
 - **CamSol:** Identifies residue-level solubility hotspots and aggregation-prone regions.
 - **SoluProt:** Traditional solubility predictor for comparison with NetsolP’s transformer-based approach.
 
 ## Related Models
+---
 - **TemStaPro:** Can be used alongside NetsolP to explore the correlation between **thermal stability** and **solubility**.
 - **Aggrescan3D:** Helps identify **aggregation hotspots** contributing to low solubility in protein structures.
 ---

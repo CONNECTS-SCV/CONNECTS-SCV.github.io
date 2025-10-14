@@ -11,12 +11,14 @@ language: en
 ---
 
 ## Overview
+---
 HemoPI2 is a computational model that predicts the hemolytic activity (RBC toxicity) of peptides or proteins directly from their sequences. It performs both binary classification (hemolytic vs. non-hemolytic) and regression analysis to estimate the hemolytic concentration (HC₅₀, μM).
 By identifying potential blood toxicity risks early, HemoPI2 is used in peptide drug discovery and safety evaluation pipelines.
 
 ---
 
 ## Mechanism
+---
 HemoPI2 integrates **sequence-based features**—including amino acid composition, motif patterns, and physicochemical properties—with **ESM2-t6 embeddings** (protein language model).
 Motif detection is performed using **MERCI**, which identifies experimentally validated hemolytic motifs.
 
@@ -35,6 +37,7 @@ The model was trained on ~1,900 experimentally validated mammalian RBC datasets,
 ---
 
 ## Input, Output, Options
+---
 
 **Input**:
 - Peptide sequence (FASTA format)
@@ -51,6 +54,7 @@ The model was trained on ~1,900 experimentally validated mammalian RBC datasets,
 ---
 
 ## Applications & Key Features
+---
 - Early-stage **toxicity screening** for peptide drug candidates.
 - Identification of **high-risk motifs or regions** for sequence redesign or mutation.
 - Provides **quantitative hemolysis metrics (HC₅₀)** in addition to binary classification.
@@ -60,11 +64,13 @@ The model was trained on ~1,900 experimentally validated mammalian RBC datasets,
 ---
 
 ## Comparable Models
+---
 - **ToxinPred3.0:** Offers broader peptide toxicity profiling, including hemolytic and non-hemolytic peptide screening—suitable for cross-validation with HemoPI2.
 
 ---
 
 ## Related Models
+---
 - Integrate **DILIpred** or **hERGAI** for multi-dimensional toxicity evaluation (hepatic and cardiac).
 - Use **ADMET-AI** for full-spectrum safety profiling, combining in-silico predictions with experimental **RBC lysis assay** data for cross-validation.
 
