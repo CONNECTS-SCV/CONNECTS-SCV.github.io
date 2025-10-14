@@ -169,8 +169,16 @@ const translations: Record<Language, Record<string, string>> = {
     'comments.errorPosting': '댓글 작성에 실패했습니다. 다시 시도해주세요.',
 
     // Search
-    'search.placeholder': '검색...',
+    'search.placeholder': '검색어를 입력하세요',
     'search.noResults': '검색 결과가 없습니다',
+    'search.tryOtherKeywords': '다른 검색어를 입력해보세요',
+    'search.quickActions': 'Quick Actions',
+    'search.searchAnalysis': '분석 모델 검색',
+    'search.releaseNotes': '릴리즈 노트',
+    'search.keyboardShortcuts': 'Keyboard Shortcuts',
+    'search.navigate': 'Navigate',
+    'search.open': 'Open',
+    'search.search': 'Search',
 
     // Footer
     'footer.copyright': '© 2024 CONNECTS. All rights reserved.',
@@ -274,8 +282,16 @@ const translations: Record<Language, Record<string, string>> = {
     'comments.errorPosting': 'Failed to post comment. Please try again.',
 
     // Search
-    'search.placeholder': 'Search...',
+    'search.placeholder': 'Type to search...',
     'search.noResults': 'No results found',
+    'search.tryOtherKeywords': 'Try different keywords',
+    'search.quickActions': 'Quick Actions',
+    'search.searchAnalysis': 'Search Analysis Models',
+    'search.releaseNotes': 'Release Notes',
+    'search.keyboardShortcuts': 'Keyboard Shortcuts',
+    'search.navigate': 'Navigate',
+    'search.open': 'Open',
+    'search.search': 'Search',
 
     // Footer
     'footer.copyright': '© 2024 CONNECTS. All rights reserved.',

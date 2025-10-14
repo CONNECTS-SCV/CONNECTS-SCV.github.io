@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import type { BlogPost } from "@/lib/markdown";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface SearchModalProps {
 }
 
 export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
+  const { t, language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -134,7 +136,7 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="검색어를 입력하세요"
+                placeholder={t('search.placeholder')}
                 className="flex-1 text-[17px] font-medium outline-none placeholder-gray-400 text-gray-900"
                 autoComplete="off"
                 spellCheck={false}
@@ -253,10 +255,10 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
                     </svg>
                   </div>
                   <p className="text-gray-900 font-medium mb-1">
-                    검색 결과가 없습니다
+                    {t('search.noResults')}
                   </p>
                   <p className="text-sm text-gray-500">
-                    다른 검색어를 입력해보세요
+                    {t('search.tryOtherKeywords')}
                   </p>
                 </div>
               )
@@ -267,11 +269,11 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
                   {/* 빠른 실행 */}
                   <div>
                     <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                      Quick Actions
+                      {t('search.quickActions')}
                     </h3>
                     <div className="space-y-1">
                       <button
-                        onClick={() => setSearchQuery("분석")}
+                        onClick={() => setSearchQuery("analysis")}
                         className="w-full px-3 py-2.5 flex items-center gap-3 rounded-lg hover:bg-gray-50 transition-colors text-left"
                       >
                         <div className="p-1.5 bg-blue-100 text-blue-600 rounded">
@@ -279,10 +281,10 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                           </svg>
                         </div>
-                        <span className="text-sm font-medium text-gray-700">분석 모델 검색</span>
+                        <span className="text-sm font-medium text-gray-700">{t('search.searchAnalysis')}</span>
                       </button>
                       <button
-                        onClick={() => setSearchQuery("릴리즈")}
+                        onClick={() => setSearchQuery("release")}
                         className="w-full px-3 py-2.5 flex items-center gap-3 rounded-lg hover:bg-gray-50 transition-colors text-left"
                       >
                         <div className="p-1.5 bg-green-100 text-green-600 rounded">
@@ -290,7 +292,7 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                           </svg>
                         </div>
-                        <span className="text-sm font-medium text-gray-700">릴리즈 노트</span>
+                        <span className="text-sm font-medium text-gray-700">{t('search.releaseNotes')}</span>
                       </button>
                     </div>
                   </div>
@@ -298,25 +300,25 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
                   {/* 키보드 단축키 */}
                   <div>
                     <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                      Keyboard Shortcuts
+                      {t('search.keyboardShortcuts')}
                     </h3>
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div className="flex items-center gap-2 text-gray-600">
                         <kbd className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] font-semibold">↑</kbd>
                         <kbd className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] font-semibold">↓</kbd>
-                        <span>Navigate</span>
+                        <span>{t('search.navigate')}</span>
                       </div>
                       <div className="flex items-center gap-2 text-gray-600">
                         <kbd className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] font-semibold">Enter</kbd>
-                        <span>Open</span>
+                        <span>{t('search.open')}</span>
                       </div>
                       <div className="flex items-center gap-2 text-gray-600">
                         <kbd className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] font-semibold">Shift</kbd>
-                        <span>×2 Search</span>
+                        <span>×2 {t('search.search')}</span>
                       </div>
                       <div className="flex items-center gap-2 text-gray-600">
                         <kbd className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] font-semibold">⌘K</kbd>
-                        <span>Search</span>
+                        <span>{t('search.search')}</span>
                       </div>
                     </div>
                   </div>
