@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { parseMarkdownFrontmatter, generateSlug, extractExcerpt, BlogPost } from './markdown';
-import { getAuthor } from '../data/authors';
+import { parseMarkdownFrontmatter, extractExcerpt, BlogPost } from './markdown';
+import { getAuthor } from '@/data/authors';
 
-const postsDirectory = path.join(process.cwd(), 'posts');
+const postsDirectory = path.join(process.cwd(), 'src', 'posts');
 
 export async function getAllPosts(): Promise<BlogPost[]> {
   // Check if posts directory exists
@@ -20,18 +20,23 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   for (const fileName of markdownFiles) {
     const filePath = path.join(postsDirectory, fileName);
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    
+
     try {
       const { metadata, content } = parseMarkdownFrontmatter(fileContent);
-      
+
       // Generate slug from filename if not provided
       if (!metadata.slug) {
         metadata.slug = fileName.replace(/\.md$/, '');
       }
-      
+
+      // Set default language to 'ko' if not specified
+      if (!metadata.language) {
+        metadata.language = 'ko';
+      }
+
       // Extract excerpt from content
       const excerpt = metadata.description || extractExcerpt(content);
-      
+
       posts.push({
         metadata,
         content,
@@ -66,6 +71,11 @@ export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
 export async function getPostsByAuthor(authorId: string): Promise<BlogPost[]> {
   const posts = await getAllPosts();
   return posts.filter(post => post.metadata.author === authorId);
+}
+
+export async function getPostsByLanguage(language: 'ko' | 'en'): Promise<BlogPost[]> {
+  const posts = await getAllPosts();
+  return posts.filter(post => post.metadata.language === language);
 }
 
 // Utility function to get post with author details

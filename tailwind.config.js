@@ -11,6 +11,7 @@ export default {
       colors: {
         background: "rgb(var(--background))",
         foreground: "rgb(var(--foreground))",
+        calloutbox: "#EAEAEA",
         card: {
           DEFAULT: "rgb(var(--card))",
           foreground: "rgb(var(--card-foreground))",

@@ -15,46 +15,55 @@ export const authors: Record<string, Author> = {
     id: 'author1',
     name: '이대희',
     title: '대표이사',
-    department: '연구',
-    bio: 'CONNECTS의 핵심 AI 알고리즘과 단백질 구조 예측 모델을 개발하는 연구팀입니다.',
-    avatar: '/avatars/research-team.png',
-    email: 'research@connects.ai'
+    department: '경영',
+    bio: 'CONNECTS의 비전과 전략을 수립하고 회사를 이끌어가고 있습니다.',
+    avatar: '/avatars/daehee-lee.png',
+    email: 'daehee.lee@connects.ai'
   },
   'author2': {
     id: 'author2',
     name: '정종관',
     title: '연구원',
     department: '연구',
-    bio: '머신러닝과 딥러닝 기술을 활용하여 생물학적 데이터를 분석하는 전문팀입니다.',
-    avatar: '/avatars/ai-team.png',
-    email: 'ai@connects.ai'
+    bio: '단백질 구조 예측과 AI 알고리즘 개발을 담당하고 있습니다.',
+    avatar: '/avatars/jongkwan-jung.png',
+    email: 'jongkwan.jung@connects.ai'
   },
   'author3': {
     id: 'author3',
     name: '엄소현',
     title: '디자이너',
     department: '디자인',
-    bio: '사용자 경험을 중심으로 CONNECTS 플랫폼의 제품을 기획하고 개발합니다.',
-    avatar: '/avatars/product-team.png',
-    email: 'product@connects.ai'
+    bio: 'UX/UI 디자인과 사용자 경험 설계를 담당하고 있습니다.',
+    avatar: '/avatars/sohyun-um.png',
+    email: 'sohyun.um@connects.ai'
   },
   'author4': {
     id: 'author4',
     name: '차성욱',
     title: '개발자',
     department: '개발',
-    bio: '전략적 파트너십과 사업 개발을 담당하는 팀입니다.',
-    avatar: '/avatars/business-team.png',
-    email: 'business@connects.ai'
+    bio: '프론트엔드 개발과 웹 플랫폼 구축을 담당하고 있습니다.',
+    avatar: '/avatars/sungwook-cha.png',
+    email: 'sungwook.cha@connects.ai'
   },
   'author5': {
     id: 'author5',
     name: '김민태',
     title: '개발자',
     department: '개발',
-    bio: 'CONNECTS 플랫폼의 백엔드와 프론트엔드 개발을 담당합니다.',
-    avatar: '/avatars/engineering-team.png',
-    email: 'engineering@connects.ai'
+    bio: '백엔드 시스템과 인프라 관리를 담당하고 있습니다.',
+    avatar: '/avatars/mintae-kim.png',
+    email: 'mintae.kim@connects.ai'
+  },
+  'author6': {
+    id: 'author6',
+    name: 'CURIE',
+    title: '회사 계정',
+    department: 'CONNECTS',
+    bio: 'CONNECTS의 공식 회사 계정입니다.',
+    avatar: '/avatars/curie-logo.png',
+    email: 'info@connects.ai'
   }
 };
 
