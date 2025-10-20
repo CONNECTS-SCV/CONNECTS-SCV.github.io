@@ -15,7 +15,7 @@ interface CategoryFilterProps {
 }
 
 export function CategoryFilter({ onCategoryChange, className }: CategoryFilterProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
   const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -27,6 +27,13 @@ export function CategoryFilter({ onCategoryChange, className }: CategoryFilterPr
     { id: "feature", label: t('category.feature'), value: "feature" },
     { id: "academic", label: t('category.academic'), value: "academic" },
   ];
+
+  // 언어 변경 시 카테고리를 "전체"로 초기화
+  useEffect(() => {
+    setSelectedCategory("all");
+    onCategoryChange("all");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
 
   useEffect(() => {
     updateIndicator(selectedCategory);
@@ -89,7 +96,7 @@ export function CategoryFilter({ onCategoryChange, className }: CategoryFilterPr
 
 // Responsive wrapper for mobile
 export function CategoryFilterMobile({ onCategoryChange, className }: CategoryFilterProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -100,6 +107,13 @@ export function CategoryFilterMobile({ onCategoryChange, className }: CategoryFi
     { id: "feature", label: t('category.feature'), value: "feature" },
     { id: "academic", label: t('category.academic'), value: "academic" },
   ];
+
+  // 언어 변경 시 카테고리를 "전체"로 초기화
+  useEffect(() => {
+    setSelectedCategory("all");
+    onCategoryChange("all");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
 
   const handleCategoryClick = (category: Category & { label: string }) => {
     setSelectedCategory(category.id);
