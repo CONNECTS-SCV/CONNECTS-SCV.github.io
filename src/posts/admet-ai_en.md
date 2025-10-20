@@ -4,7 +4,7 @@ title: "ADMET-AI : AI Model for Predicting ADMET Properties of Small Molecules"
 description: "An AI-powered computational screening tool for evaluating drug-likeness and safety profiles by predicting ADMET properties from small molecule structures."
 categories: [analysis]
 tags: [ADMET-AI, ADMET, Drug Discovery, AI, GNN, MPNN]
-author: "author1"
+author: "author6"
 date: "2025-10-14"
 thumbnail: "/image/default.webp"
 language: en
