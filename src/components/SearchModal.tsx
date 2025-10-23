@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import type { BlogPost } from "@/lib/markdown";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { AdminLoginModal } from "./admin/AdminLoginModal";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
   const { t, language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -37,12 +39,18 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
     [posts]
   );
 
+  // 관리자 검색어 확인
+  const isAdminSearch = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
+    return query === "관리자" || query === "admin";
+  }, [searchQuery]);
+
   // 검색 결과
   const searchResults = useMemo(() => {
-    if (!searchQuery.trim()) return [];
+    if (!searchQuery.trim() || isAdminSearch) return [];
     const results = fuse.search(searchQuery);
     return results.slice(0, 6).map((result) => result.item);
-  }, [searchQuery, fuse]);
+  }, [searchQuery, fuse, isAdminSearch]);
 
   // 모달이 열릴 때 포커스 설정 및 body 스크롤 방지
   useEffect(() => {
@@ -80,7 +88,11 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
           break;
         case "Enter":
           e.preventDefault();
-          if (searchResults[selectedIndex] && searchResults[selectedIndex].metadata.slug) {
+          // 관리자 검색어인 경우 관리자 모달 열기
+          if (isAdminSearch) {
+            setIsAdminModalOpen(true);
+            onClose();
+          } else if (searchResults[selectedIndex] && searchResults[selectedIndex].metadata.slug) {
             router.push(`/post/${searchResults[selectedIndex].metadata.slug}`);
             onClose();
           }
@@ -94,16 +106,24 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, searchResults, selectedIndex, router, onClose]);
+  }, [isOpen, searchResults, selectedIndex, router, onClose, isAdminSearch]);
 
-  if (!isOpen) return null;
+  if (!isOpen) return (
+    <>
+      <AdminLoginModal
+        isOpen={isAdminModalOpen}
+        onClose={() => setIsAdminModalOpen(false)}
+      />
+    </>
+  );
 
   return (
-    <div
-      className="fixed inset-0 z-[100] animate-in fade-in duration-200"
-      role="dialog"
-      aria-modal="true"
-    >
+    <>
+      <div
+        className="fixed inset-0 z-[100] animate-in fade-in duration-200"
+        role="dialog"
+        aria-modal="true"
+      >
       {/* 배경 오버레이 */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-md"
@@ -150,7 +170,69 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
           {/* 검색 결과 영역 */}
           <div className="max-h-[400px] overflow-y-auto overscroll-contain">
             {searchQuery ? (
-              searchResults.length > 0 ? (
+              isAdminSearch ? (
+                /* 관리자 검색 결과 */
+                <div className="py-2">
+                  <button
+                    onClick={() => {
+                      setIsAdminModalOpen(true);
+                      onClose();
+                    }}
+                    className="w-full px-6 py-4 flex items-start gap-3 text-left transition-all duration-150 border-l-4 border-gray-900 bg-gray-50 hover:bg-gray-100"
+                  >
+                    {/* 아이콘 영역 */}
+                    <div className="mt-0.5 p-2 rounded bg-gray-900 text-white">
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                        />
+                      </svg>
+                    </div>
+
+                    {/* 콘텐츠 영역 */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="font-semibold text-[15px] text-gray-900 break-keep">
+                          {language === 'ko' ? '🔐 관리자 로그인' : '🔐 Admin Login'}
+                        </h3>
+                        <svg
+                          className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </div>
+
+                      <p className="mt-1 text-[13px] text-gray-600 break-keep">
+                        {language === 'ko'
+                          ? '댓글 관리 및 통계 확인 (관리자 전용)'
+                          : 'Comment management and statistics (Admin only)'}
+                      </p>
+
+                      <div className="mt-2">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded bg-gray-200 text-[11px] font-medium text-gray-700">
+                          {language === 'ko' ? 'Enter를 눌러 로그인' : 'Press Enter to login'}
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              ) : searchResults.length > 0 ? (
                 <div className="py-2">
                   {searchResults.map((post, index) => (
                     <button
@@ -328,6 +410,13 @@ export function SearchModal({ isOpen, onClose, posts }: SearchModalProps) {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+
+      {/* 관리자 로그인 모달 */}
+      <AdminLoginModal
+        isOpen={isAdminModalOpen}
+        onClose={() => setIsAdminModalOpen(false)}
+      />
+    </>
   );
 }
