@@ -400,8 +400,8 @@ DiffDock이 예측한 소라페닙의 결합 위치는 **B-RAF의 ATP 결합 포
 ---
 
 - [Github DiffDock](https://github.com/gcorso/DiffDock)
-- [arXiv](https://arxiv.org/abs/2210.01776)
-- [arXiv](https://arxiv.org/abs/2402.18396)
+- [arXiv | DiffDock: Diffusion Steps, Twists, and Turns for Molecular Docking](https://arxiv.org/abs/2210.01776)
+- [arXiv | Deep Confident Steps to New Pockets: Strategies for Docking Generalization](https://arxiv.org/abs/2402.18396)
 - CURIE : [DiffDock](https://curie.kr/Analysis/diffdock)
 
 ---
