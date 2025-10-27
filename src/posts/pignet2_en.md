@@ -8,6 +8,8 @@ author: "author6"
 date: "2025-10-14"
 thumbnail: "/image/default.webp"
 language: en
+comment_id: "pignet2_main"
+paired_post: "pignet2"
 ---
 
 ## Overview

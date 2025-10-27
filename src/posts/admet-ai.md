@@ -7,6 +7,8 @@ tags: [ADMET-AI, 저분자, 화합물, ADMET, 독성예측, ChEMBL, PubChem, Dru
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "admet-ai_main"
+paired_post: "admet-ai_en"
 ---
 
 ## 개요

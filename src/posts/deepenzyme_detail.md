@@ -7,6 +7,7 @@ tags: [DeepEnzyme, 효소, Kcat, 촉매속도, Transformer]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/info/detail/deepenzyme_1.webp"
+comment_id: "deepenzyme_detail"
 ---
 
 ![image](/image/info/detail/deepenzyme_1.webp){center:600}

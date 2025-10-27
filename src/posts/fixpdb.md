@@ -7,6 +7,8 @@ tags: [PDB repair, structure correction, GROMACS, molecular dynamics]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "fixpdb_main"
+paired_post: "fixpdb_en"
 ---
 
 ## 개요

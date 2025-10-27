@@ -7,6 +7,8 @@ tags: [MD, Molecular Dynamics, GROMACS, Simulation]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "gromacs_main"
+paired_post: "gromacs_en"
 ---
 
 ## 개요

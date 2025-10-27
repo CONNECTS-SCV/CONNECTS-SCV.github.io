@@ -7,6 +7,8 @@ tags: [hERG, 심장 독성, 약물 스크리닝, 예측 모델]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "herg_main"
+paired_post: "herg_en"
 ---
 ## 개요
 ---

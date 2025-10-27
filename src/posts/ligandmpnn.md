@@ -7,6 +7,8 @@ tags: [LigandMPNN, 단백질 서열 최적화, 리간드 결합, MPNN, 단백질
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "ligandmpnn_main"
+paired_post: "ligandmpnn_en"
 ---
 ## 개요
 ---

@@ -7,6 +7,8 @@ tags: [Diffdock, Docking, Protein-Ligand]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "diffdock_main"
+paired_post: "diffdock_en"
 ---
 
 ## 개요

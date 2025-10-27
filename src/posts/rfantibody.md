@@ -7,6 +7,8 @@ tags: [RFantibody, 항체 설계, De Novo Design, RFdiffusion, ProteinMPNN]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "rfantibody_main"
+paired_post: "rfantibody_en"
 ---
 ## 개요
 ---

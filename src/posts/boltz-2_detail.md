@@ -7,6 +7,7 @@ tags: [Boltz-2, 단백질구조, 도킹, Diffusion, 리간드결합]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/info/detail/boltz-2_1.webp"
+comment_id: "boltz-2_detail"
 ---
 
 ![image](/image/info/detail/boltz-2_1.webp){center:600}

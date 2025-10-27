@@ -9,6 +9,8 @@ export interface PostMetadata {
   slug: string;
   thumbnail?: string;
   language?: 'ko' | 'en';
+  comment_id?: string;  // 댓글 공유를 위한 고유 ID
+  paired_post?: string; // 언어 전환 시 이동할 대응 글의 slug
 }
 
 export interface BlogPost {

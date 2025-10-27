@@ -7,6 +7,8 @@ tags: [항체 구조 예측, TCR, 3D 구조, Immunebuilder, Alphafold]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "immunebuilder_main"
+paired_post: "immunebuilder_en"
 ---
 ## 개요
 ---

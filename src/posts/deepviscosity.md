@@ -7,6 +7,8 @@ tags: [DeepViscosity, 항체, 점도, mAb, 제형개발]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "deepviscosity_main"
+paired_post: "deepviscosity_en"
 ---
 
 ## 개요

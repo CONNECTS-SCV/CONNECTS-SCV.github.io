@@ -7,6 +7,8 @@ tags: [Kcat prediction, enzyme kinetics, BERT, CNN]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "dlkcat_main"
+paired_post: "dlkcat_en"
 ---
 
 ## 개요

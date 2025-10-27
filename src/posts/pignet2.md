@@ -7,6 +7,8 @@ tags: [PIGNET2, 결합 친화도, Binding Affinity, 단백질-리간드, GNN]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "pignet2_main"
+paired_post: "pignet2_en"
 ---
 ## 개요
 ---

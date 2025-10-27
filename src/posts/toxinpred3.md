@@ -7,6 +7,8 @@ tags: [ToxinPred3.0, 독성 예측, 펩타이드, 지도학습, 안전성 평가
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "toxinpred3_main"
+paired_post: "toxinpred3_en"
 ---
 ## 개요
 ---

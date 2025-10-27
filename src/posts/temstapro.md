@@ -7,6 +7,8 @@ tags: [TemStaPro, 단백질 안정성, 열안정성, ProtT5, 예측 모델]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "temstapro_main"
+paired_post: "temstapro_en"
 ---
 ## 개요
 ---

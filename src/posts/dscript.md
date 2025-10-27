@@ -7,6 +7,8 @@ tags: [PPI, protein interaction, CNN, sequence analysis]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "dscript_main"
+paired_post: "dscript_en"
 ---
 
 ## 개요

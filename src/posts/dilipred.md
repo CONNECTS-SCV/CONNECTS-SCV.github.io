@@ -7,6 +7,8 @@ tags: [DILI, Drug-Induced Liver Injury, 간독성, 예측모델, 신약개발]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "dilipred_main"
+paired_post: "dilipred_en"
 ---
 
 ## 개요

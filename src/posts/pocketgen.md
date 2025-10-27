@@ -7,6 +7,8 @@ tags: [PocketGen, 단백질 디자인, 포켓 설계, 인공 효소, ESM-2]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "pocketgen_main"
+paired_post: "pocketgen_en"
 ---
 ## 개요
 ---

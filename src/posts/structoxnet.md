@@ -7,6 +7,8 @@ tags: [StrucToxNet, 펩타이드 독성, 3D 구조, 예측 모델, GNN]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "structoxnet_main"
+paired_post: "structoxnet_en"
 ---
 ## 개요
 ---

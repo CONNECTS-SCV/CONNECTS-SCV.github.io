@@ -7,6 +7,8 @@ tags: [BioPhi, 항체, humanization, humanness, OAS, 딥러닝]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "biophi_main"
+paired_post: "biophi_en"
 ---
 
 ## 개요

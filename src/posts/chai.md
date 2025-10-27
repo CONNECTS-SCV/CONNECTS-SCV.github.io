@@ -7,6 +7,8 @@ tags: [Chai-1, 단백질구조, 도킹, Transformer, 리간드결합, Glycan]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "chai_main"
+paired_post: "chai_en"
 ---
 
 ## 개요

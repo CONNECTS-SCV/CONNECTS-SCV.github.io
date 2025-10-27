@@ -7,6 +7,8 @@ tags: [NetsolP, 단백질 용해도, 단백질 발현, ESM, 예측 모델]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "netsolp_main"
+paired_post: "netsolp_en"
 ---
 ## 개요
 ---

@@ -7,6 +7,8 @@ tags: [REINVENT4, 분자 생성, 강화학습, 신약 개발, De Novo Design]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "reinvent4_main"
+paired_post: "reinvent4_en"
 ---
 ## 개요
 ---

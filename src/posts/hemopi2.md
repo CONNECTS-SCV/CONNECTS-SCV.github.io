@@ -7,6 +7,8 @@ tags: [hemolysis, toxicity prediction, peptide, drug safety]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "hemopi2_main"
+paired_post: "hemopi2_en"
 ---
 
 ## 개요

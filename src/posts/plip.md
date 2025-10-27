@@ -7,6 +7,8 @@ tags: [PLIP, 단백질-리간드, 상호작용 분석, 비공유 결합, 시각�
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "plip_main"
+paired_post: "plip_en"
 ---
 ## 개요
 ---

@@ -7,6 +7,8 @@ tags: [Bioemu, 단백질구조, Diffusion, MD시뮬레이션, AlphaFold]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "bioemu_main"
+paired_post: "bioemu_en"
 ---
 
 ## 개요

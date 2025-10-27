@@ -7,6 +7,8 @@ tags: [ThermoMPNN, 단백질 안정성, ΔΔG, 돌연변이, MPNN]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "thermompnn_main"
+paired_post: "thermompnn_en"
 ---
 ## 개요
 ---

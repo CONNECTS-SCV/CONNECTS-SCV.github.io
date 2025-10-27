@@ -7,6 +7,8 @@ tags: [MHCflurry, 면역원성 예측, 신생항원, MHC, 딥러닝]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "mhcflurry_main"
+paired_post: "mhcflurry_en"
 ---
 ## 개요
 ---

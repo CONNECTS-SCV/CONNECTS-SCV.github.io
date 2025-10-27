@@ -7,6 +7,8 @@ tags: [RDKit, 화학 정보학, Cheminformatics, SMILES, 분자 모델링]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "rdkit_main"
+paired_post: "rdkit_en"
 ---
 ## 개요
 ---

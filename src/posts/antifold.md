@@ -7,6 +7,8 @@ tags: [Antifold, 항체, inverse-folding, ESM-IF1, 서열최적화]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "antifold_main"
+paired_post: "antifold_en"
 ---
 
 ## 개요

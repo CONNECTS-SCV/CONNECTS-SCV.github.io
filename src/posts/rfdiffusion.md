@@ -7,6 +7,8 @@ tags: [RFdiffusion, 단백질 설계, Diffusion Model, De Novo Design, 단백질
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "rfdiffusion_main"
+paired_post: "rfdiffusion_en"
 ---
 ## 개요
 ---

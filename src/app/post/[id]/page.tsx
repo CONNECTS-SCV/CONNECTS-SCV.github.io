@@ -4,6 +4,7 @@ import {getPostBySlug, getAllPosts} from '@/lib/posts';
 import {getAuthor} from '@/data/authors';
 import MarkdownContent from '@/components/post/MarkdownContent';
 import CommentSectionOnline from '@/components/post/CommentSectionOnline';
+import PostInfoProvider from '@/components/post/PostInfoProvider';
 import BackToListButton from '@/components/post/BackToListButton';
 import PostMetadata from '@/components/post/PostMetadata';
 
@@ -87,6 +88,7 @@ export default async function PostPage({params}: { params: Promise<{ id: string 
 
     return (
         <>
+            <PostInfoProvider pairedPost={post.metadata.paired_post} slug={id} />
             <div className="w-[80%] mx-auto px-4 pt-10 pb-20">
                 {/* Header */}
                 <header className="mb-8">
@@ -112,7 +114,7 @@ export default async function PostPage({params}: { params: Promise<{ id: string 
                 </article>
 
                 {/* Comment Section */}
-                <CommentSectionOnline postId={id} />
+                <CommentSectionOnline postId={post.metadata.comment_id || id} />
 
                 {/* Navigation */}
                 <div className="mt-10 pt-6 border-t border-gray-200">

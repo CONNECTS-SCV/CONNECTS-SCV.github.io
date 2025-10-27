@@ -7,6 +7,8 @@ tags: [ProteinMPNN, Inverse Folding, 단백질 설계, MPNN, 서열 생성]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "proteinmpnn_main"
+paired_post: "proteinmpnn_en"
 ---
 ## 개요
 ---

@@ -8,6 +8,8 @@ author: "author6"
 date: "2025-10-14"
 thumbnail: "/image/default.webp"
 language: en
+comment_id: "bioemu_main"
+paired_post: "bioemu"
 ---
 
 ## Overview

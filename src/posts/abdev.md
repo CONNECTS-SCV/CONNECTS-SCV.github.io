@@ -7,6 +7,8 @@ tags: [AbDev, 항체, 개발가능성, 물리화학적 특성, DeepSP]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "abdev_main"
+paired_post: "abdev_en"
 ---
 
 ## 개요

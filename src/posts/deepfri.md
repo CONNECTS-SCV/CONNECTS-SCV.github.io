@@ -7,6 +7,8 @@ tags: [DeepFRI, 단백질기능, 잔기예측, GNN, GO annotation]
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "deepfri_main"
+paired_post: "deepfri_en"
 ---
 
 ## 개요

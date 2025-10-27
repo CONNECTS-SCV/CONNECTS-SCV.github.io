@@ -7,6 +7,8 @@ tags: [PRODIGY, 결합 친화도, 단백질-단백질 상호작용, PPI, 회귀 
 author: "author6"
 date: "2025-09-29"
 thumbnail: "/image/default.webp"
+comment_id: "prodigy_main"
+paired_post: "prodigy_en"
 ---
 ## 개요
 ---
