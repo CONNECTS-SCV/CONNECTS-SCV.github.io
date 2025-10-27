@@ -5,7 +5,7 @@ description: "AI 기반 단백질 상호작용(PPI) 예측 모델 D-SCRIPT를 �
 categories: [analysis]
 tags: [D-SCRIPT, PPI, Protein-Protein Interaction, CD137, CD137L, Bioinformatics, AI Protein Design] 
 author: "author6"
-date: "2025-10-27"
+date: "2025-09-29"
 thumbnail: "/image/info/detail/dscript_1.webp"
 comment_id: "dscript_cd137_detail"
 ---
