@@ -12,7 +12,7 @@ comment_id: "dscript_cd137_detail"
 
 ![image.png](/image/info/detail/dscript_1.webp)
 
-안녕하세요! 이번 글에서는 **단백질–단백질 상호작용(Protein–Protein Interaction, PPI)** 을 예측하는 AI 기반 모델 [**D-SCRIPT**](https://github.com/samsledje/D-SCRIPT) 를 소개하고 실제 생리학적으로 상호작용이 잘 알려진 **CD137 (4-1BB)** 과 **CD137L (4-1BB Ligand)** 쌍을 예제로 예측 실습을 진행해보겠습니다.
+안녕하세요! 이번 글에서는 **단백질–단백질 상호작용(Protein–Protein Interaction, PPI)** 을 예측하는 AI 기반 모델 [D-SCRIPT](https://github.com/samsledje/D-SCRIPT) 를 소개하고 실제 생리학적으로 상호작용이 잘 알려진 **CD137 (4-1BB)** 과 **CD137L (4-1BB Ligand)** 쌍을 예제로 예측 실습을 진행해보겠습니다.
 
 단백질 간의 결합 여부를 밝히는 것은 생명과학 연구와 신약개발에서 매우 중요한 과제입니다.
 
