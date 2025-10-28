@@ -5,7 +5,7 @@ description: "A supervised AI model that predicts the potential toxicity of prot
 categories: [analysis]
 tags: [ToxinPred3.0, Peptide Toxicity, Transformer, AI]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "toxinpred3_main"

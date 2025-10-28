@@ -5,7 +5,7 @@ description: "An open-source molecular generation and optimization toolkit that 
 categories: [analysis]
 tags: [REINVENT4, Drug Design, Molecular Generation, RNN, Reinforcement Learning]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "reinvent4_main"

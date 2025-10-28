@@ -5,7 +5,7 @@ description: "An MPNN-based deep learning model that performs inverse folding to
 categories: [analysis]
 tags: [ProteinMPNN, MPNN, Inverse Folding, Protein Design, Deep Learning]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "proteinmpnn_main"

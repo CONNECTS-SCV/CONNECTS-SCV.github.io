@@ -5,7 +5,7 @@ description: "A deep learning model combining sequence (LSTM) and structure (GCN
 categories: [analysis]
 tags: [DeepFRI, Protein Function, Deep Learning, GCN, LSTM, Gene Ontology]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "deepfri_main"

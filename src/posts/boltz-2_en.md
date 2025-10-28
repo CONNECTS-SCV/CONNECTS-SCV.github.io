@@ -5,7 +5,7 @@ description: "A diffusion-based generative AI model for rapid protein structure 
 categories: [analysis]
 tags: [Boltz-2, Protein Design, Ligand Docking, Diffusion Model, AI]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "boltz-2_main"

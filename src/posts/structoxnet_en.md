@@ -5,7 +5,7 @@ description: "A binary classification model that predicts peptide toxicity by in
 categories: [analysis]
 tags: [StrucToxNet, Peptide Toxicity, 3D Structure, ProtT5, ESMFold, EGNN]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "structoxnet_main"

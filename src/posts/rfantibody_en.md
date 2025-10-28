@@ -5,7 +5,7 @@ description: "An integrated AI workflow combining RFdiffusion, ProteinMPNN, and 
 categories: [analysis]
 tags: [RFantibody, Antibody Design, RFdiffusion, ProteinMPNN, RoseTTAFold2, De Novo Design]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "rfantibody_main"

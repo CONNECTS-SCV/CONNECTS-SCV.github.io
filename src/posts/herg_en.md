@@ -5,7 +5,7 @@ description: "A predictive model that evaluates a compound's potential to block 
 categories: [analysis]
 tags: [hERG, Cardiotoxicity, Drug Discovery, Transformer, AI]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "herg_main"

@@ -5,7 +5,7 @@ description: "A BERT/CNN-based AI model that predicts the catalytic rate constan
 categories: [analysis]
 tags: [DLKcat, Kcat, Enzyme, Deep Learning, BERT, GNN]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "dlkcat_main"

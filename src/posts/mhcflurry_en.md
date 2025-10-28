@@ -5,7 +5,7 @@ description: "A deep learning model that predicts binding affinity and immunogen
 categories: [analysis]
 tags: [MHCflurry, MHC, Immunogenicity, Deep Learning, Neoantigen]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "mhcflurry_main"

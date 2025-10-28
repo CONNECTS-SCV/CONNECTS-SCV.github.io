@@ -5,7 +5,7 @@ description: "A state-of-the-art diffusion-based model for generating and design
 categories: [analysis]
 tags: [RFdiffusion, Protein Design, Diffusion Model, Deep Learning, De Novo Design]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "rfdiffusion_main"

@@ -5,7 +5,7 @@ description: "An open-source package for high-performance molecular dynamics (MD
 categories: [analysis]
 tags: [GROMACS, Molecular Dynamics, MD, Simulation, Force Field, PME]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "gromacs_main"

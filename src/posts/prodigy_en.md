@@ -5,7 +5,7 @@ description: "A structure-based tool that predicts the binding affinity (ΔG) an
 categories: [analysis]
 tags: [PRODIGY, Binding Affinity, Protein-Protein Interaction, PPI, Linear Regression]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "prodigy_main"

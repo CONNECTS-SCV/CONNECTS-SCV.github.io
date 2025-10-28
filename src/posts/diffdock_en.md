@@ -5,7 +5,7 @@ description: "A deep learning diffusion model that optimizes a ligand's pose to 
 categories: [analysis]
 tags: [DiffDock, Docking, Diffusion Model, Deep Learning, Virtual Screening]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "diffdock_main"

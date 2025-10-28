@@ -5,7 +5,7 @@ description: "A deep learning platform that evaluates antibody humanness and aut
 categories: [analysis]
 tags: [BioPhi, Antibody, Humanization, Deep Learning, OAS, Humanness Score]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "biophi_main"

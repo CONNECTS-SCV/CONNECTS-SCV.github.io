@@ -5,7 +5,7 @@ description: "An AlphaFold-based deep learning model specialized for predicting 
 categories: [analysis]
 tags: [Immunebuilder, AlphaFold, Antibody, TCR, Structure Prediction]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "immunebuilder_main"

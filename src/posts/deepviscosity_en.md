@@ -5,7 +5,7 @@ description: "An AI model that predicts high or low viscosity of monoclonal anti
 categories: [analysis]
 tags: [DeepViscosity, Antibody, Viscosity, DeepSP, ANN]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "deepviscosity_main"

@@ -5,7 +5,7 @@ description: "A convolutional neural network (CNN) model that predicts protein-p
 categories: [analysis]
 tags: [D-Script, PPI, CNN, Protein Interaction, Deep Learning]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "dscript_main"

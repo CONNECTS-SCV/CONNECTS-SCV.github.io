@@ -5,7 +5,7 @@ description: "A deep learning model that integrates protein sequence, 3D structu
 categories: [analysis]
 tags: [DeepEnzyme, Kcat, Enzyme, Deep Learning, GCN, GNN]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "deepenzyme_main"

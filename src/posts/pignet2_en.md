@@ -5,7 +5,7 @@ description: "A graph neural network (GNN) model that predicts the binding affin
 categories: [analysis]
 tags: [PIGNET2, GNN, Binding Affinity, Protein-Ligand, Deep Learning]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "pignet2_main"

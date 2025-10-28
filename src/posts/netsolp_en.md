@@ -5,7 +5,7 @@ description: "A transformer-based model that predicts protein solubility and usa
 categories: [analysis]
 tags: [NetsolP, Protein Solubility, Transformer, ESM, Protein Expression]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "netsolp_main"

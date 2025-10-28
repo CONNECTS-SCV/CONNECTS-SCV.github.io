@@ -5,7 +5,7 @@ description: "A predictive model to identify potential hepatotoxicity in drug ca
 categories: [analysis]
 tags: [DILI, Hepatotoxicity, Drug Discovery, Toxicity, AI]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "dilipred_main"

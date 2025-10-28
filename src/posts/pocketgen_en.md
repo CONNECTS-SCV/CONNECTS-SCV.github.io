@@ -5,7 +5,7 @@ description: "A model that designs protein scaffolds and binding pockets, genera
 categories: [analysis]
 tags: [PocketGen, Protein Design, Ligand Binding, Graph Transformer, ESM-2]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "pocketgen_main"

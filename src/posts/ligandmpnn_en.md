@@ -5,7 +5,7 @@ description: "An MPNN-based deep learning model that optimizes protein sequences
 categories: [analysis]
 tags: [LigandMPNN, ProteinMPNN, Deep Learning, Ligand Binding, Protein Design]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "ligandmpnn_main"

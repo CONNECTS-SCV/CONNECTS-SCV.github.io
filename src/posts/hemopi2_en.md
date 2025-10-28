@@ -5,7 +5,7 @@ description: "A computational model that predicts the hemolytic activity (RBC to
 categories: [analysis]
 tags: [HemoPI2, Hemolytic Toxicity, Peptide, ESM2, Drug Discovery]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "hemopi2_main"

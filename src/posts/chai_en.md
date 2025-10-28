@@ -5,7 +5,7 @@ description: "A Transformer-based generative AI model that performs both protein
 categories: [analysis]
 tags: [Chai-1, Transformer, Protein Design, Ligand Docking, AI, GNN]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "chai_main"

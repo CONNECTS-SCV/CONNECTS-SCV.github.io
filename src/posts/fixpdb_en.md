@@ -5,7 +5,7 @@ description: "An automated tool that detects and corrects errors in PDB files, s
 categories: [analysis]
 tags: [FixPDB, PDB, Structure Repair, Molecular Simulation, GROMACS]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "fixpdb_main"

@@ -5,7 +5,7 @@ description: "An AI-based module that predicts an antibody's developability and 
 categories: [analysis]
 tags: [AbDev, Antibody, Developability, AI, Prediction]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "abdev_main"

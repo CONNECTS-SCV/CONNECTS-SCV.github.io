@@ -5,7 +5,7 @@ description: "An AI-powered computational screening tool for evaluating drug-lik
 categories: [analysis]
 tags: [ADMET-AI, ADMET, Drug Discovery, AI, GNN, MPNN]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "admet-ai_main"

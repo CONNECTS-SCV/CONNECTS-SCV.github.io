@@ -5,7 +5,7 @@ description: "An inverse folding model, fine-tuned from Meta's ESM-IF1, for high
 categories: [analysis]
 tags: [Antifold, Antibody, Inverse Folding, ESM-IF1, Sequence Design, CDR]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "antifold_main"

@@ -5,7 +5,7 @@ description: "A tool that predicts both global and local protein thermal stabili
 categories: [analysis]
 tags: [TemStaPro, Protein Stability, ProtT5, Thermal Stability]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "temstapro_main"

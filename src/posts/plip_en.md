@@ -5,7 +5,7 @@ description: "An automated tool that detects, classifies, and visualizes non-cov
 categories: [analysis]
 tags: [PLIP, Protein-Ligand, Non-covalent Interactions, Drug Design]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "plip_main"

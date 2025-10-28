@@ -5,7 +5,7 @@ description: "A diffusion-based generative model that predicts the dynamically e
 categories: [analysis]
 tags: [Bioemu, Protein Structure, Diffusion Model, Molecular Dynamics, AlphaFold2]
 author: "author6"
-date: "2025-10-14"
+date: "2025-09-29"
 thumbnail: "/image/default.webp"
 language: en
 comment_id: "bioemu_main"
