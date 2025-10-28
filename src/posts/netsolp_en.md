@@ -72,4 +72,4 @@ Thresholds should be chosen contextually by the researcher.
 - **TemStaPro:** Can be used alongside NetsolP to explore the correlation between **thermal stability** and **solubility**.
 - **Aggrescan3D:** Helps identify **aggregation hotspots** contributing to low solubility in protein structures.
 ---
-[tool-button:NetsolP]
+[tool-button:NetSolP]

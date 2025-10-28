@@ -62,4 +62,4 @@ NetsolP는 아미노산 서열만 가지고 E. coli 발현 기준으로 단백�
 
 ---
 
-[tool-button:NetsolP]
+[tool-button:NetSolP]
