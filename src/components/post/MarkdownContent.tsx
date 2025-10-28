@@ -164,7 +164,6 @@ const markdownComponents: any = {
         'StrucToxNet': 'https://curie.kr/Analysis/structoxnet?from=blog',
         'TemStaPro': 'https://curie.kr/Analysis/temstapro?from=blog',
         'ThermoMPNN ': 'https://curie.kr/Analysis/thermompnn?from=blog',
-        'ToxinPred3.0': 'https://curie.kr/Analysis/toxinpred3?from=blog',
       };
 
       // Find matching tool

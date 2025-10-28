@@ -2,7 +2,7 @@
 layout: post
 title: "PIGNET2 : 단백질-리간드 상호작용의 결합 친화도를 계산하는 모델"
 description: "단백질과 리간드 상호작용의 결합 친화도(binding affinity)를 정량적으로 예측하는 그래프 신경망 기반 모델입니다."
-categories: [분석 모델]
+categories: [analysis]
 tags: [PIGNET2, 결합 친화도, Binding Affinity, 단백질-리간드, GNN]
 author: "author6"
 date: "2025-09-29"

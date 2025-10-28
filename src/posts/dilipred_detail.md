@@ -2,7 +2,7 @@
 layout: post
 title: "DILI : 간독성 유발 가능성이 있는 물질과 안전한 물질의 특성 비교"
 description: "신약 개발 초기 단계에서 화합물의 간 독성 리스크를 평가하는 이진 분류 예측 모델"
-categories: [분석 모델]
+categories: [analysis]
 tags: [DILI, Drug-Induced Liver Injury, 간독성, 예측모델, 신약개발]
 author: "author6"
 date: "2025-09-29"

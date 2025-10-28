@@ -2,7 +2,7 @@
 layout: post
 title: "ToxinPred3.0 : 펩타이드의 독성 여부를 빠르게 예측하는 transformer 기반 모델"
 description: "단백질 및 펩타이드 서열의 전역적, 지역적 특징을 분석하여 잠재적인 독성 여부를 예측하는 지도학습 기반 인공지능 모델입니다."
-categories: [분석 모델]
+categories: [analysis]
 tags: [ToxinPred3.0, 독성 예측, 펩타이드, 지도학습, 안전성 평가]
 author: "author6"
 date: "2025-09-29"
@@ -67,4 +67,4 @@ ToxinPred3.0은 단백질 및 펩타이드 서열을 대상으로 잠재적인 �
 
 ---
 
-[tool-button:ToxinPred3.0]
+[tool-button:ToxinPred3]

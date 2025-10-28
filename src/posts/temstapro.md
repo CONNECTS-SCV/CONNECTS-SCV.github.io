@@ -2,7 +2,7 @@
 layout: post
 title: "TemStaPro : 단백질 열 안정성 예측 도구"
 description: "단백질의 아미노산 서열만을 입력받아, 다양한 온도 조건에서 단백질의 열안정성(thermal stability)을 예측하는 도구입니다."
-categories: [분석 모델]
+categories: [analysis]
 tags: [TemStaPro, 단백질 안정성, 열안정성, ProtT5, 예측 모델]
 author: "author6"
 date: "2025-09-29"

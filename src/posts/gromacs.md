@@ -2,7 +2,7 @@
 layout: post
 title: "GROMACS : 생체분자 시스템을 위한 분자 동역학 시뮬레이션"
 description: "단백질, 지질, 핵산 등의 생체분자를 원자 단위로 시뮬레이션하는 분자 동역학 오픈소스 소프트웨어입니다."
-categories: [분석 모델]
+categories: [analysis]
 tags: [MD, Molecular Dynamics, GROMACS, Simulation]
 author: "author6"
 date: "2025-09-29"

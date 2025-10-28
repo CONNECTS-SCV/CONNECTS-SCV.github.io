@@ -2,7 +2,7 @@
 layout: post
 title: "PocketGen : 리간드에 알맞은 단백질 스캐폴드를 생성하는 모델"
 description: "단백질 스캐폴드와 리간드 구조를 입력받아, 해당 리간드에 최적화된 단백질 포켓의 서열과 구조를 동시에 생성하는 모델입니다."
-categories: [분석 모델]
+categories: [analysis]
 tags: [PocketGen, 단백질 디자인, 포켓 설계, 인공 효소, ESM-2]
 author: "author6"
 date: "2025-09-29"

@@ -2,7 +2,7 @@
 layout: post
 title: "DILI : 약물 유발 간손상 (Drug-Induced Liver Injury) 조기 탐지를 위한 예측 도구"
 description: "신약 개발 초기 단계에서 화합물의 간 독성 리스크를 평가하는 이진 분류 예측 모델"
-categories: [분석 모델]
+categories: [analysis]
 tags: [DILI, Drug-Induced Liver Injury, 간독성, 예측모델, 신약개발]
 author: "author6"
 date: "2025-09-29"

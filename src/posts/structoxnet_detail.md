@@ -2,7 +2,7 @@
 layout: post
 title: "StrucToxNet : 뱀독소와 라이소자임의 PDB 구조를 기반으로 한 독성 예측 비교"
 description: "펩타이드의 3D 구조와 서열 정보를 결합하여 독성 여부를 이진 분류로 예측하는 모델로, 특히 짧은 펩타이드 예측에 강점을 가집니다."
-categories: [분석 모델]
+categories: [analysis]
 tags: [StrucToxNet, 펩타이드 독성, 3D 구조, 예측 모델, GNN]
 author: "author6"
 date: "2025-09-29"

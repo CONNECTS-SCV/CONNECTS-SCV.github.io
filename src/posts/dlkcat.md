@@ -2,7 +2,7 @@
 layout: post
 title: "DLKcat : 효소 촉매 효율 예측 도구"
 description: "단백질 서열과 리간드 구조를 이용해 효소의 촉매 활성 속도 상수(Kcat)를 예측하는 딥러닝 모델"
-categories: [분석 모델]
+categories: [analysis]
 tags: [Kcat prediction, enzyme kinetics, BERT, CNN]
 author: "author6"
 date: "2025-09-29"

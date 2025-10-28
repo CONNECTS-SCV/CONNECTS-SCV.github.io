@@ -2,7 +2,7 @@
 layout: post
 title: "hERG : hERG 차단제 독성 예측 모델"
 description: "화합물이 hERG 칼륨 채널을 차단하는지 예측하여 신약 개발의 심장 독성 리스크를 사전에 평가하는 모델"
-categories: [분석 모델]
+categories: [analysis]
 tags: [hERG, 심장 독성, 약물 스크리닝, 예측 모델]
 author: "author6"
 date: "2025-09-29"

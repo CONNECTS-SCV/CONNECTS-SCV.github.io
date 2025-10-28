@@ -2,7 +2,7 @@
 layout: post
 title: "RFdiffusion : Diffusion 기반 단백질 구조 설계 모델"
 description: "Binder, pocket, motif, oligomer 등 다양한 제약조건을 반영하여 단백질 구조를 설계하는 Diffusion 기반의 SOTA 단백질 생성 모델입니다."
-categories: [분석 모델]
+categories: [analysis]
 tags: [RFdiffusion, 단백질 설계, Diffusion Model, De Novo Design, 단백질 구조 생성]
 author: "author6"
 date: "2025-09-29"

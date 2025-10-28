@@ -71,4 +71,4 @@ ToxinPred3.0 can be combined with:
 
 ---
 
-[tool-button:ToxinPred3.0]
+[tool-button:ToxinPred3]
