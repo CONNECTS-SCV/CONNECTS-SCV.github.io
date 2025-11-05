@@ -1,8 +1,6 @@
 // 네이버 클라우드 Cloud Outbound Mailer 이메일 전송 서비스
 // https://guide.ncloud-docs.com/docs/ko/cloudoutboundmailer-overview
 
-import crypto from 'crypto';
-
 interface EmailData {
   to: string[];
   subject: string;
@@ -10,114 +8,36 @@ interface EmailData {
   isHtml?: boolean;
 }
 
-interface NaverCloudEmailConfig {
-  accessKey: string;
-  secretKey: string;
-  serviceId: string;
-  senderAddress: string;
-  senderName?: string;
-}
-
-// 네이버 클라우드 설정 - 환경변수로 관리
-const config: NaverCloudEmailConfig = {
-  accessKey: process.env.NEXT_PUBLIC_NCP_ACCESS_KEY || '',
-  secretKey: process.env.NEXT_PUBLIC_NCP_SECRET_KEY || '',
-  serviceId: '', // Service ID는 Cloud Outbound Mailer v2에서는 사용하지 않음
-  senderAddress: process.env.NEXT_PUBLIC_NCLOUD_SENDER_EMAIL || 'noreply@connects.com',
-  senderName: 'CONNECTS',
-};
-
-// HMAC 서명 생성
-function makeSignature(method: string, url: string, timestamp: string): string {
-  const space = ' ';
-  const newLine = '\n';
-  const hmac = crypto.createHmac('sha256', config.secretKey);
-  
-  const message = method + space + url + newLine + timestamp + newLine + config.accessKey;
-  hmac.update(message);
-  
-  return hmac.digest('base64');
-}
-
-// 네이버 클라우드 이메일 전송 API 호출
+// 네이버 클라우드 이메일 전송 API 호출 (서버사이드 API 라우트 사용)
 export async function sendEmailWithNaverCloud(data: EmailData): Promise<{ success: boolean; message: string }> {
   try {
-    // 설정 확인
-    if (!config.accessKey || !config.secretKey) {
-      console.warn('Naver Cloud Outbound Mailer is not configured.');
-      
-      // 개발 환경에서는 콘솔에 출력
-      if (process.env.NODE_ENV === 'development') {
-        console.log('=== Email would be sent (Naver Cloud) ===');
-        console.log('To:', data.to.join(', '));
-        console.log('Subject:', data.subject);
-        console.log('Body:', data.body);
-        console.log('=====================================');
-      }
-      
-      return {
-        success: false,
-        message: `네이버 클라우드 설정이 필요합니다. 
-환경변수를 확인하세요:
-- NEXT_PUBLIC_NCP_ACCESS_KEY
-- NEXT_PUBLIC_NCP_SECRET_KEY
-- NEXT_PUBLIC_NCLOUD_SENDER_EMAIL`
-      };
-    }
-
-    // API 엔드포인트
-    const baseUrl = process.env.NEXT_PUBLIC_NCP_MAIL_API_URL || 'https://mail.apigw.ntruss.com';
-    const apiPath = `/api/v1/mails`;
-    const url = `${baseUrl}${apiPath}`;
-    
-    // 타임스탬프 생성
-    const timestamp = Date.now().toString();
-    
-    // 서명 생성
-    const signature = makeSignature('POST', apiPath, timestamp);
-    
-    // 이메일 데이터 구성
-    const emailPayload = {
-      senderAddress: config.senderAddress,
-      senderName: config.senderName,
-      recipients: data.to.map(email => ({
-        address: email,
-        type: 'R' // R: 수신자, C: 참조, B: 숨은참조
-      })),
-      individual: true, // 개별 발송 (수신자끼리 이메일 주소 노출 안됨)
-      advertising: false,
-      title: data.subject,
-      body: data.body,
-      ...(data.isHtml && { bodyType: 'HTML' })
-    };
-
-    // API 요청
-    const response = await fetch(url, {
+    // Use the API route to avoid CORS issues
+    const response = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-ncp-apigw-timestamp': timestamp,
-        'x-ncp-iam-access-key': config.accessKey,
-        'x-ncp-apigw-signature-v2': signature,
-        'x-ncp-lang': 'ko-KR'
       },
-      body: JSON.stringify(emailPayload)
+      body: JSON.stringify({
+        to: data.to,
+        subject: data.subject,
+        body: data.body
+      })
     });
 
     const result = await response.json();
 
-    if (response.ok && result.requestId) {
-      return {
-        success: true,
-        message: `이메일이 성공적으로 전송되었습니다. (Request ID: ${result.requestId})`
-      };
-    } else {
-      console.error('Naver Cloud email error:', result);
+    if (!response.ok) {
+      console.error('Email API error:', result);
       return {
         success: false,
         message: result.message || '이메일 전송에 실패했습니다.'
       };
     }
+
+    return {
+      success: true,
+      message: result.message || '이메일이 성공적으로 전송되었습니다.'
+    };
   } catch (error) {
     console.error('Email sending error:', error);
     return {
@@ -127,31 +47,12 @@ export async function sendEmailWithNaverCloud(data: EmailData): Promise<{ succes
   }
 }
 
-// 이메일 전송 상태 확인
+// 이메일 전송 상태 확인 (필요시 서버사이드 API 라우트로 이동 가능)
 export async function checkEmailStatus(requestId: string): Promise<any> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_NCP_MAIL_API_URL || 'https://mail.apigw.ntruss.com';
-    const apiPath = `/api/v1/mails/requests/${requestId}`;
-    const url = `${baseUrl}${apiPath}`;
-    
-    const timestamp = Date.now().toString();
-    const signature = makeSignature('GET', apiPath, timestamp);
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'x-ncp-apigw-timestamp': timestamp,
-        'x-ncp-iam-access-key': config.accessKey,
-        'x-ncp-apigw-signature-v2': signature,
-        'x-ncp-lang': 'ko-KR'
-      }
-    });
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error checking email status:', error);
-    return null;
-  }
+  // This function would need a server-side API route as well if you want to use it
+  // For now, returning null as it requires server-side implementation
+  console.warn('Email status check requires server-side implementation');
+  return null;
 }
 
 // 이메일 템플릿
