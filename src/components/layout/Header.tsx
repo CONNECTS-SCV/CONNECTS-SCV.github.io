@@ -5,8 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import linkSVG from "@/assets/link.svg";
 import magnifyingGlassSVG from "@/assets/magnifyingGlass.svg";
+import envelopeSVG from "@/assets/envelope.svg";
 import {Button} from "../ui/button/button";
 import LanguageToggle from "./LanguageToggle";
+import SubscriptionModal from "./SubscriptionModal";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface HeaderProps {
     onSearchClick?: () => void;
@@ -14,6 +17,8 @@ interface HeaderProps {
 
 export default function Header({onSearchClick}: HeaderProps) {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
+    const { t } = useLanguage();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -40,6 +45,16 @@ export default function Header({onSearchClick}: HeaderProps) {
                 {/*    <Image src={linkSVG} alt="link" width={20} height={20} />*/}
                 {/*  </Button>*/}
                 {/*</div>*/}
+                <div className="mx-2">
+                    <Button 
+                        variant="default" 
+                        onClick={() => setIsSubscriptionModalOpen(true)}
+                        className="flex items-center gap-2"
+                    >
+                        <Image src={envelopeSVG} alt="subscribe" width={16} height={16}/>
+                        {t('header.subscribe')}
+                    </Button>
+                </div>
                 <div className="mx-2 flex gap-[6px] items-center">
                     <Link href="https://curie.kr" className="flex items-center gap-1" target="_blank" rel="noopener noreferrer">
                         <Image src={linkSVG} alt="link" width={20} height={20}/>
@@ -67,6 +82,10 @@ export default function Header({onSearchClick}: HeaderProps) {
                     </Button>
                 </div>
             </div>
+            <SubscriptionModal 
+                isOpen={isSubscriptionModalOpen}
+                onClose={() => setIsSubscriptionModalOpen(false)}
+            />
         </header>
     );
 }

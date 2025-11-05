@@ -233,6 +233,21 @@ const translations: Record<Language, Record<string, string>> = {
     'admin.dashboard.filter.today': '오늘',
     'admin.dashboard.logout': '로그아웃',
     'admin.dashboard.backToSite': '사이트로 돌아가기',
+
+    // Subscription
+    'subscription.modal.title': '뉴스레터 구독',
+    'subscription.modal.description': 'CONNECTS의 새로운 소식과 업데이트를 이메일로 받아보세요.',
+    'subscription.modal.placeholder': '이메일 주소를 입력하세요',
+    'subscription.modal.submit': '구독하기',
+    'subscription.modal.submitting': '처리중...',
+    'subscription.modal.cancel': '취소',
+    'subscription.modal.privacy': '구독하시면 개인정보 처리방침에 동의하는 것으로 간주됩니다.',
+    'subscription.modal.error.empty': '이메일을 입력해주세요.',
+    'subscription.modal.error.invalid': '올바른 이메일 형식을 입력해주세요.',
+    'subscription.modal.error.exists': '이미 구독 중인 이메일입니다.',
+    'subscription.modal.error.network': '네트워크 오류가 발생했습니다. 다시 시도해주세요.',
+    'subscription.modal.error.server': '구독 처리 중 오류가 발생했습니다.',
+    'subscription.modal.success': '구독이 완료되었습니다! 감사합니다.',
   },
   en: {
     // Header
@@ -368,5 +383,20 @@ const translations: Record<Language, Record<string, string>> = {
     'admin.dashboard.filter.today': 'Today',
     'admin.dashboard.logout': 'Logout',
     'admin.dashboard.backToSite': 'Back to Site',
+
+    // Subscription
+    'subscription.modal.title': 'Newsletter Subscription',
+    'subscription.modal.description': 'Get updates and news from CONNECTS delivered to your email.',
+    'subscription.modal.placeholder': 'Enter your email address',
+    'subscription.modal.submit': 'Subscribe',
+    'subscription.modal.submitting': 'Processing...',
+    'subscription.modal.cancel': 'Cancel',
+    'subscription.modal.privacy': 'By subscribing, you agree to our privacy policy.',
+    'subscription.modal.error.empty': 'Please enter your email.',
+    'subscription.modal.error.invalid': 'Please enter a valid email format.',
+    'subscription.modal.error.exists': 'This email is already subscribed.',
+    'subscription.modal.error.network': 'Network error occurred. Please try again.',
+    'subscription.modal.error.server': 'An error occurred during subscription.',
+    'subscription.modal.success': 'Subscription completed! Thank you.',
   }
 };

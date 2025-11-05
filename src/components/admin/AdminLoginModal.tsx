@@ -71,7 +71,7 @@ export function AdminLoginModal({ isOpen, onClose }: AdminLoginModalProps) {
 
         // 관리자 페이지로 이동
         onClose();
-        router.push("/admin/comments");
+        router.push("/admin");
       } else {
         setError(t('admin.login.error'));
         setPassword("");

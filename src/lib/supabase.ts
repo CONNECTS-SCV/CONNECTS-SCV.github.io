@@ -185,12 +185,30 @@ export async function getCommentStats() {
       .select('*', { count: 'exact', head: true })
       .gte('created_at', today.toISOString());
 
-    // 최근 24시간 댓글 수
-    const last24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
-    const { count: newCount } = await supabase
+    // 최근 7일 이내 댓글을 "새 댓글"로 간주 (테스트용으로 기간 늘림)
+    const last7Days = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const { count: newCount, error: newError } = await supabase
       .from('comments')
       .select('*', { count: 'exact', head: true })
-      .gte('created_at', last24Hours.toISOString());
+      .gte('created_at', last7Days.toISOString());
+
+    // 최근 댓글 몇 개 확인 (디버깅용)
+    const { data: recentComments } = await supabase
+      .from('comments')
+      .select('created_at')
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    // 디버깅을 위한 로그
+    console.log('Comment Stats Debug:', {
+      last7Days: last7Days.toISOString(),
+      newCount,
+      newError,
+      todayCount,
+      totalCount,
+      recentComments: recentComments?.map(c => c.created_at),
+      now: new Date().toISOString()
+    });
 
     // 포스트별 댓글 수
     const { data: postStats } = await supabase

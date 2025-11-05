@@ -8,11 +8,12 @@ import {
   MessageCircle,
   Search,
   Trash2,
-  LogOut,
   AlertCircle,
   Reply,
   X,
   Send,
+  Clock,
+  TrendingUp,
 } from "lucide-react";
 
 export default function AdminCommentsPage() {
@@ -28,7 +29,6 @@ export default function AdminCommentsPage() {
   const [replyingTo, setReplyingTo] = useState<Comment | null>(null);
   const [replyText, setReplyText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [expandedComments, setExpandedComments] = useState<Set<number>>(new Set());
   const replyInputRef = useRef<HTMLTextAreaElement>(null);
   const [stats, setStats] = useState<{
     total: number;
@@ -89,21 +89,15 @@ export default function AdminCommentsPage() {
     return postTitles[postId] || postId;
   }, [postTitles]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("admin_token");
-    localStorage.removeItem("admin_auth_time");
-    router.push("/");
-  };
 
   const handleDelete = async (id: number) => {
     if (!window.confirm(t("admin.dashboard.confirmDelete"))) return;
     try {
-      const success = await deleteComment(id);
-      if (success) {
-        await loadData();
-      }
+      await deleteComment(id);
+      await loadData();
     } catch (error) {
       console.error("Error deleting comment:", error);
+      alert(language === "ko" ? "삭제 중 오류가 발생했습니다" : "Error deleting comment");
     }
   };
 
@@ -112,55 +106,59 @@ export default function AdminCommentsPage() {
     setReplyText("");
     setTimeout(() => {
       replyInputRef.current?.focus();
-      replyInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
   };
 
-  const handleCancelReply = () => {
-    setReplyingTo(null);
-    setReplyText("");
-  };
+  const handleReplySubmit = async () => {
+    if (!replyingTo || !replyText.trim()) return;
 
-  const handleSubmitReply = async () => {
-    if (!replyText.trim() || !replyingTo) return;
     setIsSubmitting(true);
     try {
       await createComment({
         post_id: replyingTo.post_id,
-        parent_id: replyingTo.id || null,
-        nickname: "CURIE",
-        avatar: "bg-gradient-to-br from-gray-800 to-gray-900",
-        content: replyText.trim(),
+        nickname: 'CURIE',
+        content: replyText,
+        parent_id: replyingTo.parent_id || replyingTo.id,
+        avatar: 'bg-gradient-to-br from-purple-500 to-blue-500',
       });
+
+      setReplyingTo(null);
+      setReplyText("");
       await loadData();
-      handleCancelReply();
     } catch (error) {
-      console.error("Error submitting reply:", error);
-      alert("Failed to submit reply");
+      console.error("Error posting reply:", error);
+      alert(language === "ko" ? "답글 작성 중 오류가 발생했습니다" : "Error posting reply");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const formatTime = (timestamp: string | undefined) => {
-    if (!timestamp) return "";
-    const date = new Date(timestamp);
-    return date.toLocaleString(language === "ko" ? "ko-KR" : "en-US", {
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+  const formatTime = (dateString: string | undefined) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 60) return `${minutes}${language === "ko" ? "분 전" : "m ago"}`;
+    if (hours < 24) return `${hours}${language === "ko" ? "시간 전" : "h ago"}`;
+    if (days < 7) return `${days}${language === "ko" ? "일 전" : "d ago"}`;
+    return date.toLocaleDateString(language === "ko" ? "ko-KR" : "en-US");
   };
 
-  const isNewComment = (timestamp: string | undefined) => {
-    if (!timestamp) return false;
-    return new Date(timestamp).getTime() > Date.now() - 24 * 60 * 60 * 1000;
+  const isNewComment = (dateString: string | undefined) => {
+    if (!dateString) return false;
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    return diff < 24 * 60 * 60 * 1000;
   };
 
-  const isTodayComment = (timestamp: string | undefined) => {
-    if (!timestamp) return false;
-    const commentDate = new Date(timestamp);
+  const isTodayComment = (dateString: string | undefined) => {
+    if (!dateString) return false;
+    const commentDate = new Date(dateString);
     const today = new Date();
     return (
       commentDate.getDate() === today.getDate() &&
@@ -181,24 +179,10 @@ export default function AdminCommentsPage() {
     return flat;
   };
 
-  const toggleComment = (id: number) => {
-    setExpandedComments(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  };
-
-  // 필터/검색 활성화 여부 체크
   const hasActiveFilter = useMemo(() => {
     return searchQuery.trim() !== "" || filter !== "all";
   }, [searchQuery, filter]);
 
-  // 필터링된 플랫 댓글 목록 (검색/필터 활성화시)
   const filteredComments = useMemo(() => {
     let allComments = flattenComments(comments);
 
@@ -222,24 +206,6 @@ export default function AdminCommentsPage() {
     return allComments;
   }, [comments, searchQuery, filter, getPostTitle]);
 
-  // 계층 구조 댓글 목록 (필터 없을 때)
-  const hierarchicalComments = useMemo(() => {
-    if (hasActiveFilter) return [];
-    return comments;
-  }, [comments, hasActiveFilter]);
-
-  const groupedComments = useMemo(() => {
-    if (groupBy !== "post") return null;
-    const grouped: Record<string, Comment[]> = {};
-    filteredComments.forEach(comment => {
-      if (!grouped[comment.post_id]) {
-        grouped[comment.post_id] = [];
-      }
-      grouped[comment.post_id].push(comment);
-    });
-    return grouped;
-  }, [filteredComments, groupBy]);
-
   if (!isAuthenticated) return null;
 
   if (isLoading) {
@@ -253,373 +219,260 @@ export default function AdminCommentsPage() {
     );
   }
 
-  // 플랫 댓글 행 (검색/필터 활성화시)
-  function CommentRow({ comment }: { comment: Comment }) {
-    const isExpanded = expandedComments.has(comment.id!);
-    const isLong = comment.content.length > 150;
-    const displayContent = isLong && !isExpanded
-      ? comment.content.substring(0, 150) + "..."
-      : comment.content;
-
-    return (
-      <div className={`px-4 py-3 hover:bg-gray-50 transition-colors ${isNewComment(comment.created_at) ? "bg-blue-50/50" : ""}`}>
-        <div className="flex items-start gap-3">
-          <div className={`w-8 h-8 ${comment.avatar} rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}>
-            {comment.nickname === "CURIE" ? "C" : comment.nickname.charAt(0)}
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-sm font-medium text-gray-900">{comment.nickname}</span>
-              {isNewComment(comment.created_at) && (
-                <span className="px-1.5 py-0.5 bg-blue-600 text-white text-xs font-semibold rounded">NEW</span>
-              )}
-              {comment.parent_id && (
-                <span className="px-1.5 py-0.5 bg-gray-200 text-gray-600 text-xs rounded">{language === "ko" ? "답글" : "Reply"}</span>
-              )}
-              <span className="text-xs text-gray-400">·</span>
-              <span className="text-xs text-gray-500">{formatTime(comment.created_at)}</span>
-              <span className="text-xs text-gray-400">·</span>
-              <span className="text-xs text-gray-500 truncate max-w-[200px]" title={getPostTitle(comment.post_id)}>
-                {getPostTitle(comment.post_id)}
-              </span>
-            </div>
-            <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
-              {displayContent}
-            </p>
-            {isLong && (
-              <button onClick={() => toggleComment(comment.id!)} className="text-xs text-blue-600 hover:text-blue-700 mt-1">
-                {isExpanded ? (language === "ko" ? "접기" : "Less") : (language === "ko" ? "더보기" : "More")}
-              </button>
-            )}
-          </div>
-
-          <div className="flex items-center gap-1 flex-shrink-0">
-            <button
-              onClick={() => handleReplyClick(comment)}
-              className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
-              title={language === "ko" ? "답글" : "Reply"}
-            >
-              <Reply className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => comment.id && handleDelete(comment.id)}
-              className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
-              title={language === "ko" ? "삭제" : "Delete"}
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // 계층 구조 댓글 트리 (답글이 들여쓰기되어 표시)
-  function CommentTreeItem({ comment, level = 0 }: { comment: Comment; level?: number }) {
-    const isExpanded = expandedComments.has(comment.id!);
-    const isLong = comment.content.length > 150;
-    const displayContent = isLong && !isExpanded
-      ? comment.content.substring(0, 150) + "..."
-      : comment.content;
-
-    // 들여쓰기 패딩 계산 (최대 3단계까지만 시각적으로 구분)
-    const indentClass = level === 0 ? "" : level === 1 ? "pl-12" : level === 2 ? "pl-24" : "pl-36";
-    const borderClass = level > 0 ? "border-l-2 border-gray-200" : "";
-
-    return (
-      <div>
-        <div className={`${indentClass} ${borderClass} ${isNewComment(comment.created_at) ? "bg-blue-50/50" : ""}`}>
-          <div className={`px-4 py-3 hover:bg-gray-50 transition-colors`}>
-            <div className="flex items-start gap-3">
-              <div className={`w-8 h-8 ${comment.avatar} rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}>
-                {comment.nickname === "CURIE" ? "C" : comment.nickname.charAt(0)}
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <span className="text-sm font-medium text-gray-900">{comment.nickname}</span>
-                  {isNewComment(comment.created_at) && (
-                    <span className="px-1.5 py-0.5 bg-blue-600 text-white text-xs font-semibold rounded">NEW</span>
-                  )}
-                  {level > 0 && (
-                    <span className="px-1.5 py-0.5 bg-gray-200 text-gray-600 text-xs rounded">{language === "ko" ? "답글" : "Reply"}</span>
-                  )}
-                  <span className="text-xs text-gray-400">·</span>
-                  <span className="text-xs text-gray-500">{formatTime(comment.created_at)}</span>
-                  {level === 0 && (
-                    <>
-                      <span className="text-xs text-gray-400">·</span>
-                      <span className="text-xs text-gray-500 truncate max-w-[200px]" title={getPostTitle(comment.post_id)}>
-                        {getPostTitle(comment.post_id)}
-                      </span>
-                    </>
-                  )}
-                  {comment.replies && comment.replies.length > 0 && (
-                    <>
-                      <span className="text-xs text-gray-400">·</span>
-                      <span className="text-xs text-blue-600 font-medium">
-                        {comment.replies.length} {language === "ko" ? "답글" : "replies"}
-                      </span>
-                    </>
-                  )}
-                </div>
-                <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">
-                  {displayContent}
-                </p>
-                {isLong && (
-                  <button onClick={() => toggleComment(comment.id!)} className="text-xs text-blue-600 hover:text-blue-700 mt-1">
-                    {isExpanded ? (language === "ko" ? "접기" : "Less") : (language === "ko" ? "더보기" : "More")}
-                  </button>
-                )}
-              </div>
-
-              <div className="flex items-center gap-1 flex-shrink-0">
-                <button
-                  onClick={() => handleReplyClick(comment)}
-                  className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                  title={language === "ko" ? "답글" : "Reply"}
-                >
-                  <Reply className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => comment.id && handleDelete(comment.id)}
-                  className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
-                  title={language === "ko" ? "삭제" : "Delete"}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 답글 재귀 렌더링 */}
-        {comment.replies && comment.replies.length > 0 && (
-          <div>
-            {comment.replies.map((reply) => (
-              <CommentTreeItem key={reply.id} comment={reply} level={level + 1} />
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen">
-      {/* 상단 고정 헤더 */}
-      <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-[1400px] mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-gray-900 rounded-lg">
-                  <MessageCircle className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-lg font-bold text-gray-900">{t("admin.dashboard.title")}</h1>
-                  <div className="flex items-center gap-4 text-xs text-gray-500 mt-0.5">
-                    <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                      {stats?.new || 0} {language === "ko" ? "새 댓글" : "New"}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                      {stats?.today || 0} {language === "ko" ? "오늘" : "Today"}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
-                      {stats?.total || 0} {language === "ko" ? "전체" : "Total"}
-                    </span>
-                  </div>
-                </div>
-              </div>
+    <div className="min-h-screen bg-white">
+      <main className="max-w-[1200px] mx-auto px-6 py-12">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl">
+            <div className="flex items-center justify-between mb-4">
+              <MessageCircle className="w-8 h-8 text-blue-600" />
+              {stats?.new && stats.new > 0 && (
+                <span className="px-2 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">
+                  +{stats.new}
+                </span>
+              )}
             </div>
+            <div className="text-3xl font-bold text-gray-900 mb-1">
+              {stats?.total || 0}
+            </div>
+            <div className="text-sm text-gray-700">
+              {language === "ko" ? "전체 댓글" : "Total Comments"}
+            </div>
+            <div className="mt-3 text-xs text-gray-600">
+              {language === "ko" ? "포스트 댓글 수" : "Post Comments"}
+            </div>
+          </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleLogout}
-                className="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden sm:inline">{language === "ko" ? "로그아웃" : "Logout"}</span>
-              </button>
+          <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl">
+            <div className="flex items-center justify-between mb-4">
+              <Clock className="w-8 h-8 text-green-600" />
+              {stats?.today && stats.today > 0 && (
+                <span className="text-xs text-green-600 font-semibold">
+                  오늘
+                </span>
+              )}
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mb-1">
+              {stats?.today || 0}
+            </div>
+            <div className="text-sm text-gray-700">
+              {language === "ko" ? "오늘의 댓글" : "Today's Comments"}
+            </div>
+            <div className="mt-3 text-xs text-gray-600">
+              {language === "ko" ? "24시간 이내" : "Last 24 hours"}
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl">
+            <div className="flex items-center justify-between mb-4">
+              <AlertCircle className="w-8 h-8 text-purple-600" />
+              {stats?.new && stats.new > 0 && (
+                <span className="animate-pulse">
+                  <span className="w-2 h-2 bg-purple-600 rounded-full inline-block"></span>
+                </span>
+              )}
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mb-1">
+              {stats?.new || 0}
+            </div>
+            <div className="text-sm text-gray-700">
+              {language === "ko" ? "새 댓글" : "New Comments"}
+            </div>
+            <div className="mt-3 text-xs text-gray-600">
+              {language === "ko" ? "확인 필요" : "Needs Review"}
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl">
+            <div className="flex items-center justify-between mb-4">
+              <Reply className="w-8 h-8 text-orange-600" />
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mb-1">
+              {comments.reduce((acc, c) => acc + (c.replies?.length || 0), 0)}
+            </div>
+            <div className="text-sm text-gray-700">
+              {language === "ko" ? "답글" : "Replies"}
+            </div>
+            <div className="mt-3 text-xs text-gray-600">
+              {language === "ko" ? "관리자 답글" : "Admin Replies"}
             </div>
           </div>
         </div>
-      </div>
 
-      <main className="max-w-[1400px] mx-auto px-6 py-6">
-        {/* 필터 및 검색 */}
-        <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4 shadow-sm">
-          <div className="flex flex-col sm:flex-row gap-3">
+        {/* Search and Filters */}
+        <div className="bg-gray-50 rounded-2xl p-6 mb-8">
+          <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={language === "ko" ? "닉네임, 내용, 포스트로 검색..." : "Search by nickname, content, post..."}
-                className="w-full pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400"
+                className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
             </div>
 
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => setFilter("all")}
-                className={`px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-                  filter === "all" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                {language === "ko" ? "전체" : "All"} ({filteredComments.length})
-              </button>
-              <button
-                onClick={() => setFilter("new")}
-                className={`px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-                  filter === "new" ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-700 hover:bg-blue-100"
-                }`}
-              >
-                {language === "ko" ? "새 댓글" : "New"}
-              </button>
-              <button
-                onClick={() => setFilter("today")}
-                className={`px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-                  filter === "today" ? "bg-green-600 text-white" : "bg-green-50 text-green-700 hover:bg-green-100"
-                }`}
-              >
-                {language === "ko" ? "오늘" : "Today"}
-              </button>
-              <div className="border-l border-gray-300 mx-1"></div>
+            <div className="flex items-center gap-3">
+              <div className="flex bg-white rounded-xl p-1 border border-gray-200">
+                {(["all", "new", "today"] as const).map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className={`px-4 py-2 text-sm rounded-lg transition-all font-medium ${
+                      filter === f
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                  >
+                    {f === "all" && t("admin.dashboard.filter.all")}
+                    {f === "new" && t("admin.dashboard.filter.new")}
+                    {f === "today" && t("admin.dashboard.filter.today")}
+                  </button>
+                ))}
+              </div>
+
               <button
                 onClick={() => setGroupBy(groupBy === "post" ? "none" : "post")}
-                className={`px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
-                  groupBy === "post" ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                className={`px-4 py-2.5 text-sm rounded-xl transition-all font-medium flex items-center gap-2 border ${
+                  groupBy === "post" 
+                    ? "bg-purple-50 text-purple-600 border-purple-200" 
+                    : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
                 }`}
               >
-                {groupBy === "post" ? "✓ " : ""}{language === "ko" ? "포스트별" : "By Post"}
+                <TrendingUp className="w-4 h-4" />
+                {language === "ko" ? "포스트별" : "By Post"}
               </button>
             </div>
           </div>
         </div>
 
-        {/* 답글 입력 */}
-        {replyingTo && (
-          <div className="mb-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Reply className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-medium text-gray-900">
-                  {language === "ko" ? "답글 작성 중" : "Replying to"} <strong>{replyingTo.nickname}</strong>
-                </span>
+        {/* Comments List */}
+        <div className="bg-white rounded-2xl border-2 border-gray-100 overflow-hidden">
+          <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-50 rounded-lg">
+                  <MessageCircle className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">
+                    {hasActiveFilter ? t("admin.dashboard.searchResults") : t("comments.title")}
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    {filteredComments.length}개의 결과
+                  </p>
+                </div>
               </div>
-              <button onClick={handleCancelReply} className="p-1 hover:bg-blue-100 rounded transition-colors">
-                <X className="w-4 h-4 text-gray-500" />
-              </button>
             </div>
-            <div className="bg-white rounded p-2 mb-3 border border-blue-100">
-              <p className="text-xs text-gray-600 line-clamp-2">{replyingTo.content}</p>
-            </div>
-            <div className="flex gap-2">
-              <textarea
-                ref={replyInputRef}
-                value={replyText}
-                onChange={(e) => setReplyText(e.target.value)}
-                placeholder={language === "ko" ? "답글을 입력하세요..." : "Write your reply..."}
-                className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 resize-none"
-                rows={2}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                    handleSubmitReply();
-                  }
-                }}
-              />
-              <button
-                onClick={handleSubmitReply}
-                disabled={!replyText.trim() || isSubmitting}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 mt-2">
-              CURIE · {language === "ko" ? "Ctrl+Enter로 전송" : "Ctrl+Enter to send"}
-            </p>
           </div>
-        )}
 
-        {/* 댓글 목록 */}
-        {(hasActiveFilter ? filteredComments.length === 0 : hierarchicalComments.length === 0) ? (
-          <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
-            <AlertCircle className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-            <p className="text-sm text-gray-500">{t("admin.dashboard.noComments")}</p>
-          </div>
-        ) : hasActiveFilter ? (
-          // 필터/검색 활성화시 - 플랫 리스트로 표시
-          groupBy === "post" && groupedComments ? (
-            <div className="space-y-4">
-              {Object.entries(groupedComments).map(([postId, postComments]) => (
-                <div key={postId} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                    <h3 className="text-sm font-semibold text-gray-900">{getPostTitle(postId)}</h3>
-                    <p className="text-xs text-gray-500 mt-0.5">
-                      {postComments.length} {language === "ko" ? "개 댓글" : "comments"}
-                    </p>
-                  </div>
-                  <div className="divide-y divide-gray-100">
-                    {postComments.map((comment) => (
-                      <CommentRow key={comment.id} comment={comment} />
-                    ))}
+          <div className="divide-y divide-gray-100">
+            {filteredComments.length === 0 ? (
+              <div className="p-12 text-center">
+                <MessageCircle className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-500">
+                  {language === "ko" ? "댓글이 없습니다" : "No comments found"}
+                </p>
+              </div>
+            ) : (
+              filteredComments.map((comment) => (
+                <div key={comment.id} className={`p-5 hover:bg-gray-50 transition-colors ${
+                  isNewComment(comment.created_at) ? "bg-blue-50/20" : ""
+                }`}>
+                  <div className="flex items-start gap-4">
+                    <div className={`w-10 h-10 ${comment.avatar} rounded-lg flex items-center justify-center text-white font-semibold text-sm`}>
+                      {comment.nickname === "CURIE" ? "C" : comment.nickname.charAt(0)}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="font-medium text-gray-900">{comment.nickname}</span>
+                        {isNewComment(comment.created_at) && (
+                          <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-semibold rounded">NEW</span>
+                        )}
+                        <span className="text-xs text-gray-400">·</span>
+                        <span className="text-xs text-gray-500">{formatTime(comment.created_at)}</span>
+                        <span className="text-xs text-gray-400">·</span>
+                        <span className="text-xs text-gray-600 font-medium">{getPostTitle(comment.post_id)}</span>
+                      </div>
+                      <p className="text-sm text-gray-700 leading-relaxed">{comment.content}</p>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleReplyClick(comment)}
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                      >
+                        <Reply className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => comment.id && handleDelete(comment.id)}
+                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-              <div className="divide-y divide-gray-100">
-                {filteredComments.map((comment) => (
-                  <CommentRow key={comment.id} comment={comment} />
-                ))}
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Reply Modal */}
+        {replyingTo && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl w-full max-w-2xl shadow-xl">
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-gray-900">{language === "ko" ? "답글 작성" : "Write Reply"}</h3>
+                  <button
+                    onClick={() => setReplyingTo(null)}
+                    className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-400" />
+                  </button>
+                </div>
               </div>
-            </div>
-          )
-        ) : (
-          // 필터 없을 때 - 계층 구조로 표시
-          groupBy === "post" ? (
-            <div className="space-y-4">
-              {(() => {
-                // 포스트별로 그룹화
-                const grouped: Record<string, Comment[]> = {};
-                hierarchicalComments.forEach(comment => {
-                  if (!grouped[comment.post_id]) {
-                    grouped[comment.post_id] = [];
-                  }
-                  grouped[comment.post_id].push(comment);
-                });
-                return Object.entries(grouped).map(([postId, postComments]) => (
-                  <div key={postId} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                    <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                      <h3 className="text-sm font-semibold text-gray-900">{getPostTitle(postId)}</h3>
-                      <p className="text-xs text-gray-500 mt-0.5">
-                        {postComments.length} {language === "ko" ? "개 스레드" : "threads"}
-                      </p>
+              <div className="p-6">
+                <div className="bg-gray-50 rounded-lg p-4 mb-5">
+                  <div className="flex items-start gap-3">
+                    <div className={`w-8 h-8 ${replyingTo.avatar} rounded-lg flex items-center justify-center text-white text-xs font-semibold`}>
+                      {replyingTo.nickname.charAt(0)}
                     </div>
-                    <div>
-                      {postComments.map((comment) => (
-                        <CommentTreeItem key={comment.id} comment={comment} />
-                      ))}
+                    <div className="flex-1">
+                      <span className="text-sm font-medium text-gray-900">{replyingTo.nickname}</span>
+                      <p className="text-sm text-gray-600 mt-1">{replyingTo.content}</p>
                     </div>
                   </div>
-                ));
-              })()}
+                </div>
+                <textarea
+                  ref={replyInputRef}
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  placeholder={language === "ko" ? "답글을 입력하세요..." : "Write your reply..."}
+                  className="w-full p-4 border border-gray-200 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  rows={4}
+                />
+                <div className="flex justify-end gap-3 mt-5">
+                  <button
+                    onClick={() => setReplyingTo(null)}
+                    className="px-5 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors"
+                  >
+                    {language === "ko" ? "취소" : "Cancel"}
+                  </button>
+                  <button
+                    onClick={handleReplySubmit}
+                    disabled={isSubmitting || !replyText.trim()}
+                    className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-all"
+                  >
+                    <Send className="w-4 h-4" />
+                    {isSubmitting ? (language === "ko" ? "전송 중..." : "Sending...") : (language === "ko" ? "답글 달기" : "Reply")}
+                  </button>
+                </div>
+              </div>
             </div>
-          ) : (
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-              {hierarchicalComments.map((comment) => (
-                <CommentTreeItem key={comment.id} comment={comment} />
-              ))}
-            </div>
-          )
+          </div>
         )}
       </main>
     </div>
