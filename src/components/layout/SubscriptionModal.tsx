@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Button } from "../ui/button/button";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { sendEmailWithNaverCloud } from "@/lib/naverCloudEmail";
+import { generateEmailTemplate } from "@/lib/emailTemplate";
 
 interface SubscriptionModalProps {
     isOpen: boolean;
@@ -69,6 +71,61 @@ export default function SubscriptionModal({ isOpen, onClose }: SubscriptionModal
                 console.error("Supabase error:", error);
                 setMessage(t('subscription.modal.error.server'));
             } else {
+                // 환영 이메일 발송
+                try {
+                    const welcomeEmailContent = language === 'ko' 
+                        ? `Curieus 구독을 진심으로 환영합니다!
+
+Curieus는 최신 AI 기술을 활용한 단백질 분석 플랫폼입니다.
+
+🎯 주요 기능:
+• AlphaFold3 기반 단백질 구조 예측
+• AI 최적화 리간드 도킹
+• 실시간 분자 상호작용 분석
+
+앞으로 유용한 정보와 업데이트 소식을 전해드리겠습니다.
+
+감사합니다!
+Curieus 팀 드림`
+                        : `Welcome to Curieus!
+
+Curieus is an advanced protein analysis platform powered by cutting-edge AI technology.
+
+🎯 Key Features:
+• AlphaFold3-based protein structure prediction
+• AI-optimized ligand docking
+• Real-time molecular interaction analysis
+
+We'll keep you updated with valuable insights and platform updates.
+
+Best regards,
+The Curieus Team`;
+
+                    const welcomeEmail = generateEmailTemplate({
+                        recipientName: email.split('@')[0],
+                        recipientEmail: email,
+                        subject: language === 'ko' ? '🎊 Curieus 구독을 환영합니다!' : '🎊 Welcome to Curieus!',
+                        mainContent: welcomeEmailContent,
+                        buttonText: language === 'ko' ? '플랫폼 둘러보기' : 'Explore Platform',
+                        buttonUrl: 'https://curie.kr',
+                        footerText: language === 'ko' 
+                            ? '💡 궁금한 점이 있으시면 언제든 support@curieus.net으로 문의해주세요.'
+                            : '💡 If you have any questions, feel free to contact us at support@curieus.net'
+                    });
+
+                    await sendEmailWithNaverCloud({
+                        to: [email],
+                        subject: language === 'ko' ? '🎊 Curieus 구독을 환영합니다!' : '🎊 Welcome to Curieus!',
+                        body: welcomeEmail,
+                        isHtml: true
+                    });
+                    
+                    console.log('Welcome email sent to:', email);
+                } catch (emailError) {
+                    console.error('Failed to send welcome email:', emailError);
+                    // 이메일 전송 실패해도 구독은 성공으로 처리
+                }
+
                 setMessage(t('subscription.modal.success'));
                 setEmail("");
                 setTimeout(() => {
