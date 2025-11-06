@@ -312,7 +312,7 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
             <div class="email-header">
                 <div class="logo-section">
                     <div>
-                        <img src="/assets/logo.webp" alt="Curieus Logo" width="150" height="40" style="display: block;" />
+                        <img src="https://curie.kr/assets/logo.webp" alt="Curieus Logo" width="150" height="40" style="display: block;" />
                         <div class="logo-tag" style="margin-top: 8px;">AI-Powered Analysis Platform</div>
                     </div>
                 </div>
