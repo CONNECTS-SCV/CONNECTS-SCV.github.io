@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export', // API routes를 사용하려면 주석 처리
+  output: 'export', // GitHub Pages 정적 배포용
   images: {
     unoptimized: true,
   },
