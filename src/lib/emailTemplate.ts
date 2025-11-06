@@ -380,9 +380,9 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
                 
                 <div class="unsubscribe">
                     <p style="font-size: 11px; color: #aaa; margin-bottom: 8px;">이 이메일을 원하지 않으시면 언제든 수신을 거부할 수 있습니다.</p>
-                    // <a href="https://curieus.net/unsubscribe?email=${encodeURIComponent(recipientEmail)}">수신 거부</a> · 
-                    // <a href="https://curieus.net/settings?email=${encodeURIComponent(recipientEmail)}">설정 변경</a> · 
-                    // <a href="https://curieus.net/privacy">개인정보처리방침</a>
+<!--                    <a href="https://curieus.net/unsubscribe?email=${encodeURIComponent(recipientEmail)}">수신 거부</a> · -->
+<!--                    <a href="https://curieus.net/settings?email=${encodeURIComponent(recipientEmail)}">설정 변경</a> · -->
+<!--                    <a href="https://curieus.net/privacy">개인정보처리방침</a>-->
                 </div>
             </div>
         </div>
