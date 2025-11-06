@@ -6,17 +6,19 @@ export interface EmailTemplateData {
   buttonText?: string;
   buttonUrl?: string;
   footerText?: string;
+  language?: 'ko' | 'en';
 }
 
 export function generateEmailTemplate(data: EmailTemplateData): string {
   const {
-    recipientName = '고객님',
+    recipientName = 'Customer',
     recipientEmail = '',
     subject,
     mainContent,
     buttonText,
     buttonUrl,
-    footerText
+    footerText,
+    language = 'ko'
   } = data;
 
   // 안전한 이메일 제목 (스팸 필터 회피)
@@ -27,7 +29,7 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
 
   return `
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="${language}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -317,14 +319,14 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
                     </div>
                 </div>
                 <div class="email-subject-wrapper">
-                    <div class="email-date">${new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                    <div class="email-date">${new Date().toLocaleDateString(language === 'ko' ? 'ko-KR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
                     <h1 class="email-subject">${safeSubject}</h1>
                 </div>
             </div>
             
             <!-- Body -->
             <div class="email-body">
-                <div class="greeting">안녕하세요, ${recipientName}님</div>
+                <div class="greeting">${language === 'ko' ? `안녕하세요, ${recipientName}님` : `Hello, ${recipientName}`}</div>
                 
                 <div class="main-content">${mainContent}</div>
                 
@@ -364,22 +366,22 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
             <div class="email-footer">
                 <div class="footer-company">Curieus</div>
                 <div class="footer-links">
-                    <a href="https://curieus.net">홈페이지</a>
+                    <a href="https://curieus.net">${language === 'ko' ? '홈페이지' : 'Homepage'}</a>
 <!--                    <a href="https://curieus.net/features">기능</a>-->
 <!--                    <a href="https://curieus.net/pricing">요금제</a>-->
 <!--                    <a href="https://curieus.net/support">지원</a>-->
                 </div>
                 
                 <div class="footer-text">
-                    본 메일은 Curieus 서비스 이용자에게 발송되는 안내 메일입니다.
+                    ${language === 'ko' ? '본 메일은 Curieus 서비스 이용자에게 발송되는 안내 메일입니다.' : 'This email is sent to Curieus service users.'}
                 </div>
                 <div class="footer-address">
                     © 2025 Curieus. All rights reserved.<br>
-                    경기도 성남시 분당구 판교로289번길 20(판교스타트업캠퍼스, 3층)
+                    ${language === 'ko' ? '경기도 성남시 분당구 판교로289번길 20(판교스타트업캠퍼스, 3층)' : '20, Pangyo-ro 289beon-gil, Bundang-gu, Seongnam-si, Gyeonggi-do, Korea'}
                 </div>
                 
                 <div class="unsubscribe">
-                    <p style="font-size: 11px; color: #aaa; margin-bottom: 8px;">이 이메일을 원하지 않으시면 언제든 수신을 거부할 수 있습니다.</p>
+                    <p style="font-size: 11px; color: #aaa; margin-bottom: 8px;">${language === 'ko' ? '이 이메일을 원하지 않으시면 언제든 수신을 거부할 수 있습니다.' : 'You can unsubscribe from these emails at any time.'}</p>
 <!--                    <a href="https://curieus.net/unsubscribe?email=${encodeURIComponent(recipientEmail)}">수신 거부</a> · -->
 <!--                    <a href="https://curieus.net/settings?email=${encodeURIComponent(recipientEmail)}">설정 변경</a> · -->
 <!--                    <a href="https://curieus.net/privacy">개인정보처리방침</a>-->
