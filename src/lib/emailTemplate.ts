@@ -341,23 +341,23 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
                 ` : ''}
                 
                 <!-- Info Section -->
-                <div class="info-section">
-                    <div class="info-title">Curieus 핵심 기능</div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-item-title">단백질 구조 예측</div>
-                            <div class="info-item-desc">AlphaFold3 기반 고정밀 3D 구조 분석</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-item-title">리간드 도킹</div>
-                            <div class="info-item-desc">AI 최적화 분자 결합 시뮬레이션</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-item-title">상호작용 분석</div>
-                            <div class="info-item-desc">단백질-단백질 인터페이스 예측</div>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="info-section">-->
+<!--                    <div class="info-title">Curieus 핵심 기능</div>-->
+<!--                    <div class="info-grid">-->
+<!--                        <div class="info-item">-->
+<!--                            <div class="info-item-title">단백질 구조 예측</div>-->
+<!--                            <div class="info-item-desc">AlphaFold3 기반 고정밀 3D 구조 분석</div>-->
+<!--                        </div>-->
+<!--                        <div class="info-item">-->
+<!--                            <div class="info-item-title">리간드 도킹</div>-->
+<!--                            <div class="info-item-desc">AI 최적화 분자 결합 시뮬레이션</div>-->
+<!--                        </div>-->
+<!--                        <div class="info-item">-->
+<!--                            <div class="info-item-title">상호작용 분석</div>-->
+<!--                            <div class="info-item-desc">단백질-단백질 인터페이스 예측</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             
             <!-- Footer -->
@@ -365,24 +365,24 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
                 <div class="footer-company">Curieus</div>
                 <div class="footer-links">
                     <a href="https://curieus.net">홈페이지</a>
-                    <a href="https://curieus.net/features">기능</a>
-                    <a href="https://curieus.net/pricing">요금제</a>
-                    <a href="https://curieus.net/support">지원</a>
+<!--                    <a href="https://curieus.net/features">기능</a>-->
+<!--                    <a href="https://curieus.net/pricing">요금제</a>-->
+<!--                    <a href="https://curieus.net/support">지원</a>-->
                 </div>
                 
                 <div class="footer-text">
                     본 메일은 Curieus 서비스 이용자에게 발송되는 안내 메일입니다.
                 </div>
                 <div class="footer-address">
-                    © 2024 Curieus. All rights reserved.<br>
-                    서울특별시 강남구 테헤란로 521, 파르나스타워 27층
+                    © 2025 Curieus. All rights reserved.<br>
+                    경기도 성남시 분당구 판교로289번길 20(판교스타트업캠퍼스, 3층)
                 </div>
                 
                 <div class="unsubscribe">
                     <p style="font-size: 11px; color: #aaa; margin-bottom: 8px;">이 이메일을 원하지 않으시면 언제든 수신을 거부할 수 있습니다.</p>
-                    <a href="https://curieus.net/unsubscribe?email=${encodeURIComponent(recipientEmail)}">수신 거부</a> · 
-                    <a href="https://curieus.net/settings?email=${encodeURIComponent(recipientEmail)}">설정 변경</a> · 
-                    <a href="https://curieus.net/privacy">개인정보처리방침</a>
+                    // <a href="https://curieus.net/unsubscribe?email=${encodeURIComponent(recipientEmail)}">수신 거부</a> · 
+                    // <a href="https://curieus.net/settings?email=${encodeURIComponent(recipientEmail)}">설정 변경</a> · 
+                    // <a href="https://curieus.net/privacy">개인정보처리방침</a>
                 </div>
             </div>
         </div>

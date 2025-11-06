@@ -20,7 +20,7 @@ export default function SubscriptionModal({ isOpen, onClose }: SubscriptionModal
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!email) {
             setMessage(t('subscription.modal.error.empty'));
             return;
@@ -73,15 +73,10 @@ export default function SubscriptionModal({ isOpen, onClose }: SubscriptionModal
             } else {
                 // 환영 이메일 발송
                 try {
-                    const welcomeEmailContent = language === 'ko' 
+                    const welcomeEmailContent = language === 'ko'
                         ? `Curieus 구독을 진심으로 환영합니다!
 
-Curieus는 최신 AI 기술을 활용한 단백질 분석 플랫폼입니다.
-
-🎯 주요 기능:
-• AlphaFold3 기반 단백질 구조 예측
-• AI 최적화 리간드 도킹
-• 실시간 분자 상호작용 분석
+Curieus는 최신 AI 기술을 활용한 분석 플랫폼입니다.
 
 앞으로 유용한 정보와 업데이트 소식을 전해드리겠습니다.
 
@@ -89,12 +84,7 @@ Curieus는 최신 AI 기술을 활용한 단백질 분석 플랫폼입니다.
 Curieus 팀 드림`
                         : `Welcome to Curieus!
 
-Curieus is an advanced protein analysis platform powered by cutting-edge AI technology.
-
-🎯 Key Features:
-• AlphaFold3-based protein structure prediction
-• AI-optimized ligand docking
-• Real-time molecular interaction analysis
+Curieus is an advanced analysis platform powered by cutting-edge AI technology.
 
 We'll keep you updated with valuable insights and platform updates.
 
@@ -107,10 +97,10 @@ The Curieus Team`;
                         subject: language === 'ko' ? '🎊 Curieus 구독을 환영합니다!' : '🎊 Welcome to Curieus!',
                         mainContent: welcomeEmailContent,
                         buttonText: language === 'ko' ? '플랫폼 둘러보기' : 'Explore Platform',
-                        buttonUrl: 'https://curie.kr',
-                        footerText: language === 'ko' 
-                            ? '💡 궁금한 점이 있으시면 언제든 support@curieus.net으로 문의해주세요.'
-                            : '💡 If you have any questions, feel free to contact us at support@curieus.net'
+                        buttonUrl: 'https://curieus.net',
+                        footerText: language === 'ko'
+                            ? '💡 궁금한 점이 있으시면 언제든 curieus@connects.so으로 문의해주세요.'
+                            : '💡 If you have any questions, feel free to contact us at curieus@connects.so'
                     });
 
                     await sendEmailWithNaverCloud({
@@ -119,7 +109,7 @@ The Curieus Team`;
                         body: welcomeEmail,
                         isHtml: true
                     });
-                    
+
                     console.log('Welcome email sent to:', email);
                 } catch (emailError) {
                     console.error('Failed to send welcome email:', emailError);
@@ -145,7 +135,7 @@ The Curieus Team`;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={onClose}>
-            <div 
+            <div
                 className="bg-white rounded-lg p-6 w-full max-w-md mx-4"
                 onClick={(e) => e.stopPropagation()}
             >
@@ -153,7 +143,7 @@ The Curieus Team`;
                 <p className="text-gray-600 mb-6">
                     {t('subscription.modal.description')}
                 </p>
-                
+
                 <form onSubmit={handleSubmit}>
                     <input
                         type="email"
@@ -163,7 +153,7 @@ The Curieus Team`;
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         disabled={isLoading}
                     />
-                    
+
                     {message && (
                         <div className={`mb-4 p-3 rounded-lg text-sm ${
                             message === t('subscription.modal.success') 
@@ -173,19 +163,19 @@ The Curieus Team`;
                             {message}
                         </div>
                     )}
-                    
+
                     <div className="flex gap-3">
-                        <Button 
-                            type="submit" 
-                            variant="default" 
+                        <Button
+                            type="submit"
+                            variant="default"
                             className="flex-1"
                             disabled={isLoading}
                         >
                             {isLoading ? t('subscription.modal.submitting') : t('subscription.modal.submit')}
                         </Button>
-                        <Button 
+                        <Button
                             type="button"
-                            variant="gray" 
+                            variant="gray"
                             onClick={onClose}
                             disabled={isLoading}
                         >
@@ -193,7 +183,7 @@ The Curieus Team`;
                         </Button>
                     </div>
                 </form>
-                
+
                 <p className="text-xs text-gray-500 mt-4">
                     {t('subscription.modal.privacy')}
                 </p>
