@@ -62,7 +62,7 @@ export const authors: Record<string, Author> = {
     title: '회사 계정',
     department: 'CONNECTS',
     bio: 'CONNECTS의 공식 회사 계정입니다.',
-    avatar: '/avatars/curie-logo.png',
+    avatar: '/assets/logo.webp',
     email: 'info@connects.ai'
   }
 };

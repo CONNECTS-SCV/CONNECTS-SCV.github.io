@@ -1,6 +1,8 @@
 // 네이버 클라우드 Cloud Outbound Mailer 이메일 전송 서비스
 // https://guide.ncloud-docs.com/docs/ko/cloudoutboundmailer-overview
 
+import crypto from 'crypto';
+
 interface EmailData {
   to: string[];
   subject: string;
@@ -8,10 +10,51 @@ interface EmailData {
   isHtml?: boolean;
 }
 
-// 네이버 클라우드 이메일 전송 API 호출 (서버사이드 API 라우트 사용)
+interface NaverCloudEmailConfig {
+  accessKey: string;
+  secretKey: string;
+  serviceId: string;
+  senderAddress: string;
+  senderName?: string;
+}
+
+// 네이버 클라우드 설정 - 환경변수로 관리
+const config: NaverCloudEmailConfig = {
+  accessKey: process.env.NEXT_PUBLIC_NCP_ACCESS_KEY || '',
+  secretKey: process.env.NEXT_PUBLIC_NCP_SECRET_KEY || '',
+  serviceId: '', // Service ID는 Cloud Outbound Mailer v2에서는 사용하지 않음
+  senderAddress: process.env.NEXT_PUBLIC_NCLOUD_SENDER_EMAIL || 'noreply@connects.com',
+  senderName: 'CONNECTS',
+};
+
+// Debug: Check if environment variables are loaded
+if (typeof window !== 'undefined') {
+  console.log('Naver Cloud Email Config:', {
+    hasAccessKey: !!config.accessKey,
+    hasSecretKey: !!config.secretKey,
+    senderAddress: config.senderAddress
+  });
+}
+
+// HMAC 서명 생성
+function makeSignature(method: string, url: string, timestamp: string): string {
+  const space = ' ';
+  const newLine = '\n';
+  const hmac = crypto.createHmac('sha256', config.secretKey);
+  
+  const message = method + space + url + newLine + timestamp + newLine + config.accessKey;
+  hmac.update(message);
+  
+  return hmac.digest('base64');
+}
+
+// 네이버 클라우드 이메일 전송 API 호출 (Next.js API Route 사용)
 export async function sendEmailWithNaverCloud(data: EmailData): Promise<{ success: boolean; message: string }> {
   try {
-    // Use the API route to avoid CORS issues
+    console.log('Sending email via API route...');
+    console.log('Recipients:', data.to);
+    
+    // Next.js API route로 요청 전송
     const response = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
@@ -26,20 +69,30 @@ export async function sendEmailWithNaverCloud(data: EmailData): Promise<{ succes
 
     const result = await response.json();
 
-    if (!response.ok) {
+    if (response.ok && result.success) {
+      console.log('Email sent successfully:', result.requestId);
+      return {
+        success: true,
+        message: result.message || '이메일이 성공적으로 전송되었습니다.'
+      };
+    } else {
       console.error('Email API error:', result);
       return {
         success: false,
         message: result.message || '이메일 전송에 실패했습니다.'
       };
     }
-
-    return {
-      success: true,
-      message: result.message || '이메일이 성공적으로 전송되었습니다.'
-    };
   } catch (error) {
     console.error('Email sending error:', error);
+    
+    // CORS 에러 처리
+    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      return {
+        success: false,
+        message: 'CORS 오류: 브라우저에서 직접 이메일을 전송할 수 없습니다. 서버리스 함수나 백엔드 API를 사용하세요.'
+      };
+    }
+    
     return {
       success: false,
       message: error instanceof Error ? error.message : '이메일 전송 중 오류가 발생했습니다.'
@@ -47,12 +100,31 @@ export async function sendEmailWithNaverCloud(data: EmailData): Promise<{ succes
   }
 }
 
-// 이메일 전송 상태 확인 (필요시 서버사이드 API 라우트로 이동 가능)
+// 이메일 전송 상태 확인
 export async function checkEmailStatus(requestId: string): Promise<any> {
-  // This function would need a server-side API route as well if you want to use it
-  // For now, returning null as it requires server-side implementation
-  console.warn('Email status check requires server-side implementation');
-  return null;
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_NCP_MAIL_API_URL || 'https://mail.apigw.ntruss.com';
+    const apiPath = `/api/v1/mails/requests/${requestId}`;
+    const url = `${baseUrl}${apiPath}`;
+    
+    const timestamp = Date.now().toString();
+    const signature = makeSignature('GET', apiPath, timestamp);
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'x-ncp-apigw-timestamp': timestamp,
+        'x-ncp-iam-access-key': config.accessKey,
+        'x-ncp-apigw-signature-v2': signature,
+        'x-ncp-lang': 'ko-KR'
+      }
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error checking email status:', error);
+    return null;
+  }
 }
 
 // 이메일 템플릿

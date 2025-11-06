@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { sendEmailWithNaverCloud, createEmailTemplate } from "@/lib/naverCloudEmail";
+import { generateEmailTemplate, EmailTemplateData } from "@/lib/emailTemplate";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
     Mail,
@@ -39,6 +40,17 @@ export default function AdminSubscribersPage() {
         body: "",
         preview: ""
     });
+    const [emailTemplateData, setEmailTemplateData] = useState<EmailTemplateData>({
+        recipientName: language === 'ko' ? '구독자' : 'Subscriber',
+        recipientEmail: '',
+        subject: '',
+        mainContent: '',
+        buttonText: '',
+        buttonUrl: '',
+        footerText: ''
+    });
+    const [useHtmlTemplate, setUseHtmlTemplate] = useState(true);
+    const [previewTab, setPreviewTab] = useState<'edit' | 'preview'>('edit');
     const [searchTerm, setSearchTerm] = useState("");
     const [filterActive, setFilterActive] = useState<"all" | "active" | "inactive">("all");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +70,7 @@ export default function AdminSubscribersPage() {
                 setIsLoading(false);
                 return;
             }
-            
+
             const { data, error } = await supabase
                 .from("subscribers")
                 .select("*")
@@ -162,7 +174,12 @@ export default function AdminSubscribersPage() {
 
     // Send email using email service
     const handleSendEmail = async () => {
-        if (!emailContent.subject || !emailContent.body) {
+        const subject = useHtmlTemplate ? emailTemplateData.subject : emailContent.subject;
+        const body = useHtmlTemplate
+            ? generateEmailTemplate(emailTemplateData)
+            : emailContent.body;
+
+        if (!subject || (!useHtmlTemplate && !emailContent.body) || (useHtmlTemplate && !emailTemplateData.mainContent)) {
             alert(language === 'ko'
                 ? "제목과 내용을 입력해주세요."
                 : "Please enter subject and content."
@@ -184,9 +201,9 @@ export default function AdminSubscribersPage() {
             // Send email using Naver Cloud
             const result = await sendEmailWithNaverCloud({
                 to: Array.from(selectedEmails),
-                subject: emailContent.subject,
-                body: emailContent.body,
-                isHtml: emailContent.body.includes('<') && emailContent.body.includes('>')
+                subject: subject,
+                body: body,
+                isHtml: useHtmlTemplate
             });
 
             // Log email sending to Supabase (한 번에 하나의 로그로 기록)
@@ -250,7 +267,7 @@ export default function AdminSubscribersPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="min-h-screen">
             <main className="max-w-[1400px] mx-auto px-6 py-12">
                 {/* Stats Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
@@ -294,11 +311,11 @@ export default function AdminSubscribersPage() {
                     </div>
 
                     <div className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div className="relative z-10">
                             <div className="flex items-center justify-between mb-4">
-                                <div className="p-3 bg-purple-100 rounded-xl group-hover:bg-white/20 transition-colors">
-                                    <Activity className="w-6 h-6 text-purple-600 group-hover:text-white" />
+                                <div className="p-3 bg-blue-100 rounded-xl group-hover:bg-white/20 transition-colors">
+                                    <Activity className="w-6 h-6 text-blue-600 group-hover:text-white" />
                                 </div>
                             </div>
                             <div className="text-3xl font-bold text-gray-900 group-hover:text-white mb-1">
@@ -536,142 +553,383 @@ export default function AdminSubscribersPage() {
 
             {/* Email Compose Modal */}
             {showComposeModal && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-2xl w-full max-w-4xl shadow-2xl max-h-[90vh] overflow-auto">
-                        <div className="p-6 border-b">
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg w-full max-w-7xl shadow-2xl max-h-[95vh] flex flex-col">
+                        <div className="px-8 py-6 border-b bg-white">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                                    <h2 className="text-xl font-semibold text-gray-900">
                                         {language === 'ko' ? '이메일 작성' : 'Compose Email'}
                                     </h2>
-                                    <p className="text-sm text-gray-600 mt-1">
+                                    <p className="text-sm text-gray-500 mt-1">
                                         {language === 'ko'
-                                            ? `${selectedEmails.size}명에게 전송`
-                                            : `Sending to ${selectedEmails.size} recipients`
+                                            ? `${selectedEmails.size}명의 구독자에게 전송`
+                                            : `Sending to ${selectedEmails.size} subscribers`
                                         }
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setShowComposeModal(false)}
-                                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-gray-100 rounded-md transition-colors"
                                 >
-                                    <X className="w-5 h-5" />
+                                    <X className="w-5 h-5 text-gray-500" />
                                 </button>
                             </div>
                         </div>
 
-                        <div className="p-6 space-y-5">
-                            {/* Recipients Preview */}
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {language === 'ko' ? '받는 사람' : 'Recipients'}
-                                </label>
-                                <div className="p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl text-sm max-h-24 overflow-auto border border-gray-200">
-                                    {Array.from(selectedEmails).join(', ')}
-                                </div>
-                            </div>
-
-                            {/* Subject */}
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {language === 'ko' ? '제목' : 'Subject'}
-                                </label>
-                                <input
-                                    type="text"
-                                    value={emailContent.subject}
-                                    onChange={(e) => setEmailContent({...emailContent, subject: e.target.value})}
-                                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                                    placeholder={language === 'ko'
-                                        ? 'CONNECTS 뉴스레터 - [날짜]'
-                                        : 'CONNECTS Newsletter - [Date]'
-                                    }
-                                />
-                            </div>
-
-                            {/* Email Template Selection */}
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {language === 'ko' ? '템플릿' : 'Template'}
-                                </label>
-                                <select
-                                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                                    onChange={(e) => {
-                                        if (!e.target.value) return;
-
-                                        const templateType = e.target.value as 'newsletter' | 'announcement' | 'welcome' | 'custom';
-                                        const template = createEmailTemplate(templateType, language, {
-                                            newTools: '[새로운 도구 소개]',
-                                            updates: '[업데이트 내용]',
-                                            research: '[연구 성과]',
-                                            content: '[공지 내용]'
-                                        });
-
-                                        if (template) {
-                                            setEmailContent({
-                                                ...emailContent,
-                                                subject: template.subject,
-                                                body: template.body
-                                            });
-                                        }
-                                    }}
-                                >
-                                    <option value="">{language === 'ko' ? '템플릿 선택...' : 'Select template...'}</option>
-                                    <option value="newsletter">{language === 'ko' ? '뉴스레터 (HTML)' : 'Newsletter (HTML)'}</option>
-                                    <option value="announcement">{language === 'ko' ? '공지사항' : 'Announcement'}</option>
-                                    <option value="welcome">{language === 'ko' ? '환영 메일' : 'Welcome Email'}</option>
-                                    <option value="custom">{language === 'ko' ? '직접 작성' : 'Custom'}</option>
-                                </select>
-                            </div>
-
-                            {/* Body */}
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {language === 'ko' ? '내용' : 'Content'}
-                                </label>
-                                <textarea
-                                    value={emailContent.body}
-                                    onChange={(e) => setEmailContent({...emailContent, body: e.target.value})}
-                                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl resize-none focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                                    rows={12}
-                                    placeholder={language === 'ko'
-                                        ? '이메일 내용을 입력하세요...'
-                                        : 'Enter email content...'
-                                    }
-                                />
-                            </div>
-
-                            {/* Preview */}
-                            {emailContent.body && (
-                                <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        {language === 'ko' ? '미리보기' : 'Preview'}
-                                    </label>
-                                    <div className="p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-200">
-                                        <div className="font-bold text-gray-900 mb-3">{emailContent.subject}</div>
-                                        <div className="whitespace-pre-wrap text-sm text-gray-700">{emailContent.body}</div>
+                        <div className="flex-1 overflow-hidden flex">
+                            {/* Left Panel - Email Editor */}
+                            <div className="flex-1 overflow-y-auto p-6 border-r">
+                                <div className="space-y-6">
+                                    {/* Template Type Selection */}
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                            {language === 'ko' ? '이메일 형식' : 'Email Format'}
+                                        </label>
+                                        <div className="flex gap-3">
+                                            <button
+                                                onClick={() => setUseHtmlTemplate(true)}
+                                                className={`flex-1 px-4 py-3 rounded-xl font-medium transition-all ${
+                                                    useHtmlTemplate
+                                                        ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
+                                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                                }`}
+                                            >
+                                                🎨 {language === 'ko' ? 'HTML 템플릿' : 'HTML Template'}
+                                            </button>
+                                            <button
+                                                onClick={() => setUseHtmlTemplate(false)}
+                                                className={`flex-1 px-4 py-3 rounded-xl font-medium transition-all ${
+                                                    !useHtmlTemplate
+                                                        ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
+                                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                                }`}
+                                            >
+                                                📝 {language === 'ko' ? '일반 텍스트' : 'Plain Text'}
+                                            </button>
+                                        </div>
                                     </div>
+
+                                    {/* Recipients Preview */}
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                            {language === 'ko' ? '받는 사람' : 'Recipients'}
+                                        </label>
+                                        <div className="p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl text-sm max-h-20 overflow-auto border border-gray-200">
+                                            {Array.from(selectedEmails).join(', ')}
+                                        </div>
+                                    </div>
+
+                                    {useHtmlTemplate ? (
+                                        <>
+                                            {/* Quick Templates */}
+                                            <div>
+                                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                                    {language === 'ko' ? '빠른 템플릿' : 'Quick Templates'}
+                                                </label>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <button
+                                                        onClick={() => setEmailTemplateData({
+                                                            recipientName: language === 'ko' ? '연구원' : 'Researcher',
+                                                            recipientEmail: '',
+                                                            subject: language === 'ko'
+                                                                ? '✨ AlphaFold3 단백질 구조 분석이 완료되었습니다'
+                                                                : '✨ Your AlphaFold3 Protein Structure Analysis is Complete',
+                                                            mainContent: language === 'ko'
+                                                                ? `요청하신 단백질 구조 분석이 성공적으로 완료되었습니다.
+
+주요 분석 결과:
+• 전체 구조 신뢰도 (pLDDT): 92.3
+• 고신뢰 영역 (pLDDT > 90): 78%
+• 예측된 도메인: 4개
+• 처리 시간: 4분 23초
+
+분석 결과를 확인하시려면 아래 버튼을 클릭해주세요.`
+                                                                : `Your protein structure analysis has been completed successfully.
+
+Key Results:
+• Overall confidence (pLDDT): 92.3
+• High confidence regions (pLDDT > 90): 78%
+• Predicted domains: 4
+• Processing time: 4m 23s
+
+Click below to view your results.`,
+                                                            buttonText: language === 'ko' ? '결과 확인하기' : 'View Results',
+                                                            buttonUrl: 'https://curieus.net/results',
+                                                            footerText: language === 'ko'
+                                                                ? '💡 분석 결과는 30일간 보관됩니다.'
+                                                                : '💡 Analysis results will be stored for 30 days.'
+                                                        })}
+                                                        className="p-3 text-left bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl hover:shadow-md transition-all"
+                                                    >
+                                                        <span className="text-2xl mb-1 block">🧬</span>
+                                                        <span className="text-sm font-medium text-gray-700">
+                                                            {language === 'ko' ? '분석 완료' : 'Analysis Complete'}
+                                                        </span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setEmailTemplateData({
+                                                            recipientName: language === 'ko' ? '고객' : 'Customer',
+                                                            recipientEmail: '',
+                                                            subject: language === 'ko'
+                                                                ? '🚀 Curieus 새로운 기능 업데이트'
+                                                                : '🚀 Curieus New Feature Update',
+                                                            mainContent: language === 'ko'
+                                                                ? `Curieus에 새로운 기능이 추가되었습니다!
+
+이번 업데이트 내용:
+• 멀티 체인 분석 기능 추가
+• AI 기반 리간드 자동 도킹
+• 실시간 협업 기능
+• AlphaFold3 모델 통합
+
+자세한 내용을 확인해보세요.`
+                                                                : `New features have been added to Curieus!
+
+This Update Includes:
+• Multi-chain analysis capability
+• AI-powered automatic ligand docking
+• Real-time collaboration features
+• AlphaFold3 model integration
+
+Check out the details below.`,
+                                                            buttonText: language === 'ko' ? '새 기능 보기' : 'View Features',
+                                                            buttonUrl: 'https://curieus.net/features',
+                                                            footerText: ''
+                                                        })}
+                                                        className="p-3 text-left bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl hover:shadow-md transition-all"
+                                                    >
+                                                        <span className="text-2xl mb-1 block">🎉</span>
+                                                        <span className="text-sm font-medium text-gray-700">
+                                                            {language === 'ko' ? '업데이트 안내' : 'Update Notice'}
+                                                        </span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setEmailTemplateData({
+                                                            recipientName: language === 'ko' ? '신규 회원' : 'New Member',
+                                                            recipientEmail: '',
+                                                            subject: language === 'ko'
+                                                                ? '🎊 Curieus에 오신 것을 환영합니다!'
+                                                                : '🎊 Welcome to Curieus!',
+                                                            mainContent: language === 'ko'
+                                                                ? `Curieus 가입을 진심으로 환영합니다!
+
+시작하기:
+1. 단백질 시퀀스 업로드
+2. 분석 옵션 선택
+3. 결과 확인 (평균 5분 이내)
+
+무료 플랜으로 매월 10회 분석이 가능합니다.`
+                                                                : `Welcome to Curieus!
+
+Getting Started:
+1. Upload your protein sequence
+2. Select analysis options
+3. View results (average 5 minutes)
+
+Your free plan includes 10 analyses per month.`,
+                                                            buttonText: language === 'ko' ? '시작하기' : 'Get Started',
+                                                            buttonUrl: 'https://curieus.net',
+                                                            footerText: language === 'ko'
+                                                                ? '🎁 친구 초대시 추가 크레딧을 받으세요!'
+                                                                : '🎁 Invite friends to earn extra credits!'
+                                                        })}
+                                                        className="p-3 text-left bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl hover:shadow-md transition-all"
+                                                    >
+                                                        <span className="text-2xl mb-1 block">👋</span>
+                                                        <span className="text-sm font-medium text-gray-700">
+                                                            {language === 'ko' ? '환영 메일' : 'Welcome Email'}
+                                                        </span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setEmailTemplateData({
+                                                            recipientName: language === 'ko' ? '구독자' : 'Subscriber',
+                                                            recipientEmail: '',
+                                                            subject: '',
+                                                            mainContent: '',
+                                                            buttonText: '',
+                                                            buttonUrl: '',
+                                                            footerText: ''
+                                                        })}
+                                                        className="p-3 text-left bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl hover:shadow-md transition-all"
+                                                    >
+                                                        <span className="text-2xl mb-1 block">✏️</span>
+                                                        <span className="text-sm font-medium text-gray-700">
+                                                            {language === 'ko' ? '직접 작성' : 'Custom'}
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {/* HTML Template Fields */}
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                        {language === 'ko' ? '제목' : 'Subject'}
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        value={emailTemplateData.subject}
+                                                        onChange={(e) => setEmailTemplateData({...emailTemplateData, subject: e.target.value})}
+                                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                                                        placeholder={language === 'ko' ? '이메일 제목' : 'Email subject'}
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                        {language === 'ko' ? '본문 내용' : 'Main Content'}
+                                                    </label>
+                                                    <textarea
+                                                        value={emailTemplateData.mainContent}
+                                                        onChange={(e) => setEmailTemplateData({...emailTemplateData, mainContent: e.target.value})}
+                                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl resize-none focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                                                        rows={6}
+                                                        placeholder={language === 'ko' ? '이메일 본문 내용...' : 'Email body content...'}
+                                                    />
+                                                </div>
+
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                            {language === 'ko' ? '버튼 텍스트 (선택)' : 'Button Text (Optional)'}
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            value={emailTemplateData.buttonText || ''}
+                                                            onChange={(e) => setEmailTemplateData({...emailTemplateData, buttonText: e.target.value})}
+                                                            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                                                            placeholder={language === 'ko' ? '자세히 보기' : 'Learn More'}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                            {language === 'ko' ? '버튼 링크 (선택)' : 'Button URL (Optional)'}
+                                                        </label>
+                                                        <input
+                                                            type="url"
+                                                            value={emailTemplateData.buttonUrl || ''}
+                                                            onChange={(e) => setEmailTemplateData({...emailTemplateData, buttonUrl: e.target.value})}
+                                                            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                                                            placeholder="https://curieus.net"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                                        {language === 'ko' ? '하단 메시지 (선택)' : 'Footer Message (Optional)'}
+                                                    </label>
+                                                    <textarea
+                                                        value={emailTemplateData.footerText || ''}
+                                                        onChange={(e) => setEmailTemplateData({...emailTemplateData, footerText: e.target.value})}
+                                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl resize-none focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                                                        rows={2}
+                                                        placeholder={language === 'ko' ? '추가 안내사항...' : 'Additional information...'}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {/* Plain Text Fields */}
+                                            <div>
+                                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                                    {language === 'ko' ? '제목' : 'Subject'}
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={emailContent.subject}
+                                                    onChange={(e) => setEmailContent({...emailContent, subject: e.target.value})}
+                                                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                                                    placeholder={language === 'ko'
+                                                        ? 'CONNECTS 뉴스레터'
+                                                        : 'CONNECTS Newsletter'
+                                                    }
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                                    {language === 'ko' ? '내용' : 'Content'}
+                                                </label>
+                                                <textarea
+                                                    value={emailContent.body}
+                                                    onChange={(e) => setEmailContent({...emailContent, body: e.target.value})}
+                                                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl resize-none focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                                                    rows={12}
+                                                    placeholder={language === 'ko'
+                                                        ? '이메일 내용을 입력하세요...'
+                                                        : 'Enter email content...'
+                                                    }
+                                                />
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
-                            )}
+                            </div>
+
+                            {/* Right Panel - Preview */}
+                            <div className="flex-1 bg-gray-50 overflow-hidden flex flex-col">
+                                <div className="p-4 bg-white border-b">
+                                    <h3 className="font-semibold text-gray-800">
+                                        {language === 'ko' ? '📧 실시간 미리보기' : '📧 Live Preview'}
+                                    </h3>
+                                </div>
+                                <div className="flex-1 overflow-auto p-4">
+                                    {useHtmlTemplate ? (
+                                        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                                            <iframe
+                                                srcDoc={generateEmailTemplate(emailTemplateData)}
+                                                className="w-full h-full min-h-[600px]"
+                                                title="Email Preview"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="bg-white rounded-lg shadow-lg p-6">
+                                            <div className="font-bold text-lg text-gray-900 mb-4">
+                                                {emailContent.subject || (language === 'ko' ? '(제목 없음)' : '(No subject)')}
+                                            </div>
+                                            <div className="whitespace-pre-wrap text-gray-700">
+                                                {emailContent.body || (language === 'ko' ? '내용을 입력하면 여기에 표시됩니다.' : 'Content will appear here as you type.')}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="p-6 border-t bg-gray-50 flex justify-end gap-3">
-                            <button
-                                onClick={() => setShowComposeModal(false)}
-                                className="px-5 py-2.5 text-gray-600 hover:bg-gray-200 rounded-xl transition-all font-medium"
-                            >
-                                {language === 'ko' ? '취소' : 'Cancel'}
-                            </button>
-                            <button
-                                onClick={handleSendEmail}
-                                disabled={!emailContent.subject || !emailContent.body || isSubmitting}
-                                className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg transition-all font-medium"
-                            >
-                                <Send className="w-4 h-4" />
-                                {isSubmitting 
-                                    ? (language === 'ko' ? '전송 중...' : 'Sending...') 
-                                    : (language === 'ko' ? '이메일 전송' : 'Send Email')
-                                }
-                            </button>
+                        <div className="p-6 border-t bg-gradient-to-r from-gray-50 to-white flex justify-between items-center">
+                            <div className="text-sm text-gray-600">
+                                {useHtmlTemplate && (
+                                    <span className="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-full">
+                                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
+                                        Curieus HTML 템플릿
+                                    </span>
+                                )}
+                            </div>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setShowComposeModal(false)}
+                                    className="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-xl transition-all font-medium"
+                                >
+                                    {language === 'ko' ? '취소' : 'Cancel'}
+                                </button>
+                                <button
+                                    onClick={handleSendEmail}
+                                    disabled={
+                                        isSubmitting ||
+                                        (useHtmlTemplate ? !emailTemplateData.subject || !emailTemplateData.mainContent : !emailContent.subject || !emailContent.body)
+                                    }
+                                    className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:from-blue-600 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg transition-all font-medium"
+                                >
+                                    <Send className="w-4 h-4" />
+                                    {isSubmitting
+                                        ? (language === 'ko' ? '전송 중...' : 'Sending...')
+                                        : (language === 'ko' ? '이메일 전송' : 'Send Email')
+                                    }
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
