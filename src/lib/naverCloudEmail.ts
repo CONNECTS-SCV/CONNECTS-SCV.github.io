@@ -41,10 +41,10 @@ function makeSignature(method: string, url: string, timestamp: string): string {
   const space = ' ';
   const newLine = '\n';
   const hmac = crypto.createHmac('sha256', config.secretKey);
-  
+
   const message = method + space + url + newLine + timestamp + newLine + config.accessKey;
   hmac.update(message);
-  
+
   return hmac.digest('base64');
 }
 
@@ -53,9 +53,9 @@ export async function sendEmailWithNaverCloud(data: EmailData): Promise<{ succes
   try {
     console.log('Sending email via API route...');
     console.log('Recipients:', data.to);
-    
+
     // Next.js API route로 요청 전송
-    const response = await fetch('/api/send-email', {
+    const response = await fetch('https://send-email.tumornavigator.workers.dev', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export async function sendEmailWithNaverCloud(data: EmailData): Promise<{ succes
     }
   } catch (error) {
     console.error('Email sending error:', error);
-    
+
     // CORS 에러 처리
     if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
       return {
@@ -92,7 +92,7 @@ export async function sendEmailWithNaverCloud(data: EmailData): Promise<{ succes
         message: 'CORS 오류: 브라우저에서 직접 이메일을 전송할 수 없습니다. 서버리스 함수나 백엔드 API를 사용하세요.'
       };
     }
-    
+
     return {
       success: false,
       message: error instanceof Error ? error.message : '이메일 전송 중 오류가 발생했습니다.'
@@ -106,10 +106,10 @@ export async function checkEmailStatus(requestId: string): Promise<any> {
     const baseUrl = process.env.NEXT_PUBLIC_NCP_MAIL_API_URL || 'https://mail.apigw.ntruss.com';
     const apiPath = `/api/v1/mails/requests/${requestId}`;
     const url = `${baseUrl}${apiPath}`;
-    
+
     const timestamp = Date.now().toString();
     const signature = makeSignature('GET', apiPath, timestamp);
-    
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {
