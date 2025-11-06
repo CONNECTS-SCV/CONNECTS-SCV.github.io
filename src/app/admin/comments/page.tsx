@@ -116,7 +116,7 @@ export default function AdminCommentsPage() {
     try {
       await createComment({
         post_id: replyingTo.post_id,
-        nickname: 'CURIE',
+        nickname: 'Curieus',
         content: replyText,
         parent_id: replyingTo.parent_id || replyingTo.id,
         avatar: 'bg-gradient-to-br from-purple-500 to-blue-500',
@@ -383,7 +383,7 @@ export default function AdminCommentsPage() {
                 }`}>
                   <div className="flex items-start gap-4">
                     <div className={`w-10 h-10 ${comment.avatar} rounded-lg flex items-center justify-center text-white font-semibold text-sm`}>
-                      {comment.nickname === "CURIE" ? "C" : comment.nickname.charAt(0)}
+                      {comment.nickname === "Curieus" ? "C" : comment.nickname.charAt(0)}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
