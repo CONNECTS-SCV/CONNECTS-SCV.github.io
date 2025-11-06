@@ -36,7 +36,7 @@ export default function Header({onSearchClick}: HeaderProps) {
         <header
             className={`w-full h-[80px] flex justify-between items-center bg-white px-4 xl:px-2 border-b transition-colors ${isScrolled ? 'border-calloutbox' : 'border-transparent'}`}>
             <Link href="/">
-                <Image src={'/image/curie_tech.webp'} alt="Logo" width={110} height={20}/>
+                <Image src={'/image/curieus_tech.webp'} alt="Logo" width={110} height={20}/>
             </Link>
             <div className="flex items-center font-bold">
                 {/*<div className="mx-2 flex gap-[6px] items-center">*/}

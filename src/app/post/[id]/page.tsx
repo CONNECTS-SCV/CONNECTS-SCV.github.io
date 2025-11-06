@@ -45,7 +45,7 @@ export async function generateMetadata({params}: { params: Promise<{ id: string 
             locale: 'ko_KR',
             images: [
                 {
-                    url: '/image/curie_tech.webp',
+                    url: '/image/curieus_tech.webp',
                     width: 1200,
                     height: 630,
                     alt: post.metadata.title,
@@ -56,7 +56,7 @@ export async function generateMetadata({params}: { params: Promise<{ id: string 
             card: 'summary_large_image',
             title: post.metadata.title,
             description: post.metadata.description || post.excerpt,
-            images: ['/image/curie_tech.webp'],
+            images: ['/image/curieus_tech.webp'],
         },
         alternates: {
             canonical: `/post/${id}`,

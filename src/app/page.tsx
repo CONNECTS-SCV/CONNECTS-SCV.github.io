@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     url: 'https://connects-scv.github.io',
     images: [
       {
-        url: '/image/curie_tech.webp',
+        url: '/image/curieus_tech.webp',
         width: 1200,
         height: 630,
         alt: 'CONNECTS Tech Blog',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CONNECTS Tech Blog',
     description: 'AI 기반 구조 생물학 분석 플랫폼 CONNECTS의 기술 블로그',
-    images: ['/image/curie_tech.webp'],
+    images: ['/image/curieus_tech.webp'],
   },
   alternates: {
     canonical: '/',
