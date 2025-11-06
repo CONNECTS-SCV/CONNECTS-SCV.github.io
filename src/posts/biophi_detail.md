@@ -223,7 +223,7 @@ biophi oasis $INPUT_DIR/BioPhi.fa --oasis-db $OASIS_DB --output $OUTPUT_DIR/oasi
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/biophi
+https://curieus.net/Analysis/biophi
 ```
 
 화면에는 **Heavy Chain과 Light Chain의 서열을** 입력하는 창이 준비되어 있습니다.
@@ -353,7 +353,7 @@ Cetuximab은 OASis 지표 기준으로 인간 유사성이 낮고 비-인간 잔
 - [Github BioPhi](https://github.com/Merck/BioPhi?tab=readme-ov-file)
 - [IMGT DB 7906](https://www.imgt.org/3Dstructure-DB/cgi/details.cgi?pdbcode=7906)
 - [IMGT DB 8499](https://www.imgt.org/3Dstructure-DB/cgi/details.cgi?pdbcode=8499)
-- CURIE : [BioPhi](https://curie.kr/Analysis/biophi), [Dilipred](https://curie.kr/Analysis/dilipred)
+- Curieus : [BioPhi](https://curieus.net/Analysis/biophi), [Dilipred](https://curieus.net/Analysis/dilipred)
 
 ---
 

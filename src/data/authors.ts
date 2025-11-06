@@ -58,7 +58,7 @@ export const authors: Record<string, Author> = {
   },
   'author6': {
     id: 'author6',
-    name: 'CURIE',
+    name: 'Curieus',
     title: '회사 계정',
     department: 'CONNECTS',
     bio: 'CONNECTS의 공식 회사 계정입니다.',

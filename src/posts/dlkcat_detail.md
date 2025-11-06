@@ -230,7 +230,7 @@ python prediction_for_input.py input.tsv
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/dlkcat
+https://curieus.net/Analysis/dlkcat
 ```
 
 화면에는 효소 단백질의 아미노산 서열과 효소와 반응하는 기질의 SMILES 문자열을 입력하는 창이 준비되어 있습니다.
@@ -298,7 +298,7 @@ DLKcat은 단백질 서열과 기질 구조(SMILES)만으로 예측을 수행함
 
 - [Github DLKcat](https://github.com/SysBioChalmers/DLKcat)
 - [Nature Catalysis](https://www.nature.com/articles/s41929-022-00798-z)
-- CURIE : [DLKcat](https://curie.kr/Analysis/dlkcat)
+- Curieus : [DLKcat](https://curieus.net/Analysis/dlkcat)
 
 ---
 

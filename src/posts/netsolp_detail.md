@@ -229,7 +229,7 @@ python predict.py \
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/netsolp
+https://curieus.net/Analysis/netsolp
 ```
 
 화면에는 단백질의 아미노산 서열을 입력하는 공간과 예측을 수핼 할 모델은 선택하는 공간이 준비되어 있습니다.
@@ -302,7 +302,7 @@ NetSolP-1.0 예측 결과, **N11-A8 태그 부착이 eGFP의 용해도와 사용
 - [BioMed Central](https://microbialcellfactories.biomedcentral.com/articles/10.1186/s12934-025-02738-5)
 - [DTU Health Tech](https://services.healthtech.dtu.dk/services/NetSolP-1.0/)
 - [OXFORD ACADEMIC](https://academic.oup.com/bioinformatics/article/38/4/941/6444984?login=false)
-- CURIE : [NetSolP](https://curie.kr/Analysis/netsolp)
+- Curieus : [NetSolP](https://curieus.net/Analysis/netsolp)
 
 ---
 

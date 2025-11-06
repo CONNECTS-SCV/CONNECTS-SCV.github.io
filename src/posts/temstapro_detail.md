@@ -285,7 +285,7 @@ TemStaPro는 FASTA 파일을 입력으로 받아 평균 ProtTrans 임베딩을 �
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/temstapro
+https://curieus.net/Analysis/temstapro
 ```
 
 화면에는 열 안정성 예측에 사용 할 단백질의 아미노산 서열을 입력하는 창이 준비되 있습니다.
@@ -360,7 +360,7 @@ TemStaPro로 여러분의 단백질, 한번 예측해보는건 어떨까요.
 
 - [Github TemStaPro](https://github.com/ievapudz/TemStaPro)
 - [OXFORD ACADEMIC](https://academic.oup.com/bioinformatics/article/40/4/btae157/7632735?login=false)
-- CURIE : [TemStaPro](https://curie.kr/Analysis/temstapro)
+- Curieus : [TemStaPro](https://curieus.net/Analysis/temstapro)
 
 ---
 

@@ -283,7 +283,7 @@ hemopi2_classification -i peptides.fa -o classification_results.csv -m 4
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/hemopi
+https://curieus.net/Analysis/hemopi
 ```
 
 화면에는 펩타이드의 아미노산 서열을  입력하는 창이 준비되어 있습니다. 또한 분석의 종류와 분석에 사용 할 펩타이드 단위 길이를 설정할 수 있습니다.
@@ -416,7 +416,7 @@ Histatin-3는 부분적으로 잘라 보아도 독성이 거의 나타나지 않
 - [Github HemoPI2](https://github.com/raghavagps/HemoPI2)
 - [HemoPI2: Prediction of hemolytic potential of peptides](https://webs.iiitd.edu.in/raghava/hemopi2/index.html)
 - [Nature](https://www.nature.com/articles/s42003-025-07615-w)
-- CURIE : [HemoPI2](https://curie.kr/Analysis/hemopi)
+- Curieus : [HemoPI2](https://curieus.net/Analysis/hemopi)
 
 ---
 

@@ -318,7 +318,7 @@ dscript predict \
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/dscript
+https://curieus.net/Analysis/dscript
 ```
 
 화면에서는 단백질 서열 입력을 위한 두 가지 방식을 제공합니다.
@@ -395,7 +395,7 @@ https://curie.kr/Analysis/dscript
 
 - [Github D-SCRIPT](https://github.com/samsledje/D-SCRIPT)
 - [bioRxiv](https://www.biorxiv.org/content/10.1101/2021.01.22.427866v1)
-- CURIE : [D-SCRIPT](https://curie.kr/Analysis/dscript)
+- Curieus : [D-SCRIPT](https://curieus.net/Analysis/dscript)
 
 ---
 

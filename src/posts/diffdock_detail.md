@@ -329,7 +329,7 @@ python -m inference \
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/diffdock
+https://curieus.net/Analysis/diffdock
 ```
 
 화면에서는 단백질의 구조를 입력할 수 있는 두가지 방식이 준비되어 있습니다. Curie에서는 현재 PDB 형태의 입력 방식을 지원합니다.
@@ -402,7 +402,7 @@ DiffDock이 예측한 소라페닙의 결합 위치는 **B-RAF의 ATP 결합 포
 - [Github DiffDock](https://github.com/gcorso/DiffDock)
 - [arXiv | DiffDock: Diffusion Steps, Twists, and Turns for Molecular Docking](https://arxiv.org/abs/2210.01776)
 - [arXiv | Deep Confident Steps to New Pockets: Strategies for Docking Generalization](https://arxiv.org/abs/2402.18396)
-- CURIE : [DiffDock](https://curie.kr/Analysis/diffdock)
+- Curieus : [DiffDock](https://curieus.net/Analysis/diffdock)
 
 ---
 

@@ -169,7 +169,7 @@ boltz predict example.fasta --use_msa_server --out_dir OUTPUT_PATH --output_form
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/boltz
+https://curieus.net/Analysis/boltz
 ```
 
 화면에는 아미노산 서열과 화합물에 대한 열보를 입력하는 창이 준비되어 있습니다.
@@ -247,7 +247,7 @@ Boltz는 단백질 단독 구조뿐 아니라 단백질–리간드 복합체까
 ---
 
 - [Github Boltz](https://github.com/jwohlwend/boltz)
-- CURIE : [Boltz](https://curie.kr/Analysis/boltz), [Dilipred](https://curie.kr/Analysis/dilipred)
+- Curieus : [Boltz](https://curieus.net/Analysis/boltz), [Dilipred](https://curieus.net/Analysis/dilipred)
 
 ---
 

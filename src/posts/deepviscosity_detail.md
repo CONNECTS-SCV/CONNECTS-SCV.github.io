@@ -161,7 +161,7 @@ python deepviscosity_predictor.py -i DeepViscosity_input.csv
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/deepviscosity
+https://curieus.net/Analysis/deepviscosity
 ```
 
 화면에는 점도를 분석 할 항체의 정보를 입력 할 다양한 방식이 준비되어있습니다. PDB 파일 업로드 또는 RCSB ID를 입력하면, 구조로부터 자동으로 항체의 서열을 추출하여 입력파일을 생성합니다. 또한 항체의 서열을 직접 입력할 수 있습니다.
@@ -229,7 +229,7 @@ https://curie.kr/Analysis/deepviscosity
 - [ScienceDirect](https://www.sciencedirect.com/science/article/abs/pii/S1389172321002437)
 - [PubMed Central(PMC)](https://pmc.ncbi.nlm.nih.gov/articles/PMC11262234/)
 - [Qprotyn](https://www.qprotyn.com/post/qprotyn-bevacizumab)
-- CURIE : [DeepViscosity](https://curie.kr/Analysis/deepviscosity)
+- Curieus : [DeepViscosity](https://curieus.net/Analysis/deepviscosity)
 
 ---
 

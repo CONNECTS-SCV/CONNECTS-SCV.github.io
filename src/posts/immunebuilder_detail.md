@@ -415,7 +415,7 @@ python -m pdbfixer pembrolizumab_fv.pdb --add-atoms=heavy --output=pembrolizumab
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/immunebuilder
+https://curieus.net/Analysis/immunebuilder
 ```
 
 화면에는 **항체(Antibody)**, **나노바디(Nanobody)**, **T 세포 수용체(TCR)** 중 구조를 예측할 대상을 선택할 수 있는 메뉴가 준비되어 있습니다.
@@ -493,7 +493,7 @@ ImmuneBuilder가 예측한 Pembrolizumab 항체의 가변영역 구조는 실제
 - [Github ImmuneBuilder](https://github.com/oxpig/ImmuneBuilder)
 - [Nature](https://www.nature.com/articles/s42003-023-04927-7)
 - [RCSB : 5JXE](https://www.rcsb.org/structure/5JXE)
-- CURIE : [ImmuneBuilder](https://curie.kr/Analysis/immunebuilder)
+- Curieus : [ImmuneBuilder](https://curieus.net/Analysis/immunebuilder)
 
 ---
 

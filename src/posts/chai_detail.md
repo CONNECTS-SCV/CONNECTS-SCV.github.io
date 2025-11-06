@@ -187,7 +187,7 @@ chai lab fold --use-msa-server --use-template-server INPUT_PATH/input.fasta OUTP
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/chai
+https://curieus.net/Analysis/chai
 ```
 
 화면에는 아미노산 서열과 화합물에 대한 열보를 입력하는 창이 준비되어 있습니다.
@@ -259,7 +259,7 @@ glycan이 **N297 포켓 방향**에 자연스럽게 자리하고, **RMSD 0.665 �
 - [Github Chai-lab](https://github.com/chaidiscovery/chai-lab)
 - [RSCB 6BZ4](https://www.rcsb.org/structure/6BZ4)
 - [bioRxiv](https://www.biorxiv.org/content/10.1101/2024.10.10.615955v1)
-- CURIE : [Chai](https://curie.kr/Analysis/chai), [Dilipred](https://curie.kr/Analysis/dilipred)
+- Curieus : [Chai](https://curieus.net/Analysis/chai), [Dilipred](https://curieus.net/Analysis/dilipred)
 
 ---
 

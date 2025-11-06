@@ -299,7 +299,7 @@ prodigy 1BRS_D39A.pdb --selection A B
 먼저 해당 주소로 접속합니다.
 
 ```
-https://curie.kr/Analysis/prodigy
+https://curieus.net/Analysis/prodigy
 ```
 
 화면에는 단백질의 PDB 구조 파일을 업로드 할 수 있는 공간과, 친화도 예측에 사용 할 파라미터 값을 설정하는 영역이 준비되어 있습니다.
@@ -514,7 +514,7 @@ Wild-type에서는 Asp39이 Barnase의 Lys, Arg, His 잔기와 전하 상호작�
 - [PubMed Central(PMC)](https://pmc.ncbi.nlm.nih.gov/articles/PMC8044032/)
 - [ACS Publications](https://pubs.acs.org/doi/10.1021/acsnano.4c13072)
 - [PRODIGY Manual](https://rascar.science.uu.nl/prodigy/manual)
-- CURIE : [PRODIGY](https://curie.kr/Analysis/prodigy)
+- Curieus : [PRODIGY](https://curieus.net/Analysis/prodigy)
 
 ---
 

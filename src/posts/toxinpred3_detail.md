@@ -229,7 +229,7 @@ toxinpred3.py -i peptides.fa -o result.csv -m 2 -d 2
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/toxinpred3
+https://curieus.net/Analysis/toxinpred3
 ```
 
 화면에는 독성 예측에 사용 할 단백질의 아미노산 서열을 입력하는 창이 준비되 있습니다.
@@ -354,7 +354,7 @@ PIP 설치부터 CLI 실행, 그리고 슬라이딩 윈도우 기반 해석까�
 
 - [Github ToxinPred3](https://github.com/raghavagps/toxinpred3)
 - [bioRxiv](https://www.biorxiv.org/content/10.1101/2023.08.11.552911v1)
-- CURIE : [ToxinPred3]https://curie.kr/Analysis/toxinpred3
+- Curieus : [ToxinPred3]https://curieus.net/Analysis/toxinpred3
 
 ---
 

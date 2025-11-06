@@ -248,7 +248,7 @@ python generation-prediction.py --sequence CC(C)(C)C1=CC=C(C=C1)C(CCCN2CCC(CC2)C
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/herg
+https://curieus.net/Analysis/herg
 ```
 
 화면에는 화합물의 정보를 입력하는 방식 선택과 SMILES 문자열을 입력하는 창이 준비되어 있습니다.
@@ -303,7 +303,7 @@ https://curie.kr/Analysis/herg
 - [Github hERG](https://github.com/WeilabMSU/hERG-prediction)
 - [RayBiotech](https://www.raybiotech.com/terfenadine-331-11916)
 - [WIKIPEDIA](https://en.wikipedia.org/wiki/Terfenadine?utm_source=chatgpt.com)
-- CURIE : [hERG](https://curie.kr/Analysis/herg)
+- Curieus : [hERG](https://curieus.net/Analysis/herg)
 
 ---
 

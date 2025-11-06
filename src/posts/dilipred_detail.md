@@ -198,7 +198,7 @@ dilipred --smiles "CC(=O)NC1=CC=C(C=C1)O" --out ./results/acetaminophen_result.c
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/dilipred
+https://curieus.net/Analysis/dilipred
 ```
 
 화면에는 SMILES 문자열을 입력하는 창이 준비되어 있습니다.
@@ -287,7 +287,7 @@ DILI Predictor는 두 가지 방식으로 활용할 수 있습니다.
 ---
 
 - [Github DILI](https://github.com/srijitseal/DILI/tree/main)
-- CURIE : [Dilipred](https://curie.kr/Analysis/dilipred)
+- Curieus : [Dilipred](https://curieus.net/Analysis/dilipred)
 
 ---
 

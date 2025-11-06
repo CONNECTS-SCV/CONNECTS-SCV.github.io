@@ -183,7 +183,7 @@ AbDev는 DeepSP에서 생성된 구조적 특성을 바탕으로, 항체의 **�
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/abdev
+https://curieus.net/Analysis/abdev
 ```
 
 항체 서열에 대한 정보를 입력하는 방식은 두 가지가 있으며,  두 방식 모두 위 형식에 맞추어 **자동으로 전처리**를 진행하도록 설계되어 있습니다.
@@ -334,7 +334,7 @@ Abituzumab은 평균적인 후보로 볼 수 있고, Abrilumab은 가장 개발 
 - [Github AbDev](https://github.com/Lailabcode/AbDev/tree/main)
 - [Github DeepSP](https://github.com/Lailabcode/DeepSP)
 - [Github ANARCI](https://github.com/oxpig/ANARCI)
-- CURIE : [AbDev](https://curie.kr/Analysis/abdev), [Dilipred](https://curie.kr/Analysis/dilipred)
+- Curieus : [AbDev](https://curieus.net/Analysis/abdev), [Dilipred](https://curieus.net/Analysis/dilipred)
 
 ---
 

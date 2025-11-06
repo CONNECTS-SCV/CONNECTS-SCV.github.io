@@ -215,7 +215,7 @@ python -m bioemu.sidechain_relax --pdb-path path/to/topology.pdb --xtc-path path
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/bioemu
+https://curieus.net/Analysis/bioemu
 ```
 
 화면에는 단백질의 아미노산 서열을 입력하는 창이 준비되어 있습니다. 또한 생성 할 구조의 수를 설정할 수 있으며 `--md-protocl nvt_equil` 옵션을 설정 할 수 있습니다.
@@ -311,7 +311,7 @@ AF3의 단일 구조는 루프의 평형 분포를 보여주기에는 다소 어
 ---
 
 - [Github Bioemu](https://github.com/microsoft/bioemu)
-- CURIE : [Bioemu](https://curie.kr/Analysis/bioemu), [Dilipred](https://curie.kr/Analysis/dilipred)
+- Curieus : [Bioemu](https://curieus.net/Analysis/bioemu), [Dilipred](https://curieus.net/Analysis/dilipred)
 - [PubMed Central(PMC)](https://pmc.ncbi.nlm.nih.gov/articles/PMC3838469/?utm_source=chatgpt.com)
 
 ---

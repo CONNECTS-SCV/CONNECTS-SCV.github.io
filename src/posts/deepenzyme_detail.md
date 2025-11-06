@@ -205,7 +205,7 @@ python Code/Example/example.py \
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/deepenzyme
+https://curieus.net/Analysis/deepenzyme
 ```
 
 화면에는 SMILES 문자열을 입력하는 창이 준비되어 있습니다.
@@ -279,7 +279,7 @@ DeepEnzyme은 **절대적인 Kcat 수치 자체보다는 상대적인 활성 경
 
 - [Github DeepEnzyme](https://github.com/hongzhonglu/DeepEnzyme)
 - [PubMed Central(PMC)](https://pmc.ncbi.nlm.nih.gov/articles/PMC10934673/#app1-molecules-29-01071)
-- CURIE : [DeepEnzyme](https://curie.kr/Analysis/deepenayme), [Dilipred](https://curie.kr/Analysis/dilipred)
+- Curieus : [DeepEnzyme](https://curieus.net/Analysis/deepenayme), [Dilipred](https://curieus.net/Analysis/dilipred)
 - [Example File](/file/deepenzyme_detail.zip)
 
 ---

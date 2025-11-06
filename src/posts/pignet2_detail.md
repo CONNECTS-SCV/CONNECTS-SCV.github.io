@@ -247,7 +247,7 @@ python src/exe/predict.py $CKPT \
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/pignet2
+https://curieus.net/Analysis/pignet2
 ```
 
 화면에는 단백질의 PDB 구조 파일과 리간드 분자파일 SDF를 업로드 하는 공간이 준비되어 있습니다.
@@ -318,7 +318,7 @@ https://curie.kr/Analysis/pignet2
 
 - [Github PIGNet2](https://github.com/mseok/PIGNet2)
 - [Royal Society of CHEMISTRY](https://pubs.rsc.org/en/content/articlelanding/2024/dd/d3dd00149k)
-- CURIE : [PIGNet2](https://curie.kr/Analysis/pignet2)
+- Curieus : [PIGNet2](https://curieus.net/Analysis/pignet2)
 
 ---
 

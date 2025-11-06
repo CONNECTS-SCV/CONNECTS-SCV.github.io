@@ -46,8 +46,8 @@ export default function Header({onSearchClick}: HeaderProps) {
                 {/*  </Button>*/}
                 {/*</div>*/}
                 <div className="mx-2">
-                    <Button 
-                        variant="default" 
+                    <Button
+                        variant="default"
                         onClick={() => setIsSubscriptionModalOpen(true)}
                         className="flex items-center gap-2"
                     >
@@ -58,7 +58,7 @@ export default function Header({onSearchClick}: HeaderProps) {
                 <div className="mx-2 flex gap-[6px] items-center">
                     <Link href="https://curie.kr" className="flex items-center gap-1" target="_blank" rel="noopener noreferrer">
                         <Image src={linkSVG} alt="link" width={20} height={20}/>
-                        <span>CURIE</span>
+                        <span>Curieus</span>
                     </Link>
                 </div>
                 {/*<div className="mx-2 flex gap-[6px] items-center">*/}
@@ -82,7 +82,7 @@ export default function Header({onSearchClick}: HeaderProps) {
                     </Button>
                 </div>
             </div>
-            <SubscriptionModal 
+            <SubscriptionModal
                 isOpen={isSubscriptionModalOpen}
                 onClose={() => setIsSubscriptionModalOpen(false)}
             />

@@ -298,7 +298,7 @@ python predict.py \
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/deepfri
+https://curieus.net/Analysis/deepfri
 ```
 
 화면에는 단백질의 3차원 구조파일(PDB)을 입력하는 창이 준비되어 있습니다.
@@ -439,7 +439,7 @@ DeepFRI의 장점은 단순 예측을 넘어, **“왜 그런 예측이 나왔�
 
 - [Gtihub DeepFRI](https://github.com/flatironinstitute/DeepFRI)
 - [bioRxiv](https://www.biorxiv.org/content/10.1101/786236v1)
-- CURIE : [DeepFRI](https://curie.kr/Analysis/deepfri)
+- Curieus : [DeepFRI](https://curieus.net/Analysis/deepfri)
 
 ---
 

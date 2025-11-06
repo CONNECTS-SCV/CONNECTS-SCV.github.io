@@ -225,7 +225,7 @@ python main.py -i ./inputs/lysozyme.fasta -o ./outputs/lysozyme
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/structoxnet
+https://curieus.net/Analysis/structoxnet
 ```
 
 화면에는 단백질의 3차원 구조파일(PDB)을 입력하는 창이 준비되어 있습니다.
@@ -271,7 +271,7 @@ https://curie.kr/Analysis/structoxnet
 
 - [Github StrucToxNet](https://github.com/jiaoshihu/StrucToxNet)
 - [Zenodo](https://zenodo.org/records/15599677)
-- CURIE : [StrucToxNet](https://curie.kr/Analysis/structoxnet)
+- Curieus : [StrucToxNet](https://curieus.net/Analysis/structoxnet)
 
 ---
 

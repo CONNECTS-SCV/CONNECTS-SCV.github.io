@@ -311,7 +311,7 @@ if pd.api.types.is_numeric_dtype(sub[target]):
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/admet-ai
+https://curieus.net/Analysis/admet-ai
 ```
 
 ADMET-AI는 별도의 프로그램 설치 없이 **웹 브라우저 상에서 바로 화합물의 ADMET 특성을 예측**
@@ -454,7 +454,7 @@ ADMET-AI의 예측 결과는 두 화합물의 **구조적·약동학적 차이**
 - [OXFORD ACADEMIC](https://academic.oup.com/bioinformatics/article/40/7/btae416/7698030?guestAccessKey=f4fca1d2-49ec-4b10-b476-5aea3bf37045&login=false&utm_source=authortollfreelink&utm_campaign=bioinformatics&utm_medium=email)
 - [PubChem | Hexocyclium](https://pubchem.ncbi.nlm.nih.gov/compound/24199#section=InChI)
 - [PubChem | Ambrisentan](https://pubchem.ncbi.nlm.nih.gov/compound/6918493#section=2D-Structure)
-- CURIE : [ADMET-AI](https://curie.kr/Analysis/admet-ai)
+- Curieus : [ADMET-AI](https://curieus.net/Analysis/admet-ai)
 
 ---
 

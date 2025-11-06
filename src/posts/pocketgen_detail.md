@@ -307,7 +307,7 @@ python generate_new.py \
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/pocketgen
+https://curieus.net/Analysis/pocketgen
 ```
 
 PocketGen은 별도의 설치 없이 **웹 브라우저 상에서 단백질–리간드 결합 포켓을 예측하고 리모델링할 수 있는 AI 도구**입니다. 사용자는 복잡한 환경 설정이나 터미널 명령어 입력 없이, **단백질 구조(PDB)**
@@ -395,7 +395,7 @@ PocketGen은 단백질 구조 기반의 **신약 설계(Structure-based Drug Des
 
 - [PocketGen](https://github.com/zaixizhang/PocketGen)
 - [bioRxiv](https://www.biorxiv.org/content/10.1101/2024.02.25.581968v3)
-- CURIE : [PocketGen](https://curie.kr/Analysis/pocketgen)
+- Curieus : [PocketGen](https://curieus.net/Analysis/pocketgen)
 
 ---
 

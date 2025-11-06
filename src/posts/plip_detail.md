@@ -315,7 +315,7 @@ pymol generate/2p16/plip_out_pg/2P16_APX_A_283.pse
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/plip
+https://curieus.net/Analysis/plip
 ```
 
 PLIP(Protein–Ligand Interaction Profiler)은 복잡한 설치 과정 없이도 **웹 브라우저에서 바로 단백질–리간드 결합 상호작용을 시각화하고 분석할 수 있는** 편리한 도구를 제공합니다.
@@ -444,7 +444,7 @@ AI 모델의 결과를 “그럴듯하다” 수준에서 멈추지 않고 **결
 
 - [Github PLIP](https://github.com/pharmai/plip)
 - [OXFORD ACADEMIC](https://academic.oup.com/nar/article/49/W1/W530/6266421)
-- CURIE : [PLIP](https://curie.kr/Analysis/plip)
+- Curieus : [PLIP](https://curieus.net/Analysis/plip)
 
 ---
 

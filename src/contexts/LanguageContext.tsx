@@ -31,7 +31,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     } else {
       // Detect language from browser
       const browserLang = navigator.language.toLowerCase();
-      
+
       // Only set to Korean if browser language is Korean
       // or if timezone suggests Korea location
       if (browserLang.startsWith('ko')) {
@@ -45,7 +45,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
           finalLanguage = 'en'; // Default to English for all other cases
         }
       }
-      
+
       localStorage.setItem('language', finalLanguage);
     }
 
@@ -101,7 +101,7 @@ export function useLanguage() {
 const translations: Record<Language, Record<string, string>> = {
   ko: {
     // Header
-    'header.curie': 'CURIE',
+    'header.curie': 'Curieus',
     'header.about': 'About Us',
     'header.subscribe': '구독하기',
     'header.recruit': '채용 바로가기',
@@ -251,7 +251,7 @@ const translations: Record<Language, Record<string, string>> = {
   },
   en: {
     // Header
-    'header.curie': 'CURIE',
+    'header.curie': 'Curieus',
     'header.about': 'About Us',
     'header.subscribe': 'Subscribe',
     'header.recruit': 'Careers',

@@ -909,7 +909,7 @@ gmx mdrun -deffnm md_0_10
 먼저 해당 주소로 접속합니다.
 
 ```text
-https://curie.kr/Analysis/gromacs
+https://curieus.net/Analysis/gromacs
 ```
 
 이 화면은 **GROMACS 기반 분자 동역학(MD) 시뮬레이션을 웹 환경에서 간편하게 수행할 수 있도록 설계된 인터페이스**입니다. 복잡한 명령어나 스크립트 작성 없이, 사용자는 **필수 입력값만 설정** 하면 자동으로 최신 버전의 MDP 파라미터가 적용되어 시뮬레이션이 실행됩니다.
@@ -1081,7 +1081,7 @@ GROMACS는 단순한 계산 프로그램이 아니라, 연구자가 **분자의 
 
 - [Github GROMACS](https://github.com/gromacs/gromacs)
 - [GROMACS Tutorials lysozyme](http://www.mdtutorials.com/gmx/lysozyme)
-- CURIE : [GROMACS](https://curie.kr/Analysis/gromacs)
+- Curieus : [GROMACS](https://curieus.net/Analysis/gromacs)
 
 -----
 
