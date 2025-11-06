@@ -176,7 +176,7 @@ export default function AdminSubscribersPage() {
     const handleSendEmail = async () => {
         const subject = useHtmlTemplate ? emailTemplateData.subject : emailContent.subject;
         const body = useHtmlTemplate
-            ? generateEmailTemplate(emailTemplateData)
+            ? generateEmailTemplate({...emailTemplateData, language})
             : emailContent.body;
 
         if (!subject || (!useHtmlTemplate && !emailContent.body) || (useHtmlTemplate && !emailTemplateData.mainContent)) {

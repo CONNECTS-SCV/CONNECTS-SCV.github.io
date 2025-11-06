@@ -100,7 +100,8 @@ The Curieus Team`;
                         buttonUrl: 'https://curieus.net',
                         footerText: language === 'ko'
                             ? '💡 궁금한 점이 있으시면 언제든 curieus@connects.so으로 문의해주세요.'
-                            : '💡 If you have any questions, feel free to contact us at curieus@connects.so'
+                            : '💡 If you have any questions, feel free to contact us at curieus@connects.so',
+                        language: language as 'ko' | 'en'
                     });
 
                     await sendEmailWithNaverCloud({
