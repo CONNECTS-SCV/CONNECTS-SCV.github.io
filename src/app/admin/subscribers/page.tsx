@@ -14,6 +14,7 @@ import {
     CheckSquare,
     Activity,
     X,
+    Trash2,
 } from "lucide-react";
 
 interface Subscriber {
@@ -159,6 +160,57 @@ export default function AdminSubscribersPage() {
     // Clear selection
     const clearSelection = () => {
         setSelectedEmails(new Set());
+    };
+
+    // Delete selected subscribers
+    const handleDeleteSelected = async () => {
+        if (selectedEmails.size === 0) {
+            alert(language === 'ko' ? '삭제할 구독자를 선택해주세요.' : 'Please select subscribers to delete.');
+            return;
+        }
+
+        const confirmDelete = window.confirm(
+            language === 'ko' 
+                ? `${selectedEmails.size}명의 구독자를 삭제하시겠습니까?` 
+                : `Delete ${selectedEmails.size} subscriber(s)?`
+        );
+
+        if (!confirmDelete) return;
+
+        try {
+            // Get IDs of selected subscribers
+            const idsToDelete = subscribers
+                .filter(sub => selectedEmails.has(sub.email))
+                .map(sub => sub.id);
+
+            if (!supabase) {
+                throw new Error('Supabase client not initialized');
+            }
+
+            const { error } = await supabase
+                .from('subscribers')
+                .delete()
+                .in('id', idsToDelete);
+
+            if (error) throw error;
+
+            // Update local state
+            setSubscribers(prev => prev.filter(sub => !selectedEmails.has(sub.email)));
+            clearSelection();
+
+            alert(
+                language === 'ko' 
+                    ? `${selectedEmails.size}명의 구독자가 삭제되었습니다.` 
+                    : `Successfully deleted ${selectedEmails.size} subscriber(s).`
+            );
+        } catch (error) {
+            console.error('Error deleting subscribers:', error);
+            alert(
+                language === 'ko' 
+                    ? '구독자 삭제 중 오류가 발생했습니다.' 
+                    : 'Error deleting subscribers.'
+            );
+        }
     };
 
     // Handle logout
@@ -391,12 +443,22 @@ export default function AdminSubscribersPage() {
                             </button>
 
                             {selectedEmails.size > 0 && (
-                                <button
-                                    onClick={clearSelection}
-                                    className="px-4 py-2.5 text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl transition-all font-medium"
-                                >
-                                    {language === 'ko' ? '선택 해제' : 'Clear'}
-                                </button>
+                                <>
+                                    <button
+                                        onClick={clearSelection}
+                                        className="px-4 py-2.5 text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl transition-all font-medium"
+                                    >
+                                        {language === 'ko' ? '선택 해제' : 'Clear'}
+                                    </button>
+                                    
+                                    <button
+                                        onClick={handleDeleteSelected}
+                                        className="px-4 py-2.5 text-sm bg-red-100 text-red-600 hover:bg-red-200 rounded-xl transition-all font-medium flex items-center gap-2"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                        {language === 'ko' ? '삭제' : 'Delete'}
+                                    </button>
+                                </>
                             )}
 
                             <button
