@@ -110,7 +110,7 @@ export function generateGmailTemplate(data: EmailTemplateData): string {
 </html>`;
 }
 
-// 네이버 전용 템플릿 (인라인 스타일, Base64 이미지)
+// 네이버 전용 템플릿 (토스증권 방식으로 스타일 적용)
 export function generateNaverOnlyTemplate(data: EmailTemplateData): string {
   const {
     recipientName = '고객님',
@@ -134,70 +134,114 @@ export function generateNaverOnlyTemplate(data: EmailTemplateData): string {
     day: 'numeric'
   });
 
-  // 네이버용: 작은 Base64 SVG 로고
-  const LOGO_BASE64 = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjQwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjNGM0OWVhIi8+CiAgPHRleHQgeD0iNzUiIHk9IjI3IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q3VyaWV1czwvdGV4dD4KPC9zdmc+';
+  // Curieus 로고 (외부 URL 또는 Base64)
+  const logoUrl = 'https://curieus.net/assets/logo.png';
+  // 또는 Base64 SVG 사용
+  const logoBase64 = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjQwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjNGM0OWVhIi8+CiAgPHRleHQgeD0iNzUiIHk9IjI3IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q3VyaWV1czwvdGV4dD4KPC9zdmc+';
 
-  return `<!DOCTYPE html>
-<html lang="${language}">
-<head>
-<meta charset="UTF-8">
-<title>${safeSubject}</title>
-</head>
-<body style="margin:0;padding:0;background-color:#f6f6f6;font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;">
-  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#f6f6f6;">
-    <tr>
-      <td align="center" style="padding:40px 0;">
-        <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color:#ffffff;">
-          <tr>
-            <td style="padding:40px;border-bottom:2px solid #f0f0f0;">
-              <img src="${LOGO_BASE64}" alt="Curieus" style="display:block;max-width:150px;" />
-              <span style="display:block;margin-top:8px;font-size:12px;color:#888888;">AI-Powered Analysis Platform</span>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:30px 40px;">
-              <span style="display:block;font-size:11px;color:#888888;">${currentDate}</span>
-              <h1 style="margin:16px 0;font-size:24px;color:#1a1a1a;">${safeSubject}</h1>
-              <p style="margin:0 0 16px;font-size:15px;color:#1a1a1a;font-weight:500;">
-                ${language === 'ko' ? `안녕하세요, ${recipientName}님` : `Hello, ${recipientName}`}
-              </p>
-              <p style="margin:0;font-size:15px;line-height:1.6;color:#333333;">${formattedContent}</p>
-              ${buttonText && buttonUrl ? `
-              <table border="0" cellspacing="0" cellpadding="0" style="margin-top:30px;">
+  // 네이버 메일 호환 템플릿 (토스증권 스타일 방식 적용)
+  return `<div style="margin: 0px; padding: 0px; background-color: rgb(246, 246, 246); width: 100%; line-height: 100%;">
+    <table border="0" cellpadding="0" cellspacing="0" width="600" style="margin: 0px auto; padding: 0px; width: 100%;">
+      <tbody>
+        <tr>
+          <td>
+            <table border="0" cellpadding="0" cellspacing="0" width="600" style="margin: 0px auto; padding: 40px 30px; background-color: rgb(255, 255, 255);">
+              <tbody>
+                <!-- 헤더 섹션 -->
                 <tr>
-                  <td style="background-color:#4c49ea;border-radius:6px;">
-                    <a href="${buttonUrl}" style="display:inline-block;padding:14px 32px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">
-                      ${buttonText}
-                    </a>
+                  <td style="padding: 0px 0px 20px 0px; border-bottom: 2px solid rgb(240, 240, 240);">
+                    <img src="${logoUrl}" alt="Curieus" style="max-width: 150px; height: auto;" loading="lazy">
+                    <p style="color: rgb(136, 136, 136); font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif; font-size: 12px; line-height: 1.5; margin: 8px 0px 0px 0px;">
+                      AI-Powered Analysis Platform
+                    </p>
                   </td>
                 </tr>
-              </table>` : ''}
-              ${footerText ? `
-              <table width="100%" style="margin-top:30px;">
+                
+                <!-- 날짜 및 제목 -->
                 <tr>
-                  <td style="background-color:#f8f9fa;border-left:4px solid #4c49ea;padding:16px;">
-                    <p style="margin:0;font-size:14px;color:#555555;">${footerText}</p>
+                  <td style="padding: 30px 0px 0px 0px;">
+                    <p style="color: rgb(136, 136, 136); font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif; font-size: 11px; margin: 0px 0px 8px 0px;">
+                      ${currentDate}
+                    </p>
+                    <h1 style="display: block; font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif; font-size: 24px; font-weight: bold; line-height: 1.4; margin: 0px; padding: 0px; color: rgb(26, 26, 26);">
+                      ${safeSubject}
+                    </h1>
                   </td>
                 </tr>
-              </table>` : ''}
-            </td>
-          </tr>
-          <tr>
-            <td style="background-color:#fafafa;padding:30px 40px;text-align:center;">
-              <img src="${LOGO_BASE64}" alt="Curieus" style="display:block;width:100px;margin:0 auto 16px;" />
-              <p style="margin:0 0 8px;font-size:13px;color:#666666;">
-                <a href="https://curieus.net" style="color:#4c49ea;text-decoration:none;">홈페이지</a> | 
-                <a href="mailto:curieus@connects.so" style="color:#4c49ea;text-decoration:none;">문의하기</a>
-              </p>
-              <p style="margin:8px 0 0;font-size:11px;color:#999999;">© 2025 Curieus. All rights reserved.</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+                
+                <!-- 본문 내용 -->
+                <tr>
+                  <td style="padding: 30px 0px;">
+                    <p style="color: rgb(26, 26, 26); font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif; font-size: 15px; line-height: 1.6; margin: 0px 0px 16px 0px; font-weight: 500;">
+                      ${language === 'ko' ? `안녕하세요, ${recipientName}님` : `Hello, ${recipientName}`}
+                    </p>
+                    <p style="color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif; font-size: 15px; line-height: 1.6; margin: 0px;">
+                      ${formattedContent}
+                    </p>
+                    
+                    ${buttonText && buttonUrl ? `
+                    <table border="0" cellpadding="0" cellspacing="0" style="margin: 30px 0px 0px 0px;">
+                      <tbody>
+                        <tr>
+                          <td style="background-color: rgb(76, 73, 234); border-radius: 6px;">
+                            <a href="${buttonUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 14px 32px; color: rgb(255, 255, 255); text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 15px; font-weight: 600;">
+                              ${buttonText}
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    ` : ''}
+                    
+                    ${footerText ? `
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 30px 0px 0px 0px;">
+                      <tbody>
+                        <tr>
+                          <td style="background-color: rgb(248, 249, 250); border-left: 4px solid rgb(76, 73, 234); padding: 16px;">
+                            <p style="color: rgb(85, 85, 85); font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 14px; line-height: 1.5; margin: 0px;">
+                              ${footerText}
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    ` : ''}
+                  </td>
+                </tr>
+                
+                <!-- 푸터 섹션 -->
+                <tr>
+                  <td style="padding: 30px 0px 0px 0px;">
+                    <hr style="color: rgb(229, 229, 229); background-color: rgb(229, 229, 229); height: 1px; border: 0px; margin: 0px 0px 30px 0px;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tbody>
+                        <tr>
+                          <td style="text-align: center;">
+                            <img src="${logoUrl}" alt="Curieus" style="width: 100px; margin: 0px 0px 16px 0px;" loading="lazy">
+                            <p style="color: rgb(102, 102, 102); font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', Apple SD Gothic Neo, sans-serif; font-size: 13px; line-height: 1.6; margin: 0px 0px 8px 0px;">
+                              <a href="https://curieus.net" style="color: rgb(76, 73, 234); text-decoration: none;" target="_blank" rel="noreferrer noopener">${language === 'ko' ? '홈페이지' : 'Homepage'}</a>
+                              <span style="color: rgb(204, 204, 204);"> | </span>
+                              <a href="mailto:curieus@connects.so" style="color: rgb(76, 73, 234); text-decoration: none;">${language === 'ko' ? '문의하기' : 'Contact'}</a>
+                            </p>
+                            <p style="color: rgb(153, 153, 153); font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 12px; line-height: 1.5; margin: 0px 0px 4px 0px;">
+                              ${language === 'ko' ? '경기도 성남시 분당구 판교로289번길 20' : '20, Pangyo-ro 289beon-gil, Bundang-gu, Seongnam-si'}
+                            </p>
+                            <p style="color: rgb(170, 170, 170); font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', sans-serif; font-size: 11px; margin: 8px 0px 0px 0px;">
+                              © 2025 Curieus. All Rights Reserved
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>`;
 }
 
 // 여러 수신자에게 보낼 때 각 도메인별로 템플릿 선택
