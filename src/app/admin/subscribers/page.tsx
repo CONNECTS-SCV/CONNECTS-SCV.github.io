@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { sendEmailWithNaverCloud, createEmailTemplate } from "@/lib/naverCloudEmail";
-import { generateAdaptiveEmailTemplate, isNaverEmail, EmailTemplateData } from "@/lib/adaptiveEmailTemplate";
+import { generateEmailTemplate, EmailTemplateData } from "@/lib/emailTemplate";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
     Mail,
@@ -165,55 +165,92 @@ export default function AdminSubscribersPage() {
     // Delete selected subscribers
     const handleDeleteSelected = async () => {
         if (selectedEmails.size === 0) {
-            alert(language === 'ko' ? '삭제할 구독자를 선택해주세요.' : 'Please select subscribers to delete.');
+            alert(language === 'ko' ? "삭제할 구독자를 선택해주세요." : "Please select subscribers to delete.");
             return;
         }
 
         const confirmDelete = window.confirm(
-            language === 'ko' 
-                ? `${selectedEmails.size}명의 구독자를 삭제하시겠습니까?` 
-                : `Delete ${selectedEmails.size} subscriber(s)?`
+            language === 'ko'
+                ? `정말로 ${selectedEmails.size}명의 구독자를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`
+                : `Are you sure you want to delete ${selectedEmails.size} subscribers?\nThis action cannot be undone.`
         );
 
         if (!confirmDelete) return;
 
+        setIsLoading(true);
         try {
-            // Get IDs of selected subscribers
-            const idsToDelete = subscribers
-                .filter(sub => selectedEmails.has(sub.email))
-                .map(sub => sub.id);
-
             if (!supabase) {
-                throw new Error('Supabase client not initialized');
+                console.error("Supabase is not initialized");
+                alert(language === 'ko' ? "데이터베이스 연결 실패" : "Database connection failed");
+                return;
             }
 
-            const { error } = await supabase
+            // Find subscriber IDs from emails
+            const subscribersToDelete = subscribers.filter(s => selectedEmails.has(s.email));
+            const idsToDelete = subscribersToDelete.map(s => s.id);
+            
+            console.log('Attempting to delete subscribers:', {
+                emails: Array.from(selectedEmails),
+                ids: idsToDelete,
+                count: idsToDelete.length
+            });
+
+            // Delete from Supabase
+            const { data, error } = await supabase
                 .from('subscribers')
                 .delete()
-                .in('id', idsToDelete);
+                .in('id', idsToDelete)
+                .select(); // Add select to see what was deleted
 
-            if (error) throw error;
+            if (error) {
+                console.error('Supabase delete error:', {
+                    error,
+                    message: error.message,
+                    details: error.details,
+                    hint: error.hint,
+                    code: error.code
+                });
+                
+                // Check for specific error types
+                if (error.message.includes('RLS') || error.message.includes('policy')) {
+                    alert(language === 'ko' 
+                        ? `삭제 실패: Row Level Security 정책 문제입니다.\nSupabase 대시보드에서 subscribers 테이블의 RLS 정책을 확인해주세요.` 
+                        : `Failed to delete: Row Level Security policy issue.\nPlease check RLS policies for subscribers table in Supabase dashboard.`);
+                } else {
+                    alert(language === 'ko' 
+                        ? `삭제 실패: ${error.message}\n\n상세: ${error.details || '없음'}\n힌트: ${error.hint || '없음'}` 
+                        : `Failed to delete: ${error.message}\n\nDetails: ${error.details || 'None'}\nHint: ${error.hint || 'None'}`);
+                }
+                return;
+            }
 
-            // Update local state
-            setSubscribers(prev => prev.filter(sub => !selectedEmails.has(sub.email)));
+            console.log('Delete result:', data);
+            
+            // Check if any rows were actually deleted
+            if (!data || data.length === 0) {
+                console.warn('No rows were deleted. Possible RLS issue.');
+                alert(language === 'ko' 
+                    ? `삭제되지 않았습니다. Row Level Security 정책을 확인해주세요.` 
+                    : `No rows were deleted. Please check Row Level Security policies.`);
+                return;
+            }
+
+            alert(language === 'ko' 
+                ? `${data.length}명의 구독자가 삭제되었습니다.` 
+                : `${data.length} subscribers have been deleted.`);
+
+            // Clear selection and reload data
             clearSelection();
-
-            alert(
-                language === 'ko' 
-                    ? `${selectedEmails.size}명의 구독자가 삭제되었습니다.` 
-                    : `Successfully deleted ${selectedEmails.size} subscriber(s).`
-            );
+            await loadSubscribers();
         } catch (error) {
-            console.error('Error deleting subscribers:', error);
-            alert(
-                language === 'ko' 
-                    ? '구독자 삭제 중 오류가 발생했습니다.' 
-                    : 'Error deleting subscribers.'
-            );
+            console.error('Unexpected error during delete:', error);
+            alert(language === 'ko' 
+                ? `삭제 중 오류가 발생했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}` 
+                : `An error occurred while deleting: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        } finally {
+            setIsLoading(false);
         }
     };
-
-    // Handle logout
 
     // Handle email composition
     const handleCompose = () => {
@@ -227,6 +264,9 @@ export default function AdminSubscribersPage() {
     // Send email using email service
     const handleSendEmail = async () => {
         const subject = useHtmlTemplate ? emailTemplateData.subject : emailContent.subject;
+        const body = useHtmlTemplate
+            ? generateEmailTemplate({...emailTemplateData, language})
+            : emailContent.body;
 
         if (!subject || (!useHtmlTemplate && !emailContent.body) || (useHtmlTemplate && !emailTemplateData.mainContent)) {
             alert(language === 'ko'
@@ -246,19 +286,10 @@ export default function AdminSubscribersPage() {
 
         setIsSubmitting(true);
         try {
-            // 각 수신자별로 적절한 템플릿 생성
-            const emailsArray = Array.from(selectedEmails);
-            
-            // 모든 수신자에게 동일한 내용이지만, 도메인별로 다른 템플릿 사용
-            // 첨 번째 이메일을 대표로 사용하여 보내기 (네이버 API는 한 번에 하나의 템플릿만 지원)
-            const firstEmail = emailsArray[0];
-            const body = useHtmlTemplate
-                ? generateAdaptiveEmailTemplate({...emailTemplateData, recipientEmail: firstEmail, language})
-                : emailContent.body;
 
             // Send email using Naver Cloud
             const result = await sendEmailWithNaverCloud({
-                to: emailsArray,
+                to: Array.from(selectedEmails),
                 subject: subject,
                 body: body,
                 isHtml: useHtmlTemplate
@@ -459,10 +490,12 @@ export default function AdminSubscribersPage() {
                                     
                                     <button
                                         onClick={handleDeleteSelected}
-                                        className="px-4 py-2.5 text-sm bg-red-100 text-red-600 hover:bg-red-200 rounded-xl transition-all font-medium flex items-center gap-2"
+                                        className="px-4 py-2.5 text-sm bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all font-medium flex items-center gap-2 shadow-lg"
                                     >
                                         <Trash2 className="w-4 h-4" />
-                                        {language === 'ko' ? '삭제' : 'Delete'}
+                                        <span>
+                                            {language === 'ko' ? `삭제 (${selectedEmails.size})` : `Delete (${selectedEmails.size})`}
+                                        </span>
                                     </button>
                                 </>
                             )}
@@ -948,7 +981,7 @@ Your free plan includes 10 analyses per month.`,
                                     {useHtmlTemplate ? (
                                         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                                             <iframe
-                                                srcDoc={generateAdaptiveEmailTemplate({...emailTemplateData, recipientEmail: 'preview@example.com'})}
+                                                srcDoc={generateEmailTemplate(emailTemplateData)}
                                                 className="w-full h-full min-h-[600px]"
                                                 title="Email Preview"
                                             />
