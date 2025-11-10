@@ -1,5 +1,7 @@
 // 수신자 도메인에 따라 적절한 이메일 템플릿을 선택하는 어댑티브 템플릿
 
+import { generateNaverEmailTemplate } from './naverEmailTemplate';
+
 export interface EmailTemplateData {
   recipientName?: string;
   recipientEmail?: string;
@@ -24,7 +26,7 @@ export function generateAdaptiveEmailTemplate(data: EmailTemplateData): string {
   
   // 네이버 계열 이메일인 경우 네이버 호환 템플릿 사용
   if (isNaverEmail(recipientEmail)) {
-    return generateNaverOnlyTemplate(data);
+    return generateNaverEmailTemplate(data);
   }
   
   // Gmail 및 기타 이메일은 일반 템플릿 사용
