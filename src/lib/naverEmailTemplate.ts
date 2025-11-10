@@ -30,9 +30,9 @@ export function generateNaverEmailTemplate(data: EmailTemplateData): string {
     .replace(/[A-Z]{4,}/g, (match) => match.charAt(0) + match.slice(1).toLowerCase());
 
   // 줄바꿈을 <br>로 변환
-  const formattedContent = mainContent.replace(/\n/g, '<br>');
+  const formattedContent = mainContent.replace(/\n/g, '<br><br>');
 
-  // 네이버 메일 호환 템플릿
+  // 네이버 메일 호환 템플릿 (실제 작동하는 형식)
   return `<div style="margin: 0px; padding: 0px; background-color: #fafafa; width: 100%; line-height: 100%;">
   <table border="0" cellpadding="0" cellspacing="0" width="630" style="margin: 0px; padding: 0px; width: 100%;">
     <tbody>
