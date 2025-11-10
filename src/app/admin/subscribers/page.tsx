@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { sendEmailWithNaverCloud, createEmailTemplate } from "@/lib/naverCloudEmail";
-import { generateNaverCompatibleTemplate, EmailTemplateData } from "@/lib/naverCompatibleTemplate";
+import { generateAdaptiveEmailTemplate, isNaverEmail, EmailTemplateData } from "@/lib/adaptiveEmailTemplate";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
     Mail,
@@ -227,9 +227,6 @@ export default function AdminSubscribersPage() {
     // Send email using email service
     const handleSendEmail = async () => {
         const subject = useHtmlTemplate ? emailTemplateData.subject : emailContent.subject;
-        const body = useHtmlTemplate
-            ? generateNaverCompatibleTemplate({...emailTemplateData, language})
-            : emailContent.body;
 
         if (!subject || (!useHtmlTemplate && !emailContent.body) || (useHtmlTemplate && !emailTemplateData.mainContent)) {
             alert(language === 'ko'
@@ -249,10 +246,19 @@ export default function AdminSubscribersPage() {
 
         setIsSubmitting(true);
         try {
+            // 각 수신자별로 적절한 템플릿 생성
+            const emailsArray = Array.from(selectedEmails);
+            
+            // 모든 수신자에게 동일한 내용이지만, 도메인별로 다른 템플릿 사용
+            // 첨 번째 이메일을 대표로 사용하여 보내기 (네이버 API는 한 번에 하나의 템플릿만 지원)
+            const firstEmail = emailsArray[0];
+            const body = useHtmlTemplate
+                ? generateAdaptiveEmailTemplate({...emailTemplateData, recipientEmail: firstEmail, language})
+                : emailContent.body;
 
             // Send email using Naver Cloud
             const result = await sendEmailWithNaverCloud({
-                to: Array.from(selectedEmails),
+                to: emailsArray,
                 subject: subject,
                 body: body,
                 isHtml: useHtmlTemplate
@@ -942,7 +948,7 @@ Your free plan includes 10 analyses per month.`,
                                     {useHtmlTemplate ? (
                                         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                                             <iframe
-                                                srcDoc={generateNaverCompatibleTemplate(emailTemplateData)}
+                                                srcDoc={generateAdaptiveEmailTemplate({...emailTemplateData, recipientEmail: 'preview@example.com'})}
                                                 className="w-full h-full min-h-[600px]"
                                                 title="Email Preview"
                                             />
