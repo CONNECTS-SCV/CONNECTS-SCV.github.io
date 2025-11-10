@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { sendEmailWithNaverCloud, createEmailTemplate } from "@/lib/naverCloudEmail";
-import { generateEmailTemplate, EmailTemplateData } from "@/lib/emailTemplate";
+import { generateNaverCompatibleTemplate, EmailTemplateData } from "@/lib/naverCompatibleTemplate";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
     Mail,
@@ -228,7 +228,7 @@ export default function AdminSubscribersPage() {
     const handleSendEmail = async () => {
         const subject = useHtmlTemplate ? emailTemplateData.subject : emailContent.subject;
         const body = useHtmlTemplate
-            ? generateEmailTemplate({...emailTemplateData, language})
+            ? generateNaverCompatibleTemplate({...emailTemplateData, language})
             : emailContent.body;
 
         if (!subject || (!useHtmlTemplate && !emailContent.body) || (useHtmlTemplate && !emailTemplateData.mainContent)) {
@@ -942,7 +942,7 @@ Your free plan includes 10 analyses per month.`,
                                     {useHtmlTemplate ? (
                                         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                                             <iframe
-                                                srcDoc={generateEmailTemplate(emailTemplateData)}
+                                                srcDoc={generateNaverCompatibleTemplate(emailTemplateData)}
                                                 className="w-full h-full min-h-[600px]"
                                                 title="Email Preview"
                                             />
