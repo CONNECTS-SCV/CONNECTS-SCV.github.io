@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { sendEmailWithNaverCloud, createEmailTemplate } from "@/lib/naverCloudEmail";
-import { generateEmailTemplate, EmailTemplateData } from "@/lib/emailTemplate";
+import { generateEmailTemplate, generateNaverEmailTemplate, EmailTemplateData } from "@/lib/emailTemplate";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
     Mail,
@@ -264,8 +264,16 @@ export default function AdminSubscribersPage() {
     // Send email using email service
     const handleSendEmail = async () => {
         const subject = useHtmlTemplate ? emailTemplateData.subject : emailContent.subject;
+        
+        // 선택된 이메일 중 네이버 도메인이 있는지 확인
+        const hasNaverDomain = Array.from(selectedEmails).some(email => 
+            email.includes('@naver.com') || email.includes('@hanmail.net') || email.includes('@daum.net')
+        );
+        
         const body = useHtmlTemplate
-            ? generateEmailTemplate({...emailTemplateData, language})
+            ? (hasNaverDomain 
+                ? generateNaverEmailTemplate({...emailTemplateData, language})
+                : generateEmailTemplate({...emailTemplateData, language}))
             : emailContent.body;
 
         if (!subject || (!useHtmlTemplate && !emailContent.body) || (useHtmlTemplate && !emailTemplateData.mainContent)) {

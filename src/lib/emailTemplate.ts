@@ -394,6 +394,195 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
   `.trim();
 }
 
+// 네이버 도메인 전용 템플릿 (모든 스타일 인라인 적용)
+export function generateNaverEmailTemplate(data: EmailTemplateData): string {
+  const {
+    recipientName = 'Customer',
+    recipientEmail = '',
+    subject,
+    mainContent,
+    buttonText,
+    buttonUrl,
+    footerText,
+    language = 'ko'
+  } = data;
+
+  // 안전한 이메일 제목 (스팸 필터 회피)
+  const safeSubject = subject
+    .replace(/free|무료|100%|보장|클릭하세요/gi, '')
+    .replace(/!!!|\$\$\$/g, '')
+    .replace(/ALL CAPS/g, (match) => match.toLowerCase());
+
+  return `
+<!DOCTYPE html>
+<html lang="${language}" style="margin: 0; padding: 0;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${safeSubject}</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #1a1a1a; background-color: #ffffff;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 0; padding: 0; background-color: #ffffff;">
+        <tr>
+            <td align="center" style="padding: 60px 20px; background-color: #ffffff;">
+                <table width="640" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto; background-color: #ffffff;">
+                    <!-- Header -->
+                    <tr>
+                        <td style="border-bottom: 2px solid #f0f0f0; padding-bottom: 32px; margin-bottom: 40px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td style="padding: 0;">
+                                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 32px;">
+                                            <tr>
+                                                <td align="left" style="padding: 0;">
+                                                    <img src="https://curie.kr/assets/logo.webp" alt="Curieus Logo" width="150" height="40" style="display: block; border: none;" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" style="padding: 8px 0 0 0;">
+                                                    <span style="font-size: 12px; color: #888888; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;">AI-Powered Analysis Platform</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 24px 0 0 0;">
+                                        <p style="margin: 0 0 8px 0; padding: 0; font-size: 13px; color: #888888; font-weight: 500;">
+                                            ${new Date().toLocaleDateString(language === 'ko' ? 'ko-KR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                        </p>
+                                        <h1 style="margin: 0; padding: 0; font-size: 28px; font-weight: 700; color: #1a1a1a; line-height: 1.3;">
+                                            ${safeSubject}
+                                        </h1>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding: 40px 0;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td style="padding: 0 0 24px 0;">
+                                        <p style="margin: 0; padding: 0; font-size: 16px; color: #1a1a1a; font-weight: 500;">
+                                            ${language === 'ko' ? `안녕하세요, ${recipientName}님` : `Hello, ${recipientName}`}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0 0 40px 0;">
+                                        <div style="font-size: 15px; color: #4a4a4a; line-height: 1.8; white-space: pre-wrap;">
+                                            ${mainContent}
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                ${buttonText && buttonUrl ? `
+                                <tr>
+                                    <td style="padding: 0 0 40px 0;">
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td align="center" bgcolor="#1a1a1a" style="background-color: #1a1a1a; border-radius: 4px;">
+                                                    <a href="${buttonUrl}" target="_blank" style="display: inline-block; padding: 14px 28px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;">
+                                                        ${buttonText} →
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                ` : ''}
+                                
+                                ${footerText ? `
+                                <tr>
+                                    <td style="padding: 0;">
+                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="background-color: #f8f9fa; border-left: 3px solid #1a1a1a; padding: 20px 24px; margin: 32px 0; font-size: 14px; color: #4a4a4a; line-height: 1.7;">
+                                                    ${footerText}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                ` : ''}
+                                
+                                <!-- Divider -->
+                                <tr>
+                                    <td style="padding: 48px 0;">
+                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="height: 1px; background-color: #f0f0f0; font-size: 1px; line-height: 1px;">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 32px 0 0 0; border-top: 1px solid #f0f0f0;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td style="padding: 0 0 16px 0;">
+                                        <p style="margin: 0; padding: 0; font-size: 14px; font-weight: 600; color: #1a1a1a;">
+                                            Curieus
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0 0 24px 0;">
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="padding: 0 24px 0 0;">
+                                                    <a href="https://curieus.net" style="color: #666666; text-decoration: none; font-size: 13px; font-weight: 500;">
+                                                        ${language === 'ko' ? '홈페이지' : 'Homepage'}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0 0 8px 0;">
+                                        <p style="margin: 0; padding: 0; font-size: 12px; color: #888888; line-height: 1.6;">
+                                            ${language === 'ko' ? '본 메일은 Curieus 서비스 이용자에게 발송되는 안내 메일입니다.' : 'This email is sent to Curieus service users.'}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0 0 16px 0;">
+                                        <p style="margin: 0; padding: 0; font-size: 12px; color: #aaaaaa;">
+                                            © 2025 Curieus. All rights reserved.<br style="margin: 0; padding: 0;">
+                                            ${language === 'ko' ? '경기도 성남시 분당구 판교로289번길 20(판교스타트업캠퍼스, 3층)' : '20, Pangyo-ro 289beon-gil, Bundang-gu, Seongnam-si, Gyeonggi-do, Korea'}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 24px 0 0 0; border-top: 1px solid #f0f0f0;">
+                                        <p style="margin: 0; padding: 0; font-size: 11px; color: #aaaaaa;">
+                                            ${language === 'ko' ? '이 이메일을 원하지 않으시면 언제든 수신을 거부할 수 있습니다.' : 'You can unsubscribe from these emails at any time.'}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+  `.trim();
+}
+
 export function generatePlainTextEmail(data: EmailTemplateData): string {
   const {
     recipientName = '고객님',

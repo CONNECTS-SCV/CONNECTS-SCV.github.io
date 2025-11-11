@@ -5,7 +5,7 @@ import { Button } from "../ui/button/button";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { sendEmailWithNaverCloud } from "@/lib/naverCloudEmail";
-import { generateEmailTemplate } from "@/lib/emailTemplate";
+import { generateEmailTemplate, generateNaverEmailTemplate } from "@/lib/emailTemplate";
 
 interface SubscriptionModalProps {
     isOpen: boolean;
@@ -91,7 +91,10 @@ We'll keep you updated with valuable insights and platform updates.
 Best regards,
 The Curieus Team`;
 
-                    const welcomeEmail = generateEmailTemplate({
+                    // 네이버 도메인 체크
+                    const isNaverDomain = email.includes('@naver.com') || email.includes('@hanmail.net') || email.includes('@daum.net');
+                    
+                    const emailTemplateData = {
                         recipientName: email.split('@')[0],
                         recipientEmail: email,
                         subject: language === 'ko' ? '🎊 Curieus 구독을 환영합니다!' : '🎊 Welcome to Curieus!',
@@ -102,7 +105,11 @@ The Curieus Team`;
                             ? '💡 궁금한 점이 있으시면 언제든 curieus@connects.so으로 문의해주세요.'
                             : '💡 If you have any questions, feel free to contact us at curieus@connects.so',
                         language: language as 'ko' | 'en'
-                    });
+                    };
+                    
+                    const welcomeEmail = isNaverDomain 
+                        ? generateNaverEmailTemplate(emailTemplateData)
+                        : generateEmailTemplate(emailTemplateData);
 
                     await sendEmailWithNaverCloud({
                         to: [email],
