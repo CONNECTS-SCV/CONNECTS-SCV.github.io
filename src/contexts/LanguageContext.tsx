@@ -204,7 +204,7 @@ const translations: Record<Language, Record<string, string>> = {
     'common.error': '오류가 발생했습니다',
 
     // Banner
-    'banner.mainTitle': '기술로 만드는 더 나은 미래',
+    'banner.mainTitle': '생물학의 미래를 미리 경험하세요',
     'banner.subtitle': '새로움을 발견하고 미래를 탐구하세요',
     'banner.tag1': 'AI 연구',
     'banner.tag2': '바이오테크',
@@ -352,7 +352,7 @@ const translations: Record<Language, Record<string, string>> = {
     'common.error': 'An error occurred',
 
     // Banner
-    'banner.mainTitle': 'Better Future with Technology',
+    'banner.mainTitle': 'Experience the Future of Biology',
     'banner.subtitle': 'Discover the new and explore the future',
     'banner.tag1': 'AI Research',
     'banner.tag2': 'Biotech',

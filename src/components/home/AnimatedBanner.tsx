@@ -26,8 +26,8 @@ export function AnimatedBanner() {
           priority
         />
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-blue-500/30" />
+        {/* Gradient Overlay - 더 진하게 조정 */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-blue-600/50" />
 
         {/* Floating Shapes Pattern - Toss Style */}
         <div className="absolute inset-0">
@@ -72,9 +72,9 @@ export function AnimatedBanner() {
         {/* Main Content */}
         <div className="relative z-10 h-full flex flex-col justify-center items-center">
           {/* Main Title */}
-          <div className="overflow-hidden px-4">
+          <div className="px-4 w-full">
             <h1
-              className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-white text-center whitespace-normal lg:whitespace-nowrap"
+              className="text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white text-center whitespace-nowrap drop-shadow-lg leading-relaxed"
               style={{
                 animationName: isVisible ? 'fadeInUp' : 'none',
                 animationDuration: '0.6s',
@@ -90,7 +90,7 @@ export function AnimatedBanner() {
 
           {/* Subtitle */}
           <p
-            className="mt-2 sm:mt-3 text-white/90 text-xs sm:text-sm lg:text-base xl:text-lg font-medium text-center px-4"
+            className="mt-2 sm:mt-3 text-white text-xs sm:text-sm lg:text-base xl:text-lg font-medium text-center px-4 drop-shadow-md leading-relaxed"
             style={{
               animationName: isVisible ? 'fadeInUp' : 'none',
               animationDuration: '0.6s',
@@ -108,7 +108,7 @@ export function AnimatedBanner() {
             {[t('banner.tag1'), t('banner.tag2'), t('banner.tag3')].map((tag, i) => (
               <span
                 key={tag}
-                className="bg-white/20 backdrop-blur-sm text-white text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 rounded-full font-medium"
+                className="bg-white/25 backdrop-blur-sm text-white text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5 rounded-full font-medium border border-white/20 drop-shadow"
                 style={{
                   animationName: isVisible ? 'fadeInUp' : 'none',
                   animationDuration: '0.6s',
