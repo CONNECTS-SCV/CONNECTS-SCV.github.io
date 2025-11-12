@@ -174,13 +174,7 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
             background: #000000;
             transform: translateY(-1px);
         }
-        
-        .divider {
-            height: 1px;
-            background: #f0f0f0;
-            margin: 48px 0;
-        }
-        
+               
         .info-section {
             background: #fafafa;
             padding: 32px;
