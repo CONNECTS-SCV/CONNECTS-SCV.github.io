@@ -952,8 +952,8 @@ Your free plan includes 10 analyses per month.`,
                                                     onChange={(e) => setEmailContent({...emailContent, subject: e.target.value})}
                                                     className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
                                                     placeholder={language === 'ko'
-                                                        ? 'CONNECTS 뉴스레터'
-                                                        : 'CONNECTS Newsletter'
+                                                        ? 'Curieus 뉴스레터'
+                                                        : 'Curieus Newsletter'
                                                     }
                                                 />
                                             </div>

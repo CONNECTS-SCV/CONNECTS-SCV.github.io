@@ -197,18 +197,15 @@ const translations: Record<Language, Record<string, string>> = {
     'search.search': 'Search',
 
     // Footer
-    'footer.copyright': '© 2024 CONNECTS. All rights reserved.',
+    'footer.copyright': '© 2025 Curieus. All rights reserved.',
 
     // Common
     'common.loading': '로딩 중...',
     'common.error': '오류가 발생했습니다',
 
     // Banner
-    'banner.title.word1': '기술로',
-    'banner.title.word2': '만드는',
-    'banner.title.word3': '더 나은',
-    'banner.title.word4': '미래',
-    'banner.subtitle': '새로운 것과 다음을 발견하세요',
+    'banner.mainTitle': '기술로 만드는 더 나은 미래',
+    'banner.subtitle': '새로움을 발견하고 미래를 탐구하세요',
     'banner.tag1': 'AI 연구',
     'banner.tag2': '바이오테크',
     'banner.tag3': '혁신',
@@ -237,7 +234,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Subscription
     'subscription.modal.title': '뉴스레터 구독',
-    'subscription.modal.description': 'CONNECTS의 새로운 소식과 업데이트를 이메일로 받아보세요.',
+    'subscription.modal.description': 'Curieus의 새로운 소식과 업데이트를 이메일로 받아보세요.',
     'subscription.modal.placeholder': '이메일 주소를 입력하세요',
     'subscription.modal.submit': '구독하기',
     'subscription.modal.submitting': '처리중...',
@@ -348,18 +345,15 @@ const translations: Record<Language, Record<string, string>> = {
     'search.search': 'Search',
 
     // Footer
-    'footer.copyright': '© 2024 CONNECTS. All rights reserved.',
+    'footer.copyright': '© 2025 Curieus. All rights reserved.',
 
     // Common
     'common.loading': 'Loading...',
     'common.error': 'An error occurred',
 
     // Banner
-    'banner.title.word1': 'Building',
-    'banner.title.word2': 'a Better',
-    'banner.title.word3': 'Future',
-    'banner.title.word4': 'with Technology',
-    'banner.subtitle': 'Discover what\'s new and what\'s next',
+    'banner.mainTitle': 'Better Future with Technology',
+    'banner.subtitle': 'Discover the new and explore the future',
     'banner.tag1': 'AI Research',
     'banner.tag2': 'Biotech',
     'banner.tag3': 'Innovation',
@@ -388,7 +382,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Subscription
     'subscription.modal.title': 'Newsletter Subscription',
-    'subscription.modal.description': 'Get updates and news from CONNECTS delivered to your email.',
+    'subscription.modal.description': 'Get updates and news from Curieus delivered to your email.',
     'subscription.modal.placeholder': 'Enter your email address',
     'subscription.modal.submit': 'Subscribe',
     'subscription.modal.submitting': 'Processing...',

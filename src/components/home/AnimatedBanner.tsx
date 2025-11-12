@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Image from "next/image";
+import bannerImage from "@/assets/banner.png";
 import '@/style/animations.css';
 
 export function AnimatedBanner() {
@@ -14,19 +16,19 @@ export function AnimatedBanner() {
 
   return (
     <div className="w-full mb-10 px-4 xl:px-2">
-      <div className="relative w-full max-w-[1140px] h-32 sm:h-40 lg:h-[180px] mx-auto rounded-xl lg:rounded-2xl overflow-hidden group bg-white shadow-sm border border-gray-100">
-        {/* Animated Gradient Background - Toss Blue Style */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-600"
-          style={{
-            backgroundSize: '200% 200%',
-            animationName: 'gradientShift',
-            animationDuration: '8s',
-            animationTimingFunction: 'ease',
-            animationIterationCount: 'infinite',
-          }}
+      <div className="relative w-full max-w-[1140px] h-36 sm:h-44 lg:h-[200px] mx-auto rounded-xl lg:rounded-2xl overflow-hidden group bg-white shadow-sm border border-gray-100">
+        {/* Background Image */}
+        <Image
+          src={bannerImage}
+          alt="Banner background"
+          fill
+          className="object-cover"
+          priority
         />
-        
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-blue-500/30" />
+
         {/* Floating Shapes Pattern - Toss Style */}
         <div className="absolute inset-0">
           {/* Floating circles */}
@@ -71,40 +73,30 @@ export function AnimatedBanner() {
         <div className="relative z-10 h-full flex flex-col justify-center items-center">
           {/* Main Title */}
           <div className="overflow-hidden px-4">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center">
-              {[
-                t('banner.title.word1'),
-                t('banner.title.word2'),
-                t('banner.title.word3'),
-                t('banner.title.word4')
-              ].map((word, i) => (
-                <span
-                  key={i}
-                  className="inline-block mx-1"
-                  style={{
-                    animationName: isVisible ? 'fadeInUp' : 'none',
-                    animationDuration: '0.6s',
-                    animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                    animationFillMode: 'forwards',
-                    animationDelay: `${i * 0.1}s`,
-                    opacity: 0,
-                  }}
-                >
-                  {word}
-                </span>
-              ))}
+            <h1
+              className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-white text-center whitespace-normal lg:whitespace-nowrap"
+              style={{
+                animationName: isVisible ? 'fadeInUp' : 'none',
+                animationDuration: '0.6s',
+                animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                animationFillMode: 'forwards',
+                animationDelay: '0.1s',
+                opacity: 0,
+              }}
+            >
+              {t('banner.mainTitle')}
             </h1>
           </div>
 
           {/* Subtitle */}
           <p
-            className="mt-2 sm:mt-3 text-white/90 text-sm sm:text-base lg:text-lg font-light text-center px-4"
+            className="mt-2 sm:mt-3 text-white/90 text-xs sm:text-sm lg:text-base xl:text-lg font-medium text-center px-4"
             style={{
               animationName: isVisible ? 'fadeInUp' : 'none',
               animationDuration: '0.6s',
               animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
               animationFillMode: 'forwards',
-              animationDelay: '0.4s',
+              animationDelay: '0.3s',
               opacity: 0,
             }}
           >
@@ -133,7 +125,7 @@ export function AnimatedBanner() {
         </div>
 
         {/* Subtle Pattern Overlay */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `repeating-linear-gradient(

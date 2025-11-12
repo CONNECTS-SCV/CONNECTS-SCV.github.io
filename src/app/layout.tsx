@@ -14,17 +14,17 @@ const notoSans = Noto_Sans({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | CONNECTS',
-    default: 'CONNECTS Tech Blog',
+    template: '%s | Curieus',
+    default: 'Curieus Tech Blog',
   },
-  description: 'AI 기반 구조 생물학 분석 플랫폼 CONNECTS의 기술 블로그',
+  description: 'AI 기반 구조 생물학 분석 플랫폼 Curieus의 기술 블로그',
   metadataBase: new URL('https://connects-scv.github.io'),
-  applicationName: 'CONNECTS Blog',
+  applicationName: 'Curieus Blog',
   referrer: 'origin-when-cross-origin',
-  keywords: ['AI', '구조생물학', '단백질', '약물발견', 'AlphaFold', 'Curie', 'Twin', 'Pensive', 'CONNECTS'],
-  authors: [{ name: 'CONNECTS Team' }],
-  creator: 'CONNECTS',
-  publisher: 'CONNECTS',
+  keywords: ['AI', '구조생물학', '단백질', '약물발견', 'AlphaFold', 'Curie', 'Twin', 'Pensive', 'Curieus'],
+  authors: [{ name: 'Curieus Team' }],
+  creator: 'Curieus',
+  publisher: 'Curieus',
   formatDetection: {
     email: false,
     address: false,

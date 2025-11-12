@@ -30,18 +30,18 @@ export async function generateMetadata({params}: { params: Promise<{ id: string 
     const author = getAuthor(post.metadata.author);
 
     return {
-        title: `${post.metadata.title} | CONNECTS`,
+        title: `${post.metadata.title} | Curieus`,
         description: post.metadata.description || post.excerpt,
         keywords: post.metadata.tags?.join(', '),
-        authors: [{name: author?.name || 'CONNECTS Team'}],
+        authors: [{name: author?.name || 'Curieus Team'}],
         openGraph: {
             title: post.metadata.title,
             description: post.metadata.description || post.excerpt,
             type: 'article',
             publishedTime: post.metadata.date,
-            authors: [author?.name || 'CONNECTS Team'],
+            authors: [author?.name || 'Curieus Team'],
             tags: post.metadata.tags,
-            siteName: 'CONNECTS Blog',
+            siteName: 'Curieus Blog',
             locale: 'ko_KR',
             images: [
                 {

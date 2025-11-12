@@ -16,9 +16,9 @@ export const authors: Record<string, Author> = {
     name: '이대희',
     title: '대표이사',
     department: '경영',
-    bio: 'CONNECTS의 비전과 전략을 수립하고 회사를 이끌어가고 있습니다.',
+    bio: 'Curieus의 비전과 전략을 수립하고 회사를 이끌어가고 있습니다.',
     avatar: '/avatars/daehee-lee.png',
-    email: 'daehee.lee@connects.ai'
+    email: 'daehee.lee@curieus.ai'
   },
   'author2': {
     id: 'author2',
@@ -27,7 +27,7 @@ export const authors: Record<string, Author> = {
     department: '연구',
     bio: '단백질 구조 예측과 AI 알고리즘 개발을 담당하고 있습니다.',
     avatar: '/avatars/jongkwan-jung.png',
-    email: 'jongkwan.jung@connects.ai'
+    email: 'jongkwan.jung@curieus.ai'
   },
   'author3': {
     id: 'author3',
@@ -36,7 +36,7 @@ export const authors: Record<string, Author> = {
     department: '디자인',
     bio: 'UX/UI 디자인과 사용자 경험 설계를 담당하고 있습니다.',
     avatar: '/avatars/sohyun-um.png',
-    email: 'sohyun.um@connects.ai'
+    email: 'sohyun.um@curieus.ai'
   },
   'author4': {
     id: 'author4',
@@ -45,7 +45,7 @@ export const authors: Record<string, Author> = {
     department: '개발',
     bio: '프론트엔드 개발과 웹 플랫폼 구축을 담당하고 있습니다.',
     avatar: '/avatars/sungwook-cha.png',
-    email: 'sungwook.cha@connects.ai'
+    email: 'sungwook.cha@curieus.ai'
   },
   'author5': {
     id: 'author5',
@@ -54,16 +54,16 @@ export const authors: Record<string, Author> = {
     department: '개발',
     bio: '백엔드 시스템과 인프라 관리를 담당하고 있습니다.',
     avatar: '/avatars/mintae-kim.png',
-    email: 'mintae.kim@connects.ai'
+    email: 'mintae.kim@curieus.ai'
   },
   'author6': {
     id: 'author6',
     name: 'Curieus',
     title: '회사 계정',
-    department: 'CONNECTS',
-    bio: 'CONNECTS의 공식 회사 계정입니다.',
+    department: 'Curieus',
+    bio: 'Curieus의 공식 회사 계정입니다.',
     avatar: '/assets/logo.webp',
-    email: 'info@connects.ai'
+    email: 'info@curieus.ai'
   }
 };
 

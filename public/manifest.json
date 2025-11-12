@@ -1,7 +1,7 @@
 {
-  "name": "CONNECTS Tech Blog",
-  "short_name": "CONNECTS",
-  "description": "AI 기반 구조 생물학 분석 플랫폼 CONNECTS의 기술 블로그",
+  "name": "Curieus Tech Blog",
+  "short_name": "Curieus",
+  "description": "AI 기반 구조 생물학 분석 플랫폼 Curieus의 기술 블로그",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
