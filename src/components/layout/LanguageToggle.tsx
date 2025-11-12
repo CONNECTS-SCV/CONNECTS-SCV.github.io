@@ -54,10 +54,13 @@ export default function LanguageToggle() {
     return (
         <button
             onClick={toggleLanguage}
-      className="font-bold text-sm px-3 py-2 hover:bg-gray-100 transition-colors rounded-md select-none focus:outline-none"
+            className="header-link"
             aria-label="Toggle language"
         >
-            {language === 'ko' ? 'EN' : 'KO'}
+            <span className="link-icon">
+                <span className="text-sm font-bold text-gray-700">{language === 'ko' ? 'EN' : 'KO'}</span>
+            </span>
+            <span className="link-title">{language === 'ko' ? '영어' : 'Korean'}</span>
         </button>
     );
 }

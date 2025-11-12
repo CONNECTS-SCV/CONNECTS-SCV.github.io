@@ -105,6 +105,7 @@ const translations: Record<Language, Record<string, string>> = {
     'header.about': 'About Us',
     'header.subscribe': '구독하기',
     'header.recruit': '채용 바로가기',
+    'header.search': '검색',
 
     // Navigation
     'nav.home': '홈',
@@ -255,6 +256,7 @@ const translations: Record<Language, Record<string, string>> = {
     'header.about': 'About Us',
     'header.subscribe': 'Subscribe',
     'header.recruit': 'Careers',
+    'header.search': 'Search',
 
     // Navigation
     'nav.home': 'Home',
