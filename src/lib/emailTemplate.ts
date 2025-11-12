@@ -433,7 +433,7 @@ export function generateNaverEmailTemplate(data: EmailTemplateData): string {
                                         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 32px;">
                                             <tr>
                                                 <td align="left" style="padding: 0;">
-                                                    <img src="https://curie.kr/assets/logo.webp" alt="Curieus Logo" width="150" height="40" style="display: block; border: none;" />
+                                                    <img src="https://tech.curieus.net/assets/logo.webp" alt="Curieus Logo" width="150" height="40" style="display: block; border: none;" />
                                                 </td>
                                             </tr>
                                             <tr>
