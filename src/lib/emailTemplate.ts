@@ -1,33 +1,33 @@
 export interface EmailTemplateData {
-  recipientName?: string;
-  recipientEmail?: string;
-  subject: string;
-  mainContent: string;
-  buttonText?: string;
-  buttonUrl?: string;
-  footerText?: string;
-  language?: 'ko' | 'en';
+    recipientName?: string;
+    recipientEmail?: string;
+    subject: string;
+    mainContent: string;
+    buttonText?: string;
+    buttonUrl?: string;
+    footerText?: string;
+    language?: 'ko' | 'en';
 }
 
 export function generateEmailTemplate(data: EmailTemplateData): string {
-  const {
-    recipientName = 'Customer',
-    recipientEmail = '',
-    subject,
-    mainContent,
-    buttonText,
-    buttonUrl,
-    footerText,
-    language = 'ko'
-  } = data;
+    const {
+        recipientName = 'Customer',
+        recipientEmail = '',
+        subject,
+        mainContent,
+        buttonText,
+        buttonUrl,
+        footerText,
+        language = 'ko'
+    } = data;
 
-  // 안전한 이메일 제목 (스팸 필터 회피)
-  const safeSubject = subject
-    .replace(/free|무료|100%|보장|클릭하세요/gi, '')
-    .replace(/!!!|\$\$\$/g, '')
-    .replace(/ALL CAPS/g, (match) => match.toLowerCase());
+    // 안전한 이메일 제목 (스팸 필터 회피)
+    const safeSubject = subject
+        .replace(/free|무료|100%|보장|클릭하세요/gi, '')
+        .replace(/!!!|\$\$\$/g, '')
+        .replace(/ALL CAPS/g, (match) => match.toLowerCase());
 
-  return `
+    return `
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
@@ -319,7 +319,11 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
                     </div>
                 </div>
                 <div class="email-subject-wrapper">
-                    <div class="email-date">${new Date().toLocaleDateString(language === 'ko' ? 'ko-KR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                    <div class="email-date">${new Date().toLocaleDateString(language === 'ko' ? 'ko-KR' : 'en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })}</div>
                     <h1 class="email-subject">${safeSubject}</h1>
                 </div>
             </div>
@@ -396,24 +400,24 @@ export function generateEmailTemplate(data: EmailTemplateData): string {
 
 // 네이버 도메인 전용 템플릿 (모든 스타일 인라인 적용)
 export function generateNaverEmailTemplate(data: EmailTemplateData): string {
-  const {
-    recipientName = 'Customer',
-    recipientEmail = '',
-    subject,
-    mainContent,
-    buttonText,
-    buttonUrl,
-    footerText,
-    language = 'ko'
-  } = data;
+    const {
+        recipientName = 'Customer',
+        recipientEmail = '',
+        subject,
+        mainContent,
+        buttonText,
+        buttonUrl,
+        footerText,
+        language = 'ko'
+    } = data;
 
-  // 안전한 이메일 제목 (스팸 필터 회피)
-  const safeSubject = subject
-    .replace(/free|무료|100%|보장|클릭하세요/gi, '')
-    .replace(/!!!|\$\$\$/g, '')
-    .replace(/ALL CAPS/g, (match) => match.toLowerCase());
+    // 안전한 이메일 제목 (스팸 필터 회피)
+    const safeSubject = subject
+        .replace(/free|무료|100%|보장|클릭하세요/gi, '')
+        .replace(/!!!|\$\$\$/g, '')
+        .replace(/ALL CAPS/g, (match) => match.toLowerCase());
 
-  return `
+    return `
 <!DOCTYPE html>
 <html lang="${language}" style="margin: 0; padding: 0;">
 <head>
@@ -449,7 +453,11 @@ export function generateNaverEmailTemplate(data: EmailTemplateData): string {
                                 <tr>
                                     <td style="padding: 24px 0 0 0;">
                                         <p style="margin: 0 0 8px 0; padding: 0; font-size: 13px; color: #888888; font-weight: 500;">
-                                            ${new Date().toLocaleDateString(language === 'ko' ? 'ko-KR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                            ${new Date().toLocaleDateString(language === 'ko' ? 'ko-KR' : 'en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })}
                                         </p>
                                         <h1 style="margin: 0; padding: 0; font-size: 28px; font-weight: 700; color: #1a1a1a; line-height: 1.3;">
                                             ${safeSubject}
@@ -508,19 +516,6 @@ export function generateNaverEmailTemplate(data: EmailTemplateData): string {
                                     </td>
                                 </tr>
                                 ` : ''}
-                                
-                                <!-- Divider -->
-                                <tr>
-                                    <td style="padding: 48px 0;">
-                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                                            <tr>
-                                                <td style="height: 1px; background-color: #f0f0f0; font-size: 1px; line-height: 1px;">
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
                             </table>
                         </td>
                     </tr>
@@ -584,46 +579,46 @@ export function generateNaverEmailTemplate(data: EmailTemplateData): string {
 }
 
 export function generatePlainTextEmail(data: EmailTemplateData): string {
-  const {
-    recipientName = '고객님',
-    recipientEmail = '',
-    subject,
-    mainContent,
-    buttonText,
-    buttonUrl,
-    footerText
-  } = data;
+    const {
+        recipientName = '고객님',
+        recipientEmail = '',
+        subject,
+        mainContent,
+        buttonText,
+        buttonUrl,
+        footerText
+    } = data;
 
-  // 안전한 이메일 제목
-  const safeSubject = subject
-    .replace(/free|무료|100%|보장|클릭하세요/gi, '')
-    .replace(/!!!|\$\$\$/g, '')
-    .replace(/ALL CAPS/g, (match) => match.toLowerCase());
+    // 안전한 이메일 제목
+    const safeSubject = subject
+        .replace(/free|무료|100%|보장|클릭하세요/gi, '')
+        .replace(/!!!|\$\$\$/g, '')
+        .replace(/ALL CAPS/g, (match) => match.toLowerCase());
 
-  let plainText = `Curieus\n\n`;
-  plainText += `${safeSubject}\n\n`;
-  plainText += `안녕하세요, ${recipientName}!\n\n`;
-  plainText += `${mainContent}\n\n`;
+    let plainText = `Curieus\n\n`;
+    plainText += `${safeSubject}\n\n`;
+    plainText += `안녕하세요, ${recipientName}!\n\n`;
+    plainText += `${mainContent}\n\n`;
 
-  if (buttonText && buttonUrl) {
-    plainText += `${buttonText}: ${buttonUrl}\n\n`;
-  }
+    if (buttonText && buttonUrl) {
+        plainText += `${buttonText}: ${buttonUrl}\n\n`;
+    }
 
-  if (footerText) {
-    plainText += `---\n${footerText}\n---\n\n`;
-  }
+    if (footerText) {
+        plainText += `---\n${footerText}\n---\n\n`;
+    }
 
-  plainText += `Curieus 주요 기능:\n`;
-  plainText += `• 단백질 분석 - AlphaFold3 기반 구조 예측\n`;
-  plainText += `• 리간드 도킹 - 정밀한 결합 분석\n`;
-  plainText += `• 상호작용 예측 - 분자간 관계 분석\n\n`;
+    plainText += `Curieus 주요 기능:\n`;
+    plainText += `• 단백질 분석 - AlphaFold3 기반 구조 예측\n`;
+    plainText += `• 리간드 도킹 - 정밀한 결합 분석\n`;
+    plainText += `• 상호작용 예측 - 분자간 관계 분석\n\n`;
 
-  plainText += `홈페이지: https://curieus.net\n`;
-  plainText += `기능 소개: https://curieus.net/features\n`;
-  plainText += `문의하기: https://curieus.net/support\n\n`;
+    plainText += `홈페이지: https://curieus.net\n`;
+    plainText += `기능 소개: https://curieus.net/features\n`;
+    plainText += `문의하기: https://curieus.net/support\n\n`;
 
-  plainText += `© 2024 Curieus. All rights reserved.\n\n`;
-  plainText += `수신 거부: https://curieus.net/unsubscribe?email=${encodeURIComponent(recipientEmail)}\n`;
+    plainText += `© 2024 Curieus. All rights reserved.\n\n`;
+    plainText += `수신 거부: https://curieus.net/unsubscribe?email=${encodeURIComponent(recipientEmail)}\n`;
 
-  return plainText;
+    return plainText;
 }
