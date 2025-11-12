@@ -1,0 +1,97 @@
+.header-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.header-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 40px;
+  border-radius: 99em;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transform-origin: center left;
+  transition: width 0.2s ease-in-out, background-color 0.2s ease;
+  text-decoration: none;
+  color: #374151;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.header-link:before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  display: block;
+  border-radius: 99em;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  transform: translateX(100%);
+  transition: transform 0.2s ease-in-out;
+  transform-origin: center right;
+  background-color: #f3f4f6;
+}
+
+.header-link:hover,
+.header-link:focus {
+  outline: 0;
+  width: 130px;
+}
+
+.header-link:hover:before,
+.header-link:hover .link-title,
+.header-link:focus:before,
+.header-link:focus .link-title {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.link-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: absolute;
+  left: 15px;
+}
+
+.link-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.link-title {
+  transform: translateX(100%);
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease;
+  transform-origin: center right;
+  display: block;
+  text-align: center;
+  padding-left: 35px;
+  padding-right: 10px;
+  width: 100%;
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+/* 반응형: 모바일에서는 아이콘만 표시 */
+@media (max-width: 640px) {
+  .header-link:hover,
+  .header-link:focus {
+    width: 50px;
+  }
+  
+  .header-link .link-title {
+    display: none;
+  }
+}
