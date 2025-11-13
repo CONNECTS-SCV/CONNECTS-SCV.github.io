@@ -245,7 +245,7 @@ export function subscribeToBanners(callback: (banners: AdBanner[]) => void) {
 
 // 구독 해제
 export function unsubscribeFromBanners(subscription: any) {
-  if (subscription) {
+  if (subscription && supabase) {
     supabase.removeChannel(subscription);
   }
 }
