@@ -13,6 +13,7 @@ import {
   Activity,
   ArrowUp,
   BarChart3,
+  Megaphone,
 } from "lucide-react";
 
 interface DashboardStats {
@@ -201,7 +202,7 @@ export default function AdminDashboardPage() {
           <h2 className="text-xl font-semibold text-gray-900 mb-6">
             {language === "ko" ? "관리 메뉴" : "Management Menu"}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Comments Management */}
             <Link href="/admin/comments" className="group block">
               <div className="bg-white p-8 rounded-2xl border-2 border-gray-100 hover:border-blue-300 transition-all hover:shadow-lg cursor-pointer">
@@ -273,6 +274,44 @@ export default function AdminDashboardPage() {
                   <div className="text-xs text-gray-500">
                     <span className="text-blue-600 font-medium">+{stats.subscribers.thisWeek}</span>
                     <span> {language === "ko" ? "이번 주" : "this week"}</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Banner Management */}
+            <Link href="/admin/banners" className="group block">
+              <div className="bg-white p-8 rounded-2xl border-2 border-gray-100 hover:border-purple-300 transition-all hover:shadow-lg cursor-pointer">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="p-4 bg-purple-50 rounded-xl">
+                    <Megaphone className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <ChevronRight className="w-6 h-6 text-gray-300 group-hover:text-purple-600 transition-colors mt-3" />
+                </div>
+
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {language === "ko" ? "광고 배너 관리" : "Ad Banner Management"}
+                </h3>
+                <p className="text-gray-600 text-sm mb-6">
+                  {language === "ko"
+                    ? "홈페이지 광고 배너를 관리하고 편집합니다"
+                    : "Manage and edit homepage ad banners"}
+                </p>
+
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                  <div className="flex gap-6">
+                    <div>
+                      <div className="text-2xl font-bold text-gray-900">3</div>
+                      <div className="text-xs text-gray-500">{language === "ko" ? "활성" : "Active"}</div>
+                    </div>
+                    <div className="border-l border-gray-200 pl-6">
+                      <div className="text-2xl font-bold text-purple-600">2</div>
+                      <div className="text-xs text-gray-500">{language === "ko" ? "예정" : "Scheduled"}</div>
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    <span className="text-orange-600 font-medium">10초</span>
+                    <span> {language === "ko" ? "로테이션" : "rotation"}</span>
                   </div>
                 </div>
               </div>

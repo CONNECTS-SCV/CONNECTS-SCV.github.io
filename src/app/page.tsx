@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { PostList } from "@/components/post";
 import { AnimatedBanner } from "@/components/home/AnimatedBanner";
+import { SideAdBanner } from "@/components/home/SideAdBanner";
 
 export const metadata: Metadata = {
   title: 'Curieus Tech Blog - AI 구조 생물학 기술 블로그',
@@ -46,9 +47,18 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="w-full max-w-[1140px] mx-auto">
-      <AnimatedBanner />
-      <PostList />
-    </div>
+    <>
+      {/* 좌측 광고 배너 */}
+      <SideAdBanner position="left" />
+      
+      {/* 메인 콘텐츠 - 모바일/태블릿에서 하단 배너 공간 확보 */}
+      <div className="w-full max-w-[1140px] mx-auto pb-20 2xl:pb-0">
+        <AnimatedBanner />
+        <PostList />
+      </div>
+      
+      {/* 우측 광고 배너 */}
+      <SideAdBanner position="right" />
+    </>
   );
 }
