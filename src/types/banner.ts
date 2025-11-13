@@ -14,6 +14,7 @@ export interface AdBanner {
   badgeTextEn?: string;
   buttonText?: string;
   buttonTextEn?: string;
+  buttonColor?: string;
   link: string;
   linkTarget?: '_blank' | '_self';
   startDate?: string;
@@ -42,6 +43,7 @@ export interface BannerFormData {
   badgeTextEn?: string;
   buttonText?: string;
   buttonTextEn?: string;
+  buttonColor?: string;
   link: string;
   linkTarget?: '_blank' | '_self';
   startDate?: string;

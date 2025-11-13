@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase, getCommentStats } from "@/lib/supabase";
+import { getBanners } from "@/lib/supabase-banners";
 import {
   MessageCircle,
   Mail,
@@ -29,6 +30,11 @@ interface DashboardStats {
     thisWeek: number;
     thisMonth: number;
   };
+  banners: {
+    active: number;
+    scheduled: number;
+    total: number;
+  };
 }
 
 export default function AdminDashboardPage() {
@@ -39,6 +45,7 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState<DashboardStats>({
     comments: { total: 0, today: 0, new: 0, thisWeek: 0 },
     subscribers: { total: 0, active: 0, thisWeek: 0, thisMonth: 0 },
+    banners: { active: 0, scheduled: 0, total: 0 },
   });
 
   // Check authentication
@@ -79,8 +86,27 @@ export default function AdminDashboardPage() {
         .from("subscribers")
         .select("*");
 
+      // Load banner stats
+      const banners = await getBanners();
+      const now = new Date();
+      
+      const bannerStats = {
+        total: banners.length,
+        active: banners.filter(b => {
+          if (!b.isActive) return false;
+          const nowTime = now.getTime();
+          const startTime = b.startDate ? new Date(b.startDate).getTime() : 0;
+          const endTime = b.endDate ? new Date(b.endDate).getTime() : Infinity;
+          return nowTime >= startTime && nowTime <= endTime;
+        }).length,
+        scheduled: banners.filter(b => {
+          if (!b.isActive) return false;
+          const startTime = b.startDate ? new Date(b.startDate).getTime() : 0;
+          return startTime > now.getTime();
+        }).length,
+      };
+
       if (!error && subscribers && commentStats) {
-        const now = new Date();
         const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
         const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
@@ -99,6 +125,7 @@ export default function AdminDashboardPage() {
             thisWeek: commentStats.total, // You might want to calculate this properly
           },
           subscribers: subscriberStats,
+          banners: bannerStats,
         });
       }
     } catch (error) {
@@ -301,11 +328,11 @@ export default function AdminDashboardPage() {
                 <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
                   <div className="flex gap-6">
                     <div>
-                      <div className="text-2xl font-bold text-gray-900">3</div>
+                      <div className="text-2xl font-bold text-gray-900">{stats.banners.active}</div>
                       <div className="text-xs text-gray-500">{language === "ko" ? "활성" : "Active"}</div>
                     </div>
                     <div className="border-l border-gray-200 pl-6">
-                      <div className="text-2xl font-bold text-purple-600">2</div>
+                      <div className="text-2xl font-bold text-purple-600">{stats.banners.scheduled}</div>
                       <div className="text-xs text-gray-500">{language === "ko" ? "예정" : "Scheduled"}</div>
                     </div>
                   </div>

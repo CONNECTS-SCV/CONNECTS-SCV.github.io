@@ -83,6 +83,9 @@ export function BannerManager() {
     subtitleEn: "",
     backgroundColor: predefinedGradients[0].value,
     textColor: "text-white",
+    buttonText: "자세히 보기",
+    buttonTextEn: "Learn More",
+    buttonColor: "bg-black/20",
     link: "",
     linkTarget: "_blank",
     isActive: true,
@@ -546,14 +549,20 @@ export function BannerManager() {
                           <label className="block text-sm font-semibold text-gray-700 mb-3">
                             CTA 버튼 텍스트
                           </label>
-                          <div className="grid grid-cols-3 gap-3">
+                          <div className="grid grid-cols-3 gap-3 mb-3">
                             {ctaStyles.map((cta) => (
                               <button
                                 key={cta.name}
                                 type="button"
-                                onClick={() => setCtaText(cta)}
+                                onClick={() => {
+                                  setFormData({
+                                    ...formData,
+                                    buttonText: cta.name,
+                                    buttonTextEn: cta.nameEn
+                                  });
+                                }}
                                 className={`px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
-                                  ctaText.name === cta.name
+                                  formData.buttonText === cta.name
                                     ? 'border-purple-500 bg-purple-50 text-purple-700'
                                     : 'border-gray-200 hover:border-gray-300 text-gray-700'
                                 }`}
@@ -561,6 +570,81 @@ export function BannerManager() {
                                 {language === 'ko' ? cta.name : cta.nameEn}
                               </button>
                             ))}
+                          </div>
+
+                          {/* 커스텀 텍스트 입력 */}
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <input
+                                type="text"
+                                value={formData.buttonText || ''}
+                                onChange={(e) => setFormData({ ...formData, buttonText: e.target.value })}
+                                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                placeholder="한국어 버튼 텍스트"
+                              />
+                            </div>
+                            <div>
+                              <input
+                                type="text"
+                                value={formData.buttonTextEn || ''}
+                                onChange={(e) => setFormData({ ...formData, buttonTextEn: e.target.value })}
+                                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                placeholder="English button text"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* CTA 버튼 색상 */}
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-3">
+                            CTA 버튼 색상
+                          </label>
+                          <div className="grid grid-cols-4 gap-3">
+                            <button
+                              type="button"
+                              onClick={() => setFormData({ ...formData, buttonColor: 'bg-black/20' })}
+                              className={`px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
+                                formData.buttonColor === 'bg-black/20'
+                                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                                  : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                              }`}
+                            >
+                              반투명 검정
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setFormData({ ...formData, buttonColor: 'bg-white/20' })}
+                              className={`px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
+                                formData.buttonColor === 'bg-white/20'
+                                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                                  : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                              }`}
+                            >
+                              반투명 흰색
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setFormData({ ...formData, buttonColor: 'bg-purple-600' })}
+                              className={`px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
+                                formData.buttonColor === 'bg-purple-600'
+                                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                                  : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                              }`}
+                            >
+                              보라색
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setFormData({ ...formData, buttonColor: 'bg-blue-600' })}
+                              className={`px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
+                                formData.buttonColor === 'bg-blue-600'
+                                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                                  : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                              }`}
+                            >
+                              파란색
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -847,10 +931,6 @@ export function BannerManager() {
                       <p className="text-xs text-gray-500 mb-4">데스크톱 사이드 배너 (160px)</p>
                       <div style={{ width: '160px' }} className="mx-auto">
                         <div className={`relative rounded-xl overflow-hidden shadow-lg ${previewBanner.backgroundColor}`}>
-                          {/* AD 뱃지 */}
-                          <div className="absolute top-2 right-2 z-10">
-                            <X className="w-3 h-3 text-white/70" />
-                          </div>
 
                           <div className={`p-4 ${previewBanner.textColor || 'text-white'}`}>
                             {/* 이미지 */}
@@ -882,13 +962,11 @@ export function BannerManager() {
 
                             {/* CTA 버튼 */}
                             <div className="mt-4">
-                              <span className="inline-flex items-center justify-center w-full py-2 px-3 text-xs font-medium bg-black/20 backdrop-blur-sm rounded-lg">
-                                {language === 'ko' ? ctaText.name : ctaText.nameEn}
-                                {ctaText.icon === 'arrow' && (
-                                  <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                  </svg>
-                                )}
+                              <span className={`inline-flex items-center justify-center w-full py-2 px-3 text-xs font-medium ${previewBanner.buttonColor || 'bg-black/20'} backdrop-blur-sm rounded-lg`}>
+                                {language === 'ko' ? (previewBanner.buttonText || '자세히 보기') : (previewBanner.buttonTextEn || 'Learn More')}
+                                <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
                               </span>
                             </div>
                           </div>
@@ -903,10 +981,6 @@ export function BannerManager() {
                       <p className="text-xs text-gray-500 mb-4">모바일 하단 배너</p>
                       <div className="w-full">
                         <div className={`relative ${previewBanner.backgroundColor} p-3 rounded-lg`}>
-                          {/* 닫기 버튼 */}
-                          <div className="absolute top-2 right-2 z-10">
-                            <X className="w-4 h-4 text-white/70" />
-                          </div>
 
                           <div className={`flex items-center gap-3 ${previewBanner.textColor || 'text-white'}`}>
                             {/* 내용 */}
@@ -922,8 +996,8 @@ export function BannerManager() {
                             </div>
 
                             {/* CTA 버튼 */}
-                            <span className="px-3 py-1.5 text-xs font-medium bg-black/20 backdrop-blur-sm rounded-lg whitespace-nowrap">
-                              {language === 'ko' ? '자세히' : 'More'}
+                            <span className={`px-3 py-1.5 text-xs font-medium ${previewBanner.buttonColor || 'bg-black/20'} backdrop-blur-sm rounded-lg whitespace-nowrap`}>
+                              {language === 'ko' ? (previewBanner.buttonText || '자세히') : (previewBanner.buttonTextEn || 'More')}
                               <svg className="inline-block ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>

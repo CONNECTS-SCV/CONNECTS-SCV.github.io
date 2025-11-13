@@ -157,8 +157,8 @@ export function SideAdBanner({ position }: { position: "left" | "right" }) {
 
             {/* CTA 버튼 */}
             <div className="mt-4">
-              <span className="inline-flex items-center justify-center w-full py-2 px-3 text-xs font-medium bg-black/20 backdrop-blur-sm rounded-lg hover:bg-black/30 transition-colors">
-                {language === "ko" ? "자세히 보기" : "Learn More"}
+              <span className={`inline-flex items-center justify-center w-full py-2 px-3 text-xs font-medium ${currentAd.buttonColor || 'bg-black/20'} backdrop-blur-sm rounded-lg hover:opacity-80 transition-opacity`}>
+                {language === "ko" ? (currentAd.buttonText || "자세히 보기") : (currentAd.buttonTextEn || "Learn More")}
                 <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
@@ -203,8 +203,8 @@ export function SideAdBanner({ position }: { position: "left" | "right" }) {
               </div>
 
               {/* CTA 버튼 */}
-              <span className="px-3 py-1.5 text-xs font-medium bg-black/20 backdrop-blur-sm rounded-lg hover:bg-black/30 transition-colors whitespace-nowrap">
-                {language === "ko" ? "자세히" : "More"}
+              <span className={`px-3 py-1.5 text-xs font-medium ${currentAd.buttonColor || 'bg-black/20'} backdrop-blur-sm rounded-lg hover:opacity-80 transition-opacity whitespace-nowrap`}>
+                {language === "ko" ? (currentAd.buttonText || "자세히") : (currentAd.buttonTextEn || "More")}
                 <svg className="inline-block ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
