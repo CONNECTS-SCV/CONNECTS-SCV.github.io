@@ -32,6 +32,9 @@ export async function getBanners(): Promise<AdBanner[]> {
       imageUrl: banner.image_url,
       backgroundColor: banner.background_color,
       textColor: banner.text_color,
+      buttonText: banner.button_text,
+      buttonTextEn: banner.button_text_en,
+      buttonColor: banner.button_color,
       link: banner.link,
       linkTarget: banner.link_target as '_blank' | '_self',
       startDate: banner.start_date,
@@ -39,6 +42,9 @@ export async function getBanners(): Promise<AdBanner[]> {
       isActive: banner.is_active,
       priority: banner.priority,
       position: banner.position as 'left' | 'right' | 'both',
+      slotIndex: banner.slot_index ?? 0,
+      rotationInterval: banner.rotation_interval ?? 10000,
+      isStatic: banner.is_static ?? false,
       createdAt: banner.created_at,
       updatedAt: banner.updated_at,
     }));
@@ -83,6 +89,9 @@ export async function createBanner(banner: Omit<AdBanner, 'id' | 'createdAt' | '
         image_url: banner.imageUrl,
         background_color: banner.backgroundColor,
         text_color: banner.textColor,
+        button_text: banner.buttonText,
+        button_text_en: banner.buttonTextEn,
+        button_color: banner.buttonColor,
         link: banner.link,
         link_target: banner.linkTarget,
         start_date: banner.startDate,
@@ -90,6 +99,9 @@ export async function createBanner(banner: Omit<AdBanner, 'id' | 'createdAt' | '
         is_active: banner.isActive,
         priority: banner.priority,
         position: banner.position,
+        slot_index: banner.slotIndex ?? 0,
+        rotation_interval: banner.rotationInterval ?? 10000,
+        is_static: banner.isStatic ?? false,
       })
       .select()
       .single();
@@ -108,6 +120,9 @@ export async function createBanner(banner: Omit<AdBanner, 'id' | 'createdAt' | '
       imageUrl: data.image_url,
       backgroundColor: data.background_color,
       textColor: data.text_color,
+      buttonText: data.button_text,
+      buttonTextEn: data.button_text_en,
+      buttonColor: data.button_color,
       link: data.link,
       linkTarget: data.link_target as '_blank' | '_self',
       startDate: data.start_date,
@@ -115,6 +130,9 @@ export async function createBanner(banner: Omit<AdBanner, 'id' | 'createdAt' | '
       isActive: data.is_active,
       priority: data.priority,
       position: data.position as 'left' | 'right' | 'both',
+      slotIndex: data.slot_index ?? 0,
+      rotationInterval: data.rotation_interval ?? 10000,
+      isStatic: data.is_static ?? false,
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
@@ -151,24 +169,35 @@ export async function updateBanner(id: string, updates: Partial<AdBanner>): Prom
   }
 
   try {
+    const updateData: any = {};
+    
+    // 각 필드를 명시적으로 확인하고 데이터베이스 형식으로 변환
+    if (updates.title !== undefined) updateData.title = updates.title;
+    if (updates.titleEn !== undefined) updateData.title_en = updates.titleEn;
+    if (updates.subtitle !== undefined) updateData.subtitle = updates.subtitle;
+    if (updates.subtitleEn !== undefined) updateData.subtitle_en = updates.subtitleEn;
+    if (updates.imageUrl !== undefined) updateData.image_url = updates.imageUrl;
+    if (updates.backgroundColor !== undefined) updateData.background_color = updates.backgroundColor;
+    if (updates.textColor !== undefined) updateData.text_color = updates.textColor;
+    if (updates.buttonText !== undefined) updateData.button_text = updates.buttonText;
+    if (updates.buttonTextEn !== undefined) updateData.button_text_en = updates.buttonTextEn;
+    if (updates.buttonColor !== undefined) updateData.button_color = updates.buttonColor;
+    if (updates.link !== undefined) updateData.link = updates.link;
+    if (updates.linkTarget !== undefined) updateData.link_target = updates.linkTarget;
+    if (updates.startDate !== undefined) updateData.start_date = updates.startDate;
+    if (updates.endDate !== undefined) updateData.end_date = updates.endDate;
+    if (updates.isActive !== undefined) updateData.is_active = updates.isActive;
+    if (updates.priority !== undefined) updateData.priority = updates.priority;
+    if (updates.position !== undefined) updateData.position = updates.position;
+    if (updates.slotIndex !== undefined) updateData.slot_index = updates.slotIndex;
+    if (updates.rotationInterval !== undefined) updateData.rotation_interval = updates.rotationInterval;
+    if (updates.isStatic !== undefined) updateData.is_static = updates.isStatic;
+
+    console.log('Updating banner with data:', updateData);
+
     const { error } = await supabase
       .from('banners')
-      .update({
-        title: updates.title,
-        title_en: updates.titleEn,
-        subtitle: updates.subtitle,
-        subtitle_en: updates.subtitleEn,
-        image_url: updates.imageUrl,
-        background_color: updates.backgroundColor,
-        text_color: updates.textColor,
-        link: updates.link,
-        link_target: updates.linkTarget,
-        start_date: updates.startDate,
-        end_date: updates.endDate,
-        is_active: updates.isActive,
-        priority: updates.priority,
-        position: updates.position,
-      })
+      .update(updateData)
       .eq('id', id);
 
     if (error) {

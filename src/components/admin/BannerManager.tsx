@@ -75,6 +75,7 @@ export function BannerManager() {
   const [ctaText, setCtaText] = useState(ctaStyles[0]);
   const [backgroundType, setBackgroundType] = useState<'gradient' | 'solid' | 'custom'>('gradient');
   const [customBackground, setCustomBackground] = useState('');
+  const [viewMode, setViewMode] = useState<'list' | 'slots'>('list');
 
   const [formData, setFormData] = useState<BannerFormData>({
     title: "",
@@ -91,6 +92,9 @@ export function BannerManager() {
     isActive: true,
     priority: 1,
     position: "both",
+    slotIndex: 0,
+    rotationInterval: 10000,
+    isStatic: false,
   });
 
   // 통계 계산
@@ -139,12 +143,16 @@ export function BannerManager() {
   // 배너 저장 (실시간 업데이트)
   const saveBanner = async (banner: AdBanner | Omit<AdBanner, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
+      console.log('Saving banner with data:', banner);
+      
       if ('id' in banner && banner.id) {
         // 수정
         const { id, createdAt, updatedAt, ...updates } = banner;
+        console.log('Updating banner with ID:', id, 'Updates:', updates);
         await updateBanner(id, updates);
       } else {
         // 생성
+        console.log('Creating new banner:', banner);
         await createBanner(banner);
       }
       await loadBanners();
@@ -196,6 +204,12 @@ export function BannerManager() {
       isActive: true,
       priority: banners.length + 1,
       position: "both",
+      slotIndex: 0,
+      rotationInterval: 10000,
+      isStatic: false,
+      buttonText: "자세히 보기",
+      buttonTextEn: "Learn More",
+      buttonColor: "bg-black/20",
     });
     setActiveTab('content');
     setBackgroundType('gradient');
@@ -259,6 +273,13 @@ export function BannerManager() {
       priority: banner.priority,
       position: banner.position,
       imageUrl: banner.imageUrl,
+      // 새로운 필드들 추가
+      slotIndex: banner.slotIndex ?? 0,
+      rotationInterval: banner.rotationInterval ?? 10000,
+      isStatic: banner.isStatic ?? false,
+      buttonText: banner.buttonText,
+      buttonTextEn: banner.buttonTextEn,
+      buttonColor: banner.buttonColor,
     });
 
     // 배경 타입 감지
@@ -304,9 +325,12 @@ export function BannerManager() {
   // 실시간 미리보기 배너 데이터
   const previewBanner = {
     ...formData,
+    id: 'preview',
     backgroundColor: backgroundType === 'custom' && customBackground
       ? customBackground
       : formData.backgroundColor,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
 
   if (isLoading) {
@@ -782,24 +806,169 @@ export function BannerManager() {
 
                     {/* 설정 탭 */}
                     {activeTab === 'settings' && (
-                      <div className="space-y-5">
-                        <div className="grid grid-cols-2 gap-5">
-                          {/* 위치 */}
-                          <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
-                              표시 위치
-                            </label>
-                            <select
-                              value={formData.position}
-                              onChange={(e) => setFormData({ ...formData, position: e.target.value as 'left' | 'right' | 'both' })}
-                              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                            >
-                              <option value="both">양쪽 모두</option>
-                              <option value="left">왼쪽만</option>
-                              <option value="right">오른쪽만</option>
-                            </select>
+                      <div className="space-y-6">
+                        {/* 배너 위치 및 로테이션 설정 섹션 */}
+                        <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-5 border border-purple-100">
+                          <h4 className="text-sm font-bold text-gray-800 mb-4 flex items-center">
+                            <svg className="w-4 h-4 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                            </svg>
+                            배너 위치 및 로테이션 설정
+                          </h4>
+                          
+                          <div className="grid grid-cols-2 gap-4">
+                            {/* 표시 위치 */}
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                표시 위치
+                              </label>
+                              <select
+                                value={formData.position}
+                                onChange={(e) => setFormData({ ...formData, position: e.target.value as 'left' | 'right' | 'both' })}
+                                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all bg-white"
+                              >
+                                <option value="both">양쪽 모두</option>
+                                <option value="left">왼쪽만</option>
+                                <option value="right">오른쪽만</option>
+                              </select>
+                            </div>
+
+                            {/* 슬롯 위치 */}
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                슬롯 순서
+                              </label>
+                              <div className="flex items-center gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => setFormData({ ...formData, slotIndex: Math.max(0, (formData.slotIndex || 0) - 1) })}
+                                  className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                  </svg>
+                                </button>
+                                <input
+                                  type="number"
+                                  min="0"
+                                  max="10"
+                                  value={formData.slotIndex || 0}
+                                  onChange={(e) => setFormData({ ...formData, slotIndex: parseInt(e.target.value) })}
+                                  className="w-20 px-3 py-2 text-center border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => setFormData({ ...formData, slotIndex: Math.min(10, (formData.slotIndex || 0) + 1) })}
+                                  className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                  </svg>
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* 로테이션 설정 */}
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                로테이션 모드
+                              </label>
+                              <div className="space-y-2">
+                                <label className="flex items-center">
+                                  <input
+                                    type="checkbox"
+                                    checked={formData.isStatic || false}
+                                    onChange={(e) => setFormData({ ...formData, isStatic: e.target.checked })}
+                                    className="mr-2"
+                                  />
+                                  <span className="text-sm">고정 배너 (로테이션 없음)</span>
+                                </label>
+                              </div>
+                            </div>
+
+                            {/* 로테이션 간격 */}
+                            {!formData.isStatic && (
+                              <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                  로테이션 간격 (초)
+                                </label>
+                                <input
+                                  type="number"
+                                  min="5"
+                                  max="60"
+                                  value={(formData.rotationInterval || 10000) / 1000}
+                                  onChange={(e) => setFormData({ ...formData, rotationInterval: parseInt(e.target.value) * 1000 })}
+                                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                />
+                                <p className="mt-1 text-xs text-amber-600">
+                                  ⚠️ 같은 슬롯의 모든 배너가 동일한 간격으로 로테이션됩니다
+                                </p>
+                              </div>
+                            )}
+
+                            {/* 우선순위 */}
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                우선순위
+                              </label>
+                              <input
+                                type="number"
+                                min="1"
+                                value={formData.priority}
+                                onChange={(e) => setFormData({ ...formData, priority: parseInt(e.target.value) })}
+                                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                required
+                              />
+                              <p className="mt-1 text-xs text-gray-500">같은 슬롯 내에서 낮을수록 먼저 표시</p>
+                            </div>
                           </div>
 
+                          {/* 슬롯 위치 미리보기 */}
+                          <div className="mt-4 p-3 bg-white/80 backdrop-blur rounded-lg border border-purple-100">
+                                <div className="text-xs text-gray-600 mb-2">
+                                  슬롯 배치 미리보기:  
+                                  <span className="text-purple-600 font-medium">(같은 위치+슬롯은 하나의 그룹으로 로테이션)</span>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                  <div className="flex-shrink-0">
+                                    <div className="text-xs text-gray-500 mb-2">왼쪽</div>
+                                    <div className="flex flex-col gap-2 p-2 w-20 bg-white border-2 border-gray-200 rounded">
+                                      {[0, 1, 2, 3].map(slot => (
+                                        <div 
+                                          key={slot}
+                                          className={`w-16 h-8 rounded text-xs flex items-center justify-center transition-all ${
+                                            formData.slotIndex === slot 
+                                              ? 'bg-purple-500 text-white font-bold border-2 border-purple-600' 
+                                              : 'bg-gray-200 text-gray-500 border border-gray-300'
+                                          }`}
+                                        >
+                                          슬롯 {slot}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <div className="flex-1 text-xs text-gray-600">
+                                    <div className="font-semibold mb-1">현재 선택: 슬롯 {formData.slotIndex || 0}</div>
+                                    <div className="space-y-1">
+                                      <div>• 슬롯 0: 최상단 위치</div>
+                                      <div>• 슬롯 1: 두 번째 위치</div>
+                                      <div>• 슬롯 2: 세 번째 위치</div>
+                                      <div className="text-purple-600 font-medium mt-2">
+                                        각 배너 사이 20px 간격으로 자동 배치
+                                      </div>
+                                      <div className="text-gray-500 text-xs">
+                                        배너 크기에 관계없이 일정한 간격 유지
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+
+                        {/* 기타 설정 */}
+                        <div className="space-y-4">
+                          <h4 className="text-sm font-bold text-gray-800 mb-3">기타 설정</h4>
+                          
                           {/* 링크 타겟 */}
                           <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -1014,12 +1183,22 @@ export function BannerManager() {
 
           {/* 배너 목록 */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-            <h3 className="text-xl font-bold text-gray-900 mb-6">
-              {language === 'ko' ? '배너 목록' : 'Banner List'}
-              <span className="ml-3 text-sm font-normal text-gray-500">
-                ({banners.filter(b => b.isActive).length} / {banners.length} {language === 'ko' ? '활성' : 'active'})
-              </span>
-            </h3>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-900">
+                {language === 'ko' ? '배너 목록' : 'Banner List'}
+                <span className="ml-3 text-sm font-normal text-gray-500">
+                  ({banners.filter(b => b.isActive).length} / {banners.length} {language === 'ko' ? '활성' : 'active'})
+                </span>
+              </h3>
+              
+              {/* 슬롯별 보기 토글 */}
+              <button
+                onClick={() => setViewMode(viewMode === 'list' ? 'slots' : 'list')}
+                className="px-4 py-2 text-sm bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors"
+              >
+                {viewMode === 'list' ? '슬롯별 보기' : '리스트 보기'}
+              </button>
+            </div>
 
             {banners.length === 0 ? (
               <div className="text-center py-12">
@@ -1029,6 +1208,7 @@ export function BannerManager() {
                 </p>
               </div>
             ) : (
+              viewMode === 'list' ? (
               <div className="space-y-4">
                 {banners.sort((a, b) => a.priority - b.priority).map((banner) => (
                   <div
@@ -1061,6 +1241,14 @@ export function BannerManager() {
                           <span className="px-2.5 py-1 text-xs font-medium bg-purple-100 text-purple-700 rounded-full">
                             {banner.position === 'both' ? '양쪽' : banner.position === 'left' ? '왼쪽' : '오른쪽'}
                           </span>
+                          <span className="px-2.5 py-1 text-xs font-medium bg-yellow-100 text-yellow-700 rounded-full">
+                            슬롯: {banner.slotIndex ?? 0}
+                          </span>
+                          {banner.isStatic && (
+                            <span className="px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full">
+                              고정
+                            </span>
+                          )}
                         </div>
                         <p className="text-sm text-gray-600 mb-3">
                           {language === 'ko' ? banner.subtitle : banner.subtitleEn}
@@ -1131,7 +1319,79 @@ export function BannerManager() {
                   </div>
                 ))}
               </div>
-            )}
+            ) : (
+              // 슬롯별 뷰
+              <div className="space-y-6">
+                {Object.entries(
+                  banners.reduce((acc, banner) => {
+                    const slot = banner.slotIndex ?? 0;
+                    if (!acc[slot]) acc[slot] = [];
+                    acc[slot].push(banner);
+                    return acc;
+                  }, {} as Record<number, typeof banners>)
+                )
+                  .sort(([a], [b]) => parseInt(a) - parseInt(b))
+                  .map(([slotIndex, slotBanners]) => (
+                    <div key={slotIndex} className="border-2 border-purple-100 rounded-xl p-4 bg-purple-50/30">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-purple-700">
+                          슬롯 {slotIndex} ({slotBanners.length}개 배너)
+                        </h4>
+                        <div className="text-sm text-purple-600">
+                          순서: {parseInt(slotIndex) + 1}번째
+                        </div>
+                      </div>
+                      
+                      {/* 그룹별로 표시 */}
+                      <div className="space-y-2">
+                        {Object.entries(
+                          slotBanners.reduce((acc, banner) => {
+                            const group = `slot-${banner.slotIndex}-${banner.position}`; // 슬롯+위치로 그룹화
+                            if (!acc[group]) acc[group] = [];
+                            acc[group].push(banner);
+                            return acc;
+                          }, {} as Record<string, typeof slotBanners>)
+                        ).map(([groupId, groupBanners]) => (
+                          <div key={groupId} className="bg-white rounded-lg p-3 border border-purple-200">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-xs font-medium text-purple-600">
+                                슬롯 {groupBanners[0].slotIndex ?? 0} - {groupBanners[0].position === 'both' ? '양쪽' : groupBanners[0].position === 'left' ? '왼쪽' : '오른쪽'}
+                              </span>
+                              {groupBanners.length > 1 && !groupBanners[0].isStatic && (
+                                <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">
+                                  {groupBanners.length}개 로테이션 ({(groupBanners[0].rotationInterval || 10000) / 1000}초)
+                                </span>
+                              )}
+                              {groupBanners[0].isStatic && (
+                                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                                  고정
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {groupBanners.map(banner => (
+                                <div key={banner.id} className="flex items-center gap-2">
+                                  <span className={`text-sm ${
+                                    banner.isActive ? 'text-gray-900' : 'text-gray-400 line-through'
+                                  }`}>
+                                    {language === 'ko' ? banner.title : banner.titleEn}
+                                  </span>
+                                  <button
+                                    onClick={() => startEdit(banner)}
+                                    className="p-1 text-purple-600 hover:text-purple-700"
+                                  >
+                                    <Edit2 className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>
